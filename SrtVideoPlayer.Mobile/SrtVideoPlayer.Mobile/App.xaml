@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             mc:Ignorable="d"
+             android:Application.WindowSoftInputModeAdjust="Resize"
+             x:Class="SrtVideoPlayer.Mobile.App">
+    <Application.Resources>
+        <!-- Colors !-->
+        <Color x:Key="AccentColor">#006060</Color>
+        <Color x:Key="BarBackgroundColor">#004040</Color>
+        <Color x:Key="BarForegroundColor">#FFFFFF</Color>
+        <!-- Implicit styles !-->
+        <Style TargetType="Button">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Opacity" Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Opacity" Value=".5" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Setter Property="BackgroundColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
+                                       iOS={DynamicResource iOSPageBackgroundColor}}" />
+            <Setter Property="ios:Page.UseSafeArea" Value="True" />
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="BackgroundColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
+                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
+            <Setter Property="ios:Entry.CursorColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="IsSpellCheckEnabled" Value="False" />
+            <Setter Property="IsTextPredictionEnabled" Value="False" />
+            <Setter Property="PlaceholderColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
+                                       iOS={DynamicResource iOSTextColor}}" />
+            <Setter Property="Visual"
+                    Value="{OnPlatform Android=Material,
+                                       iOS=Default}" />
+        </Style>
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
+                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
+            <Setter Property="Visual"
+                    Value="{OnPlatform Android=Material,
+                                       iOS=Default}" />
+        </Style>
+        <Style TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="0" />
+            <Setter Property="RowSpacing" Value="0" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
+                                       iOS={DynamicResource iOSTextColor}}" />
+        </Style>
+        <Style TargetType="NavigationPage" ApplyToDerivedTypes="True">
+            <Setter Property="BarBackgroundColor" Value="{StaticResource BarBackgroundColor}" />
+            <Setter Property="BarTextColor" Value="{StaticResource BarForegroundColor}" />
+        </Style>
+        <Style TargetType="controls:CustomPicker">
+            <Setter Property="BackgroundColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
+                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
+                                       iOS={DynamicResource iOSTextColor}}" />
+            <Setter Property="TitleColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="Visual"
+                    Value="{OnPlatform Android=Material,
+                                       iOS=Default}" />
+        </Style>
+        <Style TargetType="StackLayout">
+            <Setter Property="Spacing" Value="0" />
+        </Style>
+        <!-- Named styles !-->
+        <Style x:Key="DescriptionLabelStyle" TargetType="Label">
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        </Style>
+        <Style x:Key="InputButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
+        </Style>
+        <Style x:Key="InputFrameStyle" TargetType="Frame">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+        <Style x:Key="InputGridStyle" TargetType="Grid">
+            <Setter Property="Padding" Value="0,10" />
+        </Style>
+        <Style x:Key="InputLabelStyle" TargetType="Label">
+            <Setter Property="FontSize"
+                    Value="{OnPlatform Android=28,
+                                       iOS=32}" />
+            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+            <Setter Property="MaxLines" Value="1" />
+        </Style>
+        <Style x:Key="InputParentStackLayoutStyle" TargetType="StackLayout">
+            <Setter Property="Margin"
+                    Value="{OnPlatform Android='5,10',
+                                       iOS='10,20,10,10'}" />
+            <Setter Property="Spacing"
+                    Value="{OnPlatform Android='0',
+                                       iOS='5'}" />
+        </Style>
+        <Style x:Key="InputScrollViewStyle" TargetType="ScrollView">
+            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+        <Style x:Key="InputSeparatorStyle" TargetType="BoxView">
+            <Setter Property="Color" Value="{StaticResource AccentColor}" />
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="HorizontalOptions" Value="Fill" />
+        </Style>
+        <Style x:Key="KeypadGridStyle" TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="5" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="RowSpacing" Value="5" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        </Style>
+        <Style x:Key="KeypadScrollViewStyle" TargetType="ScrollView">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        </Style>
+        <Style x:Key="SettingsParentStackLayoutStyle" TargetType="StackLayout">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Margin" Value="15,15,15,0" />
+            <Setter Property="Spacing" Value="15" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        </Style>
+        <Style x:Key="SaveSettingsButtonsStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource BarBackgroundColor}" />
+            <Setter Property="BorderColor" Value="Transparent" />
+            <Setter Property="BorderWidth" Value="0" />
+            <Setter Property="Margin" Value="0,15" />
+            <Setter Property="TextColor" Value="{StaticResource BarForegroundColor}" />
+            <Setter Property="VerticalOptions" Value="EndAndExpand" />
+        </Style>
+        <Style x:Key="SectionLabelStyle" TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="Subtitle" />
+            <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+        </Style>
+        <Style x:Key="SectionStackLayoutStyle" TargetType="StackLayout">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Spacing" Value="10" />
+        </Style>
+        <Style x:Key="SettingEntryStyle" TargetType="Entry">
+            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        </Style>
+        <Style x:Key="SettingPickerStyle" TargetType="Picker">
+            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        </Style>
+        <Style x:Key="ToastFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
+                                       iOS={DynamicResource iOSTextColor}}" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+        <Style x:Key="ToastContentViewStyle" TargetType="ContentView">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="InputTransparent" Value="True" />
+            <Setter Property="Margin" Value="0,5,0,15" />
+            <Setter Property="Opacity" Value="0" />
+            <Setter Property="VerticalOptions" Value="End" />
+        </Style>
+        <Style x:Key="ToastLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="MaxLines" Value="1" />
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
+                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
+        </Style>
+        <Style x:Key="ZoneStackLayoutStyle" TargetType="StackLayout">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Spacing" Value="5" />
+        </Style>
+    </Application.Resources>
+</Application>

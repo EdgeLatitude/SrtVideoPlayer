@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<controls:KeyboardPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                       xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
+                       xmlns:constants="clr-namespace:SrtVideoPlayer.Shared.Constants;assembly=SrtVideoPlayer.Shared"
+                       xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
+                       xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
+                       mc:Ignorable="d"
+                       x:DataType="viewmodels:SrtVideoPlayerViewModel"
+                       x:Class="SrtVideoPlayer.Mobile.Pages.SrtVideoPlayerPage">
+    <controls:KeyboardPage.ToolbarItems>
+        <ToolbarItem 
+            Text="{x:Static localization:LocalizedStrings.History}"
+            Command="{Binding ShowHistoryCommand, Mode=OneTime}"
+            Priority="0">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Primary" />
+                    <On Platform="iOS" Value="Secondary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+        <ToolbarItem 
+            Text="{x:Static localization:LocalizedStrings.Settings}"
+            Command="{Binding NavigateToSettingsCommand, Mode=OneTime}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary" />
+                    <On Platform="iOS" Value="Primary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+            <ToolbarItem.Priority>
+                <OnPlatform x:TypeArguments="x:Int32">
+                    <On Platform="Android" Value="1" />
+                    <On Platform="iOS" Value="2" />
+                </OnPlatform>
+            </ToolbarItem.Priority>
+        </ToolbarItem>
+        <ToolbarItem 
+            Text="{x:Static localization:LocalizedStrings.About}"
+            Command="{Binding ShowAboutCommand, Mode=OneTime}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary" />
+                    <On Platform="iOS" Value="Primary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+            <ToolbarItem.Priority>
+                <OnPlatform x:TypeArguments="x:Int32">
+                    <On Platform="Android" Value="2" />
+                    <On Platform="iOS" Value="1" />
+                </OnPlatform>
+            </ToolbarItem.Priority>
+        </ToolbarItem>
+    </controls:KeyboardPage.ToolbarItems>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout
+            Style="{StaticResource InputParentStackLayoutStyle}">
+            <BoxView
+                Style="{StaticResource InputSeparatorStyle}" />
+            <Frame
+                Style="{StaticResource InputFrameStyle}">
+                <ScrollView
+                    x:Name="InputScrollView"
+                    Style="{StaticResource InputScrollViewStyle}">
+                    <Grid
+                        Style="{StaticResource InputGridStyle}">
+                        <!-- Spacer label because in iOS labels' height is collapsed when there is no text -->
+                        <Label 
+                            Text=" "
+                            Style="{StaticResource InputLabelStyle}">
+                            <Label.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean">
+                                    <On Platform="Android" Value="False" />
+                                    <On Platform="iOS" Value="True" />
+                                </OnPlatform>
+                            </Label.IsVisible>
+                        </Label>
+                        <Label 
+                            x:Name="InputLabel"
+                            Text="{Binding Input}" 
+                            Style="{StaticResource InputLabelStyle}"
+                            PropertyChanged="InputLabel_PropertyChanged">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding CopyInputToClipboardCommand}"
+                                    Tapped="InputLabel_Tapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                </ScrollView>
+            </Frame>
+            <BoxView
+                Style="{StaticResource InputSeparatorStyle}" />
+        </StackLayout>
+        <ScrollView
+            Grid.Row="1"
+            Style="{StaticResource KeypadScrollViewStyle}">
+            <Grid 
+                Style="{StaticResource KeypadGridStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button 
+                    Text="AC" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding AllClearCommand, Mode=OneTime}" />
+                <Button 
+                    x:Name="DeleteButton"
+                    Text="⌫" 
+                    Grid.Column="1" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding DeleteCommand, Mode=OneTime}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.PotentiationOperator}" 
+                    Grid.Column="2"
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.PotentiationOperator}" />
+                <Button 
+                    x:Name="SquareRootButton"
+                    Text="{x:Static constants:LexicalSymbolsAsString.SquareRootOperator}" 
+                    Grid.Column="3" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding UnaryOperatorCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.SquareRootOperator}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.OpeningParenthesis}" 
+                    Grid.Row="1" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding ParenthesisCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.OpeningParenthesis}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.ClosingParenthesis}" 
+                    Grid.Row="1" 
+                    Grid.Column="1" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding ParenthesisCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.ClosingParenthesis}" />
+                <Button 
+                    Text="{x:Static localization:LocalizedStrings.LastResultAbbreviation}" 
+                    Grid.Row="1" 
+                    Grid.Column="2" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding VariableStorageCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static localization:LocalizedStrings.LastResultCharacter}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.DivisionOperator}" 
+                    Grid.Row="1" 
+                    Grid.Column="3" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.DivisionOperator}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Seven}" 
+                    Grid.Row="2" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Seven}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Eight}" 
+                    Grid.Row="2" 
+                    Grid.Column="1" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Eight}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Nine}" 
+                    Grid.Row="2" 
+                    Grid.Column="2" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Nine}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.MultiplicationOperator}" 
+                    Grid.Row="2" 
+                    Grid.Column="3" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.MultiplicationOperator}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Four}" 
+                    Grid.Row="3" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Four}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Five}" 
+                    Grid.Row="3" 
+                    Grid.Column="1" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Five}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Six}" 
+                    Grid.Row="3" 
+                    Grid.Column="2" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Six}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.SubstractionOperator}" 
+                    Grid.Row="3" 
+                    Grid.Column="3" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.SubstractionOperator}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.One}" 
+                    Grid.Row="4" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.One}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Two}" 
+                    Grid.Row="4" 
+                    Grid.Column="1" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Two}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Three}" 
+                    Grid.Row="4" 
+                    Grid.Column="2" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Three}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.AdditionOperator}" 
+                    Grid.Row="4" 
+                    Grid.Column="3" 
+                    Grid.RowSpan="2" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.AdditionOperator}" />
+                <Button 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Zero}" 
+                    Grid.Row="5" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding NumberCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Zero}" />
+                <Button
+                    Text="{Binding DecimalSeparator}"
+                    Grid.Row="5" 
+                    Grid.Column="1" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding DecimalCommand, Mode=OneTime}" />
+                <Button 
+                    x:Name="CalculateButton"
+                    Text="{x:Static constants:LexicalSymbolsAsString.ResultOperator}" 
+                    Grid.Row="5" 
+                    Grid.Column="2" 
+                    Style="{StaticResource InputButtonStyle}"
+                    Command="{Binding CalculateCommand, Mode=OneTime}" />
+            </Grid>
+        </ScrollView>
+        <ContentView
+            x:Name="InputCopiedToClipboardToast"
+            Grid.Row="1"
+            Style="{StaticResource ToastContentViewStyle}">
+            <Frame
+                Style="{StaticResource ToastFrameStyle}">
+                <Label
+                    Text="{x:Static localization:LocalizedStrings.InputCopiedToClipboard}"
+                    Style="{StaticResource ToastLabelStyle}" />
+            </Frame>
+        </ContentView>
+    </Grid>
+</controls:KeyboardPage>

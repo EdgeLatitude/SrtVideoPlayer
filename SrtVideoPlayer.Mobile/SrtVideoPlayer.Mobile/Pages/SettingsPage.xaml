@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
+             xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
+             xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
+             mc:Ignorable="d"
+             x:DataType="viewmodels:SettingsViewModel"
+             x:Class="SrtVideoPlayer.Mobile.Pages.SettingsPage"
+             Title="{x:Static localization:LocalizedStrings.Settings}">
+    <ScrollView>
+        <StackLayout
+            Style="{StaticResource SettingsParentStackLayoutStyle}">
+            <StackLayout
+                Style="{StaticResource ZoneStackLayoutStyle}">
+                <Label  
+                    Text="{x:Static localization:LocalizedStrings.History}"
+                    Style="{StaticResource SectionLabelStyle}" />
+                <StackLayout 
+                    Style="{StaticResource SectionStackLayoutStyle}">
+                    <Label  
+                        Text="{x:Static localization:LocalizedStrings.HistoryLength}" 
+                        Style="{StaticResource DescriptionLabelStyle}" />
+                    <Entry  
+                        Text="{Binding HistoryLength}"
+                        Keyboard="Numeric"
+                        MaxLength="2"
+                        WidthRequest="100"
+                        Style="{StaticResource SettingEntryStyle}" />
+                </StackLayout>
+            </StackLayout>
+            <StackLayout
+                IsVisible="{Binding StyleSectionIsVisible}"
+                Style="{StaticResource ZoneStackLayoutStyle}">
+                <Label  
+                    Text="{x:Static localization:LocalizedStrings.Style}"
+                    Style="{StaticResource SectionLabelStyle}" />
+                <StackLayout 
+                    IsVisible="{Binding DeviceSupportsManualDarkMode, Mode=OneTime}"
+                    Style="{StaticResource SectionStackLayoutStyle}">
+                    <Label  
+                        Text="{x:Static localization:LocalizedStrings.Theme}" 
+                        Style="{StaticResource DescriptionLabelStyle}" />
+                    <controls:CustomPicker  
+                        ItemsSource="{Binding Themes}"
+                        SelectedItem="{Binding SelectedTheme}"
+                        WidthRequest="150"
+                        Style="{StaticResource SettingPickerStyle}" />
+                </StackLayout>
+            </StackLayout>
+            <Button  
+                Text="{x:Static localization:LocalizedStrings.SaveSettings}"
+                IsEnabled="{Binding SettingsChanged}"
+                Command="{Binding SaveSettingsCommand, Mode=OneTime}"
+                Style="{StaticResource SaveSettingsButtonsStyle}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
