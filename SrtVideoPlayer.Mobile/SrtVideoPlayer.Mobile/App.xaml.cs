@@ -10,7 +10,7 @@ namespace SrtVideoPlayer.Mobile
         {
             ViewModelLocator.Initialize();
             InitializeComponent();
-            MainPage = new NavigationPage(new SrtVideoPlayerPage());
+            MainPage = new NavigationPage(new PlayerPage());
         }
 
         protected override void OnStart()

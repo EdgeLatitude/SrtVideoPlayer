@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
+    <Compile Include="DependencyServices\VideoPickerService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <BundleResource Include="Base.lproj\InfoPlist.strings" />

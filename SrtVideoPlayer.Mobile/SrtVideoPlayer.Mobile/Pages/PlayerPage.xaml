@@ -8,8 +8,8 @@
                        xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
                        xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
                        mc:Ignorable="d"
-                       x:DataType="viewmodels:SrtVideoPlayerViewModel"
-                       x:Class="SrtVideoPlayer.Mobile.Pages.SrtVideoPlayerPage">
+                       x:DataType="viewmodels:PlayerViewModel"
+                       x:Class="SrtVideoPlayer.Mobile.Pages.PlayerPage">
     <controls:KeyboardPage.ToolbarItems>
         <ToolbarItem 
             Text="{x:Static localization:LocalizedStrings.History}"

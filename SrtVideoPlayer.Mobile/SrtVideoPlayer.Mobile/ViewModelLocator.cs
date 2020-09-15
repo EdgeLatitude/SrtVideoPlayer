@@ -25,6 +25,7 @@ namespace SrtVideoPlayer.Mobile
             { typeof(AlertsService), typeof(IAlertsService) },
             { typeof(ClipboardService), typeof(IClipboardService) },
             { typeof(CommandFactoryService), typeof(ICommandFactoryService) },
+            { typeof(LocalVideoSelectionService), typeof(ILocalVideoSelectionService) },
             { typeof(NavigationService), typeof(INavigationService) },
             { typeof(PlatformInformationService), typeof(IPlatformInformationService) },
             { typeof(SettingsService), typeof(ISettingsService) },
@@ -34,7 +35,7 @@ namespace SrtVideoPlayer.Mobile
 
         private readonly Type[] _viewModelsToResolve = new Type[]
         {
-            typeof(SrtVideoPlayerViewModel),
+            typeof(PlayerViewModel),
             typeof(SettingsViewModel)
         };
 

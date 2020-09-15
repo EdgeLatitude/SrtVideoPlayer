@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace SrtVideoPlayer.Shared.ViewModels
 {
-    public class SrtVideoPlayerViewModel : BaseViewModel
+    public class PlayerViewModel : BaseViewModel
     {
         private static readonly List<char> _possibleDecimalSeparators
             = new List<char>()
@@ -42,7 +42,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private NextInput _nextStroke = NextInput.DoNothing;
 
-        public SrtVideoPlayerViewModel(
+        public PlayerViewModel(
             IAlertsService alertsService,
             IClipboardService clipboardService,
             ICommandFactoryService commandFactoryService,

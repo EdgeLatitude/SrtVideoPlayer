@@ -8,17 +8,17 @@ using Xamarin.Forms.Xaml;
 namespace SrtVideoPlayer.Mobile.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SrtVideoPlayerPage : KeyboardPage
+    public partial class PlayerPage : KeyboardPage
     {
-        private readonly SrtVideoPlayerViewModel _viewModel;
+        private readonly PlayerViewModel _viewModel;
 
         private bool _inputCopiedToClipboardToastIsVisible;
         private int _inputCopiedToClipboardToastActiveTaps;
 
-        public SrtVideoPlayerPage()
+        public PlayerPage()
         {
             InitializeComponent();
-            _viewModel = ViewModelLocator.Instance.Resolve<SrtVideoPlayerViewModel>();
+            _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();
             BindingContext = _viewModel;
         }
 

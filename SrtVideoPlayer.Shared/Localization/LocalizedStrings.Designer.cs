@@ -259,6 +259,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Select video:.
+        /// </summary>
+        public static string SelectVideo {
+            get {
+                return ResourceManager.GetString("SelectVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Settings.
         /// </summary>
         public static string Settings {

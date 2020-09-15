@@ -2,8 +2,8 @@
 {
     public static class Strings
     {
-        public const string HistoryLength = "HistoryLength";
-        public const string ResultsHistory = "ResultsHistory";
-        public const string Theme = "Theme";
+        public const string HistoryLength = nameof(HistoryLength);
+        public const string PlaybackHistory = nameof(PlaybackHistory);
+        public const string Theme = nameof(Theme);
     }
 }

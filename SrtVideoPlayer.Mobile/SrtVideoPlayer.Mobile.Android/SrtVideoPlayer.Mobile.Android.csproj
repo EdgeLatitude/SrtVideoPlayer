@@ -37,7 +37,6 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidDexTool>d8</AndroidDexTool>
-    <AndroidLinkTool>r8</AndroidLinkTool>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
@@ -83,6 +82,7 @@
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
+    <Compile Include="DependencyServices\VideoPickerService.cs" />
     <Compile Include="LaunchScreenActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

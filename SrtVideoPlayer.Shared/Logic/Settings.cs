@@ -40,10 +40,10 @@ namespace SrtVideoPlayer.Shared.Logic
             _settingsService.Set(Strings.HistoryLength, length);
 
         public bool ContainsResultsHistory() =>
-            _settingsService.Contains(Strings.ResultsHistory);
+            _settingsService.Contains(Strings.PlaybackHistory);
 
         public void ClearResultsHistory() =>
-            _settingsService.Remove(Strings.ResultsHistory);
+            _settingsService.Remove(Strings.PlaybackHistory);
 
         public async Task ManageNewResultAsync(string result) =>
             await Task.Run(() => ManageNewResult(result));
@@ -60,13 +60,13 @@ namespace SrtVideoPlayer.Shared.Logic
             await Task.Run(GetResultsHistory);
 
         private List<string> GetResultsHistory() =>
-            JsonConvert.DeserializeObject<List<string>>(_settingsService.Get(Strings.ResultsHistory, string.Empty));
+            JsonConvert.DeserializeObject<List<string>>(_settingsService.Get(Strings.PlaybackHistory, string.Empty));
 
         public async void SetResultsHistoryAsync(IEnumerable<string> resultsHistory) =>
             await Task.Run(() => SetResultsHistory(resultsHistory));
 
         private void SetResultsHistory(IEnumerable<string> resultsHistory) =>
-            _settingsService.Set(Strings.ResultsHistory, JsonConvert.SerializeObject(resultsHistory));
+            _settingsService.Set(Strings.PlaybackHistory, JsonConvert.SerializeObject(resultsHistory));
 
         public Theme GetTheme() =>
             (Theme)Enum.Parse(typeof(Theme),

@@ -179,4 +179,7 @@
   <data name="RootOperator" xml:space="preserve">
     <value>Root operator</value>
   </data>
+  <data name="SelectVideo" xml:space="preserve">
+    <value>Select video:</value>
+  </data>
 </root>
