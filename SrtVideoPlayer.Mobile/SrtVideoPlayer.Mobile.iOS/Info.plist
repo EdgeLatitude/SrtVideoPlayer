@@ -24,19 +24,19 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>SrtVideoPlayer (simple &amp; accurate)</string>
+	<string>Video Player</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.edgelatitude.calculator</string>
+	<string>com.edgelatitude.srtvideoplayer</string>
 	<key>CFBundleVersion</key>
-	<string>010004</string>
+	<string>000001</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
-	<string>SrtVideoPlayer (simple &amp; accurate)</string>
+	<string>SRT Video Player</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.4</string>
+	<string>0.0.1</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleLocalizations</key>

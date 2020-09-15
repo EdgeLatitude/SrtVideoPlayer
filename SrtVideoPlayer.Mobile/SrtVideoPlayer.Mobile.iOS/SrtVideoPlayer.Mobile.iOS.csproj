@@ -128,20 +128,10 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\..\SrtVideoPlayer.Shared\SrtVideoPlayer.Shared.csproj">
-      <Project>{87AA0025-374A-4803-A40C-1A409FB7416B}</Project>
-      <Name>Calculator.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SrtVideoPlayer.Mobile\SrtVideoPlayer.Mobile.csproj">
-      <Project>{00935AEB-A7D2-4375-9D72-3E28BDC1A7F9}</Project>
-      <Name>Calculator.Mobile</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Icon.png" />
   </ItemGroup>
@@ -155,5 +145,14 @@
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\SrtVideoPlayer.Shared\SrtVideoPlayer.Shared.csproj">
+      <Project>{87aa0025-374a-4803-a40c-1a409fb7416b}</Project>
+      <Name>SrtVideoPlayer.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SrtVideoPlayer.Mobile\SrtVideoPlayer.Mobile.csproj">
+      <Project>{00935aeb-a7d2-4375-9d72-3e28bdc1a7f9}</Project>
+      <Name>SrtVideoPlayer.Mobile</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

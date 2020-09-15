@@ -1,3 +1,4 @@
 <resources>
-  <string name="app_name">Calculadora</string>
+  <string name="app_name">Reproductor de vídeo SRT</string>
+  <string name="short_app_name">Reproductor de vídeo</string>
 </resources>

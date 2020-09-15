@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SrtVideoPlayer.Mobile.Droid
 {
-    [Activity(Label = "@string/app_name", Icon = "@mipmap/icon", Theme = "@style/MainTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(Label = "@string/short_app_name", Icon = "@mipmap/icon", Theme = "@style/MainTheme.Splash", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
         private bool _mainActivityCreationStarted;
