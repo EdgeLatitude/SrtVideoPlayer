@@ -18,5 +18,8 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
 
         public ICommand Create<T>(Action<T> execute, Func<T, bool> canExecute) =>
             new Command<T>(execute, canExecute);
+
+        public void NotifyOfCommandAvailability(ICommand command) =>
+            ((Command)command).ChangeCanExecute();
     }
 }

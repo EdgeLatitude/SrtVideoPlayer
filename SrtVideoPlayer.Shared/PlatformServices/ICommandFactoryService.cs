@@ -9,5 +9,6 @@ namespace SrtVideoPlayer.Shared.PlatformServices
         ICommand Create<T>(Action<T> execute);
         ICommand Create(Action execute, Func<bool> canExecute);
         ICommand Create<T>(Action<T> execute, Func<T, bool> canExecute);
+        void NotifyOfCommandAvailability(ICommand command);
     }
 }
