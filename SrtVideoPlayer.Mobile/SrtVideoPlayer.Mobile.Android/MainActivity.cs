@@ -12,9 +12,13 @@ namespace SrtVideoPlayer.Mobile.Droid
     {
         public const int PickVideoId = 1000;
 
+        public const int PickSubtitlesId = 1001;
+
         public static MainActivity Instance { get; private set; }
 
         public TaskCompletionSource<string> PickVideoTaskCompletionSource { get; set; }
+
+        public TaskCompletionSource<string> PickSubtitlesTaskCompletionSource { get; set; }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {

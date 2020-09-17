@@ -182,4 +182,7 @@
   <data name="SelectVideo" xml:space="preserve">
     <value>Selecciona vídeo:</value>
   </data>
+  <data name="SelectSubtitles" xml:space="preserve">
+    <value>Selecciona subtítulos:</value>
+  </data>
 </root>

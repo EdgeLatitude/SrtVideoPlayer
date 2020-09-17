@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
+    <Compile Include="DependencyServices\SubtitlesPickerService.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
     <Compile Include="DependencyServices\VideoPickerService.cs" />
     <Compile Include="LaunchScreenActivity.cs" />
