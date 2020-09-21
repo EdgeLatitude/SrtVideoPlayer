@@ -12,49 +12,49 @@ namespace SrtVideoPlayer.Mobile.iOS.Services
     {
         private const string _videoMediaType = "public.movie";
 
-        private UIImagePickerController _imagePicker;
+        private UIImagePickerController _videoPicker;
         private TaskCompletionSource<string> _taskCompletionSource;
 
         public Task<string> GetVideoAsync()
         {
-            _imagePicker = new UIImagePickerController
+            _videoPicker = new UIImagePickerController
             {
                 SourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum,
                 MediaTypes = new string[] { _videoMediaType }
             };
 
-            _imagePicker.FinishedPickingMedia += OnImagePickerFinishedPickingMedia;
-            _imagePicker.Canceled += OnImagePickerCancelled;
+            _videoPicker.FinishedPickingMedia += OnVideoPickerFinishedPickingMedia;
+            _videoPicker.Canceled += OnVideoPickerCancelled;
 
             var window = UIApplication.SharedApplication.KeyWindow;
             var viewController = window.RootViewController;
-            viewController.PresentViewController(_imagePicker, true, null);
+            viewController.PresentViewController(_videoPicker, true, null);
 
             _taskCompletionSource = new TaskCompletionSource<string>();
             return _taskCompletionSource.Task;
         }
 
-        private void OnImagePickerFinishedPickingMedia(object sender, UIImagePickerMediaPickedEventArgs args)
+        private void OnVideoPickerFinishedPickingMedia(object sender, UIImagePickerMediaPickedEventArgs args)
         {
             if (args.MediaType == _videoMediaType)
                 _taskCompletionSource.SetResult(args.MediaUrl.AbsoluteString);
             else
                 _taskCompletionSource.SetResult(null);
-            _imagePicker.DismissModalViewController(true);
+            _videoPicker.DismissModalViewController(true);
             DetachHandlers();
         }
 
-        private void OnImagePickerCancelled(object sender, EventArgs args)
+        private void OnVideoPickerCancelled(object sender, EventArgs args)
         {
             _taskCompletionSource.SetResult(null);
-            _imagePicker.DismissModalViewController(true);
+            _videoPicker.DismissModalViewController(true);
             DetachHandlers();
         }
 
         private void DetachHandlers()
         {
-            _imagePicker.FinishedPickingMedia -= OnImagePickerFinishedPickingMedia;
-            _imagePicker.Canceled -= OnImagePickerCancelled;
+            _videoPicker.FinishedPickingMedia -= OnVideoPickerFinishedPickingMedia;
+            _videoPicker.Canceled -= OnVideoPickerCancelled;
         }
     }
 }
