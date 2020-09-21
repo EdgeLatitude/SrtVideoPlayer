@@ -38,7 +38,7 @@ namespace SrtVideoPlayer.Mobile.Droid
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             LoadApplication(new App());
 
-            Shared.Logic.Theming.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
+            Shared.Logic.Theming.Instance.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
