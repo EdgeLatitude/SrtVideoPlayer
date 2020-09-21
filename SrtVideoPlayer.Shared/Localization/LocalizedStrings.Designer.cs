@@ -151,11 +151,38 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Downloading file....
+        /// </summary>
+        public static string DownloadingFile {
+            get {
+                return ResourceManager.GetString("DownloadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The results history is empty..
         /// </summary>
         public static string EmptyResultsHistory {
             get {
                 return ResourceManager.GetString("EmptyResultsHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a An error occurred downloading file:.
+        /// </summary>
+        public static string FileDownloadError {
+            get {
+                return ResourceManager.GetString("FileDownloadError", resourceCulture);
             }
         }
         

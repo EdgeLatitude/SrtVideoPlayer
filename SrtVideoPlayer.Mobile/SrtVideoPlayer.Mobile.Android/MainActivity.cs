@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
@@ -36,6 +37,7 @@ namespace SrtVideoPlayer.Mobile.Droid
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
+            UserDialogs.Init(this);
             LoadApplication(new App());
 
             Shared.Logic.Theming.Instance.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;

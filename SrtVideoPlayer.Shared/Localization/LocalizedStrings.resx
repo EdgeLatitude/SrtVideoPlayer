@@ -185,4 +185,13 @@
   <data name="SelectSubtitles" xml:space="preserve">
     <value>Select subtitles:</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FileDownloadError" xml:space="preserve">
+    <value>An error occurred downloading file:</value>
+  </data>
+  <data name="DownloadingFile" xml:space="preserve">
+    <value>Downloading file...</value>
+  </data>
 </root>
