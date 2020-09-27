@@ -73,7 +73,7 @@ namespace SrtVideoPlayer.Mobile.Droid.CustomRenderers
                 if (char.IsDigit(keyCharacter))
                     handled = true;
                 // Add support for parentheses, decimal separators and operators
-                else if (HardwareInput.ParenthesesDecimalSeparatorsAndOperators.Contains(keyCharacterAsString))
+                else if (HardwareInput.KeyboardShortcuts.Contains(keyCharacterAsString))
                     handled = true;
 
                 if (handled)

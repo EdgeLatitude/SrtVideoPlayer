@@ -36,7 +36,7 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
             if (fileBytes == null)
                 return null;
 
-            var filepath = Path.Combine(FileSystem.AppDataDirectory, $"{name}.{extension}");
+            var filepath = Path.Combine(FileSystem.CacheDirectory, $"{name}.{extension}");
             if (File.Exists(filepath)
                 && overwriteFile)
                 File.Delete(filepath);

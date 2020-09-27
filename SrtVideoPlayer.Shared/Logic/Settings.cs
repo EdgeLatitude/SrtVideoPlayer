@@ -1,8 +1,9 @@
-﻿using SrtVideoPlayer.Shared.Constants;
+﻿using Newtonsoft.Json;
+using SrtVideoPlayer.Shared.Constants;
 using SrtVideoPlayer.Shared.DataStructures;
+using SrtVideoPlayer.Shared.Models.Playback;
 using SrtVideoPlayer.Shared.Models.Theming;
 using SrtVideoPlayer.Shared.PlatformServices;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,40 +34,45 @@ namespace SrtVideoPlayer.Shared.Logic
             _themingService = themingService;
         }
 
-        public int GetResultsHistoryLength() =>
+        public int GetPlaybackHistoryLength() =>
             _settingsService.Get(Strings.HistoryLength, Numbers.HistoryLengthDefault);
 
-        public void SetResultsHistoryLength(int length) =>
+        public void SetPlaybackHistoryLength(int length) =>
             _settingsService.Set(Strings.HistoryLength, length);
 
-        public bool ContainsResultsHistory() =>
-            _settingsService.Contains(Strings.PlaybackHistory);
+        public bool ContainsPlaybackHistory() =>
+            _settingsService.Contains(Strings.History);
 
-        public void ClearResultsHistory() =>
-            _settingsService.Remove(Strings.PlaybackHistory);
+        public void ClearPlaybackHistory() =>
+            _settingsService.Remove(Strings.History);
 
-        public async Task ManageNewResultAsync(string result) =>
-            await Task.Run(() => ManageNewResult(result));
+        public async Task ManageNewPlaybackAsync(History playback) =>
+            await Task.Run(() => ManageNewPlayback(playback));
 
-        private void ManageNewResult(string result)
+        private void ManageNewPlayback(History playback)
         {
-            var resultsHistory = new CircularBuffer<string>(GetResultsHistoryLength(),
-                ContainsResultsHistory() ? GetResultsHistory() : new List<string>());
-            resultsHistory.Write(result);
-            SetResultsHistory(new CircularBuffer<string>(GetResultsHistoryLength(), resultsHistory));
+            var playbackHistory = new CircularBuffer<History>(GetPlaybackHistoryLength(),
+                ContainsPlaybackHistory() ? GetPlaybackHistory() : new List<History>());
+            playbackHistory.Write(playback);
+            SetPlaybackHistory(new CircularBuffer<History>(GetPlaybackHistoryLength(), playbackHistory));
         }
 
-        public async Task<List<string>> GetResultsHistoryAsync() =>
-            await Task.Run(GetResultsHistory);
+        public async Task<List<History>> GetPlaybackHistoryAsync() =>
+            await Task.Run(GetPlaybackHistory);
 
-        private List<string> GetResultsHistory() =>
-            JsonConvert.DeserializeObject<List<string>>(_settingsService.Get(Strings.PlaybackHistory, string.Empty));
+        private List<History> GetPlaybackHistory() =>
+            JsonConvert.DeserializeObject<List<History>>(_settingsService.Get(Strings.History, string.Empty));
 
-        public async void SetResultsHistoryAsync(IEnumerable<string> resultsHistory) =>
-            await Task.Run(() => SetResultsHistory(resultsHistory));
+        public async Task SetPlaybackHistoryAsync(IEnumerable<History> playbackHistory) =>
+            await Task.Run(() => SetPlaybackHistory(playbackHistory));
 
-        private void SetResultsHistory(IEnumerable<string> resultsHistory) =>
-            _settingsService.Set(Strings.PlaybackHistory, JsonConvert.SerializeObject(resultsHistory));
+        private void SetPlaybackHistory(IEnumerable<History> playbackHistory) =>
+            _settingsService.Set(Strings.History, JsonConvert.SerializeObject(playbackHistory,
+                Formatting.None,
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                }));
 
         public Theme GetTheme() =>
             (Theme)Enum.Parse(typeof(Theme),

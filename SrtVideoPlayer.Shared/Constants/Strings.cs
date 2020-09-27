@@ -3,7 +3,7 @@
     public static class Strings
     {
         public const string HistoryLength = nameof(HistoryLength);
-        public const string PlaybackHistory = nameof(PlaybackHistory);
+        public const string History = nameof(History);
         public const string Theme = nameof(Theme);
     }
 }

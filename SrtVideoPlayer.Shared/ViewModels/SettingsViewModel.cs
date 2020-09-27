@@ -37,7 +37,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             #region History settings
             SaveSettingsCommand = _commandFactoryService.Create(() => SaveSettings(), CanExecuteSaveSettings);
-            _currentHistoryLength = Settings.Instance.GetResultsHistoryLength();
+            _currentHistoryLength = Settings.Instance.GetPlaybackHistoryLength();
             HistoryLength = _currentHistoryLength.ToString();
             #endregion History settings
 
@@ -161,24 +161,24 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
             if (_currentHistoryLength == historyLengthAsInt)
                 return;
-            Settings.Instance.SetResultsHistoryLength(historyLengthAsInt);
+            Settings.Instance.SetPlaybackHistoryLength(historyLengthAsInt);
             // Clear storage for out of bounds results
             var newHistoryLengthIsZero = historyLengthAsInt == 0;
             if (historyLengthAsInt - _currentHistoryLength < 0
-                && Settings.Instance.ContainsResultsHistory()
+                && Settings.Instance.ContainsPlaybackHistory()
                 && !newHistoryLengthIsZero)
             {
-                var resultsHistory = await Settings.Instance.GetResultsHistoryAsync();
+                var resultsHistory = await Settings.Instance.GetPlaybackHistoryAsync();
                 if (historyLengthAsInt < resultsHistory.Count)
                 {
                     resultsHistory.Reverse();
                     resultsHistory = resultsHistory.Take(historyLengthAsInt).ToList();
                     resultsHistory.Reverse();
-                    Settings.Instance.SetResultsHistoryAsync(resultsHistory);
+                    _ = Settings.Instance.SetPlaybackHistoryAsync(resultsHistory);
                 }
             }
             else if (newHistoryLengthIsZero)
-                Settings.Instance.ClearResultsHistory();
+                Settings.Instance.ClearPlaybackHistory();
             _currentHistoryLength = historyLengthAsInt;
         }
 

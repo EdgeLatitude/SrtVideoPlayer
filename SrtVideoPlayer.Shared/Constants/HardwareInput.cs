@@ -2,24 +2,16 @@
 {
     public static class HardwareInput
     {
-        public const string CopyCharacter = "c";
-        public const string RootCharacter = "r";
-        public const string ResultOperator = LexicalSymbolsAsString.ResultOperator;
-
-        public static readonly string[] ParenthesesDecimalSeparatorsAndOperators = new string[]
+        public static readonly string[] KeyboardShortcutsCollection = new string[]
         {
-            LexicalSymbolsAsString.OpeningParenthesis,
-            LexicalSymbolsAsString.ClosingParenthesis,
-            LexicalSymbolsAsString.Comma,
-            LexicalSymbolsAsString.Dot,
-            LexicalSymbolsAsString.AdditionOperator,
-            LexicalSymbolsAsString.SubstractionOperator,
-            LexicalSymbolsAsString.MultiplicationOperator,
-            LexicalSymbolsAsString.DivisionOperator,
-            LexicalSymbolsAsString.PotentiationOperator,
-            LexicalSymbolsAsString.SquareRootOperator,
-            LexicalSymbolsAsString.SimpleMultiplicationOperator,
-            LexicalSymbolsAsString.SimpleDivisionOperator
+            KeyboardShortcuts.PlayPauseA,
+            KeyboardShortcuts.PlayPauseB,
+            KeyboardShortcuts.Back10_Seconds,
+            KeyboardShortcuts.Forward10_Seconds,
+            KeyboardShortcuts.Restart,
+            KeyboardShortcuts.FullScreen,
+            KeyboardShortcuts.MuteUnmute,
+            KeyboardShortcuts.CaptionsOnOff
         };
     }
 }

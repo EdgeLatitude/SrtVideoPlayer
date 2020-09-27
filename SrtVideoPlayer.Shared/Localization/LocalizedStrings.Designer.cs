@@ -88,15 +88,6 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Calculation error.
-        /// </summary>
-        public static string CalculationError {
-            get {
-                return ResourceManager.GetString("CalculationError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Cancel.
         /// </summary>
         public static string Cancel {
@@ -111,15 +102,6 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string ClearHistory {
             get {
                 return ResourceManager.GetString("ClearHistory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Copy.
-        /// </summary>
-        public static string Copy {
-            get {
-                return ResourceManager.GetString("Copy", resourceCulture);
             }
         }
         
@@ -205,42 +187,6 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Input copied to clipboard.
-        /// </summary>
-        public static string InputCopiedToClipboard {
-            get {
-                return ResourceManager.GetString("InputCopiedToClipboard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a ANS.
-        /// </summary>
-        public static string LastResultAbbreviation {
-            get {
-                return ResourceManager.GetString("LastResultAbbreviation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a A.
-        /// </summary>
-        public static string LastResultCharacter {
-            get {
-                return ResourceManager.GetString("LastResultCharacter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Lexical error.
-        /// </summary>
-        public static string LexicalError {
-            get {
-                return ResourceManager.GetString("LexicalError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Light.
         /// </summary>
         public static string Light {
@@ -264,15 +210,6 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Root operator.
-        /// </summary>
-        public static string RootOperator {
-            get {
-                return ResourceManager.GetString("RootOperator", resourceCulture);
             }
         }
         
@@ -322,29 +259,11 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Syntax error.
-        /// </summary>
-        public static string SyntaxError {
-            get {
-                return ResourceManager.GetString("SyntaxError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Theme.
         /// </summary>
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Unexpected error.
-        /// </summary>
-        public static string UnexpectedError {
-            get {
-                return ResourceManager.GetString("UnexpectedError", resourceCulture);
             }
         }
     }

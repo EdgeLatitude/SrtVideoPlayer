@@ -47,7 +47,7 @@ namespace SrtVideoPlayer.Mobile.iOS.CustomRenderers
                     _keyCommands.Add(UIKeyCommand.Create((NSString)i.ToString(), 0, selector));
 
                 // Add support for parentheses, decimal separators and operators
-                foreach (var symbol in HardwareInput.ParenthesesDecimalSeparatorsAndOperators)
+                foreach (var symbol in HardwareInput.KeyboardShortcuts)
                     _keyCommands.Add(UIKeyCommand.Create((NSString)symbol, 0, selector));
 
                 foreach (var kc in _keyCommands)
@@ -86,7 +86,7 @@ namespace SrtVideoPlayer.Mobile.iOS.CustomRenderers
 
                     if (char.IsDigit(keyCharacter))
                         handled = true;
-                    else if (HardwareInput.ParenthesesDecimalSeparatorsAndOperators.Contains(keyCharacterAsString))
+                    else if (HardwareInput.KeyboardShortcuts.Contains(keyCharacterAsString))
                         handled = true;
 
                     if (handled)
