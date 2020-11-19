@@ -1,7 +1,6 @@
-﻿using SrtVideoPlayer.Mobile.Controls;
+﻿using Foundation;
+using SrtVideoPlayer.Mobile.Controls;
 using SrtVideoPlayer.Shared.Constants;
-using SrtVideoPlayer.Shared.Localization;
-using Foundation;
 using System.Collections.Generic;
 using System.Linq;
 using UIKit;
@@ -14,8 +13,7 @@ namespace SrtVideoPlayer.Mobile.iOS.CustomRenderers
     public class KeyboardPageRenderer : PageRenderer
     {
         private const string _keySelector = "KeyCommand:";
-        private const string _enterKey = "\r";
-        private const string _backspaceKey = "\u0008";
+        private const string _spaceKey = "\u0020";
 
         private readonly IList<UIKeyCommand> _keyCommands = new List<UIKeyCommand>();
 
@@ -31,23 +29,11 @@ namespace SrtVideoPlayer.Mobile.iOS.CustomRenderers
             {
                 var selector = new ObjCRuntime.Selector(_keySelector);
 
-                // Add support for special commands (viewable on iPad (>= iOS 9) when holding down ⌘)
-                _keyCommands.Add(UIKeyCommand.Create(new NSString(HardwareInput.CopyCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.Copy)));
-                _keyCommands.Add(UIKeyCommand.Create(new NSString(HardwareInput.RootCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.RootOperator)));
+                // Add support for space key
+                _keyCommands.Add(UIKeyCommand.Create((NSString)_spaceKey, 0, selector));
 
-                // Add support for enter and equals key
-                _keyCommands.Add(UIKeyCommand.Create((NSString)_enterKey, 0, selector));
-                _keyCommands.Add(UIKeyCommand.Create((NSString)HardwareInput.ResultOperator, 0, selector));
-
-                // Add support for backspace key
-                _keyCommands.Add(UIKeyCommand.Create((NSString)_backspaceKey, 0, selector));
-
-                // Add support for numbers
-                for (var i = 0; i < 10; i++)
-                    _keyCommands.Add(UIKeyCommand.Create((NSString)i.ToString(), 0, selector));
-
-                // Add support for parentheses, decimal separators and operators
-                foreach (var symbol in HardwareInput.KeyboardShortcuts)
+                // Add support for playback keys
+                foreach (var symbol in HardwareInput.KeyboardShortcutsCollection)
                     _keyCommands.Add(UIKeyCommand.Create((NSString)symbol, 0, selector));
 
                 foreach (var kc in _keyCommands)
@@ -64,29 +50,15 @@ namespace SrtVideoPlayer.Mobile.iOS.CustomRenderers
 
             if (_keyCommands.Contains(keyCommand))
             {
-                if (keyCommand.ModifierFlags == UIKeyModifierFlags.Command)
-                    switch (keyCommand.Input.ToString())
-                    {
-                        case HardwareInput.CopyCharacter:
-                            Page?.OnKeyCommand(Controls.KeyCommand.Copy);
-                            break;
-                        case HardwareInput.RootCharacter:
-                            Page?.OnKeyCommand(Controls.KeyCommand.RootOperator);
-                            break;
-                    }
-                else if (keyCommand.Input == _enterKey
-                    || keyCommand.Input == HardwareInput.ResultOperator)
-                    Page?.OnKeyCommand(Controls.KeyCommand.Calculate);
-                else if (keyCommand.Input == _backspaceKey)
-                    Page?.OnKeyCommand(Controls.KeyCommand.Delete);
+                if (keyCommand.Input == _spaceKey
+                    || keyCommand.Input == KeyboardShortcuts.PlayPauseA)
+                    Page?.OnKeyCommand(Controls.KeyCommand.PlayPause);
                 else if (char.TryParse(keyCommand.Input, out var keyCharacter))
                 {
                     var handled = false;
                     var keyCharacterAsString = keyCharacter.ToString();
 
-                    if (char.IsDigit(keyCharacter))
-                        handled = true;
-                    else if (HardwareInput.KeyboardShortcuts.Contains(keyCharacterAsString))
+                    if (HardwareInput.KeyboardShortcutsCollection.Contains(keyCharacterAsString))
                         handled = true;
 
                     if (handled)

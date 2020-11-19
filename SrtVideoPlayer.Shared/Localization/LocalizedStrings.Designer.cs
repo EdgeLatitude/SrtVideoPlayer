@@ -259,6 +259,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Subtitle copied to clipboard.
+        /// </summary>
+        public static string SubtitleCopiedToClipboard {
+            get {
+                return ResourceManager.GetString("SubtitleCopiedToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Theme.
         /// </summary>
         public static string Theme {

@@ -1,7 +1,6 @@
 ﻿using SrtVideoPlayer.Mobile.Controls;
 using SrtVideoPlayer.Shared.ViewModels;
 using System;
-using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,8 +11,8 @@ namespace SrtVideoPlayer.Mobile.Pages
     {
         private readonly PlayerViewModel _viewModel;
 
-        private bool _inputCopiedToClipboardToastIsVisible;
-        private int _inputCopiedToClipboardToastActiveTaps;
+        private bool _subtitleCopiedToClipboardToastIsVisible;
+        private int _subtitleCopiedToClipboardToastActiveTaps;
 
         public PlayerPage()
         {
@@ -29,51 +28,42 @@ namespace SrtVideoPlayer.Mobile.Pages
         {
             switch (command)
             {
-                case KeyCommand.Copy:
-                    _viewModel.CopyInputToClipboardCommand.Execute(null);
-                    CopyInputToClipboardAnimation();
+                case KeyCommand.PlayPause:
+                    _viewModel.PlayOrPauseCommand.Execute(null);
                     break;
-                case KeyCommand.RootOperator:
-                    SquareRootButton.Command.Execute(SquareRootButton.CommandParameter);
+                case KeyCommand.Back5_Seconds:
+                    _viewModel.GoBack5_SecondsCommand.Execute(null);
                     break;
-                case KeyCommand.Calculate:
-                    CalculateButton.Command.Execute(null);
+                case KeyCommand.Forward5_Seconds:
+                    _viewModel.GoForward5_SecondsCommand.Execute(null);
                     break;
-                case KeyCommand.Delete:
-                    DeleteButton.Command.Execute(null);
+                case KeyCommand.FullScreenOff:
+                    _viewModel.ExitFullScreenCommand.Execute(null);
                     break;
             }
         }
 
-        private async void InputLabel_PropertyChanged(object sender, PropertyChangedEventArgs args)
+        private void SubtitleLabel_Tapped(object sender, EventArgs args) =>
+            CopySubtitleToClipboardAnimation();
+
+        private void CopySubtitleToClipboardAnimation()
         {
-            if (args.PropertyName != nameof(Width))
-                return;
-
-            await InputScrollView.ScrollToAsync(InputLabel, _viewModel.AfterResult ? ScrollToPosition.Start : ScrollToPosition.End, false);
-        }
-
-        private void InputLabel_Tapped(object sender, EventArgs args) =>
-            CopyInputToClipboardAnimation();
-
-        private void CopyInputToClipboardAnimation()
-        {
-            if (!_inputCopiedToClipboardToastIsVisible)
+            if (!_subtitleCopiedToClipboardToastIsVisible)
             {
-                InputCopiedToClipboardToast.FadeTo(0.75);
-                _inputCopiedToClipboardToastIsVisible = true;
+                SubtitleCopiedToClipboardToast.FadeTo(0.75);
+                _subtitleCopiedToClipboardToastIsVisible = true;
             }
 
-            _inputCopiedToClipboardToastActiveTaps++;
+            _subtitleCopiedToClipboardToastActiveTaps++;
 
             Device.StartTimer(TimeSpan.FromSeconds(3.75), () =>
             {
-                _inputCopiedToClipboardToastActiveTaps--;
+                _subtitleCopiedToClipboardToastActiveTaps--;
 
-                if (_inputCopiedToClipboardToastActiveTaps == 0)
+                if (_subtitleCopiedToClipboardToastActiveTaps == 0)
                 {
-                    InputCopiedToClipboardToast.FadeTo(0);
-                    _inputCopiedToClipboardToastIsVisible = false;
+                    SubtitleCopiedToClipboardToast.FadeTo(0);
+                    _subtitleCopiedToClipboardToastIsVisible = false;
                 }
 
                 return false;

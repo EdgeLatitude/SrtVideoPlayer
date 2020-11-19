@@ -41,39 +41,17 @@ namespace SrtVideoPlayer.Mobile.Droid.CustomRenderers
             var keyCharacter = Convert.ToChar(keyEvent.UnicodeChar);
             var keyCharacterAsString = keyCharacter.ToString();
 
-            // Add support for special commands
-            if (keyEvent.IsCtrlPressed)
-                switch (keyCharacterAsString.ToLower())
-                {
-                    case HardwareInput.CopyCharacter:
-                        Page?.OnKeyCommand(KeyCommand.Copy);
-                        handled = true;
-                        break;
-                    case HardwareInput.RootCharacter:
-                        Page?.OnKeyCommand(KeyCommand.RootOperator);
-                        handled = true;
-                        break;
-                }
-            // Add support for enter and equals key
-            else if (keyCode == Keycode.Enter
-                || keyCharacterAsString == HardwareInput.ResultOperator)
+            // Add support for space key
+            if (keyCode == Keycode.Space
+                || keyCharacterAsString == KeyboardShortcuts.PlayPauseA)
             {
-                Page?.OnKeyCommand(KeyCommand.Calculate);
-                handled = true;
-            }
-            // Add support for backspace key
-            else if (keyCode == Keycode.Del)
-            {
-                Page?.OnKeyCommand(KeyCommand.Delete);
+                Page?.OnKeyCommand(KeyCommand.PlayPause);
                 handled = true;
             }
             else
             {
-                // Add support for numbers
-                if (char.IsDigit(keyCharacter))
-                    handled = true;
-                // Add support for parentheses, decimal separators and operators
-                else if (HardwareInput.KeyboardShortcuts.Contains(keyCharacterAsString))
+                // Add support for playback keys
+                if (HardwareInput.KeyboardShortcutsCollection.Contains(keyCharacterAsString))
                     handled = true;
 
                 if (handled)

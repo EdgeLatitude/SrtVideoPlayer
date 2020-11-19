@@ -68,6 +68,14 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public ICommand ManageInputFromHardwareCommand { get; private set; }
 
+        public ICommand PlayOrPauseCommand { get; private set; }
+
+        public ICommand GoBack5_SecondsCommand { get; private set; }
+
+        public ICommand GoForward5_SecondsCommand { get; private set; }
+
+        public ICommand ExitFullScreenCommand { get; private set; }
+
         public ICommand ShowHistoryCommand { get; private set; }
 
         public ICommand NavigateToSettingsCommand { get; private set; }

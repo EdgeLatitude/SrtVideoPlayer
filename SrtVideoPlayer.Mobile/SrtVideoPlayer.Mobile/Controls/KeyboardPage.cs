@@ -10,9 +10,9 @@ namespace SrtVideoPlayer.Mobile.Controls
 
     public enum KeyCommand
     {
-        Copy,
-        RootOperator,
-        Calculate,
-        Delete
+        PlayPause,
+        Back5_Seconds,
+        Forward5_Seconds,
+        FullScreenOff
     }
 }
