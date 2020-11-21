@@ -46,27 +46,27 @@ namespace SrtVideoPlayer.Shared.Logic
         public void ClearPlaybackHistory() =>
             _settingsService.Remove(Strings.History);
 
-        public async Task ManageNewPlaybackAsync(History playback) =>
+        public async Task ManageNewPlaybackAsync(Playback playback) =>
             await Task.Run(() => ManageNewPlayback(playback));
 
-        private void ManageNewPlayback(History playback)
+        private void ManageNewPlayback(Playback playback)
         {
-            var playbackHistory = new CircularBuffer<History>(GetPlaybackHistoryLength(),
-                ContainsPlaybackHistory() ? GetPlaybackHistory() : new List<History>());
+            var playbackHistory = new CircularBuffer<Playback>(GetPlaybackHistoryLength(),
+                ContainsPlaybackHistory() ? GetPlaybackHistory() : new List<Playback>());
             playbackHistory.Write(playback);
-            SetPlaybackHistory(new CircularBuffer<History>(GetPlaybackHistoryLength(), playbackHistory));
+            SetPlaybackHistory(new CircularBuffer<Playback>(GetPlaybackHistoryLength(), playbackHistory));
         }
 
-        public async Task<List<History>> GetPlaybackHistoryAsync() =>
+        public async Task<List<Playback>> GetPlaybackHistoryAsync() =>
             await Task.Run(GetPlaybackHistory);
 
-        private List<History> GetPlaybackHistory() =>
-            JsonConvert.DeserializeObject<List<History>>(_settingsService.Get(Strings.History, string.Empty));
+        private List<Playback> GetPlaybackHistory() =>
+            JsonConvert.DeserializeObject<List<Playback>>(_settingsService.Get(Strings.History, string.Empty));
 
-        public async Task SetPlaybackHistoryAsync(IEnumerable<History> playbackHistory) =>
+        public async Task SetPlaybackHistoryAsync(IEnumerable<Playback> playbackHistory) =>
             await Task.Run(() => SetPlaybackHistory(playbackHistory));
 
-        private void SetPlaybackHistory(IEnumerable<History> playbackHistory) =>
+        private void SetPlaybackHistory(IEnumerable<Playback> playbackHistory) =>
             _settingsService.Set(Strings.History, JsonConvert.SerializeObject(playbackHistory,
                 Formatting.None,
                 new JsonSerializerSettings

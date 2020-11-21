@@ -3,22 +3,20 @@ using System.Collections.Generic;
 
 namespace SrtVideoPlayer.Shared.Models.Playback
 {
-    public class History
+    public class Playback
     {
-        public string Name { get; set; }
-        public string Location { get; set; }
+        public Video Video { get; set; }
         public TimeSpan Time { get; set; }
         public Dictionary<TimeSpan, string> Subtitles { get; set; }
 
-        public History()
+        public Playback()
         {
 
         }
 
-        public History(string name, string location, TimeSpan time, Dictionary<TimeSpan, string> subtitles)
+        public Playback(Video video, TimeSpan time, Dictionary<TimeSpan, string> subtitles)
         {
-            Name = name;
-            Location = location;
+            Video = video;
             Time = time;
             Subtitles = subtitles;
         }

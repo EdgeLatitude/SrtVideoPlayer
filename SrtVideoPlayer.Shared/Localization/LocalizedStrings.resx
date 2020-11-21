@@ -170,4 +170,28 @@
   <data name="SubtitleCopiedToClipboard" xml:space="preserve">
     <value>Subtitle copied to clipboard</value>
   </data>
+  <data name="VideoSource" xml:space="preserve">
+    <value>Video source:</value>
+  </data>
+  <data name="Web" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="LocalStorage" xml:space="preserve">
+    <value>Local storage</value>
+  </data>
+  <data name="SubtitlesSource" xml:space="preserve">
+    <value>Subtitles source:</value>
+  </data>
+  <data name="NoSubtitles" xml:space="preserve">
+    <value>No subtitles</value>
+  </data>
+  <data name="WebSource" xml:space="preserve">
+    <value>Web source</value>
+  </data>
+  <data name="EnterTheUrl" xml:space="preserve">
+    <value>Enter the URL:</value>
+  </data>
+  <data name="PleaseEnterAValidUrl" xml:space="preserve">
+    <value>Please, enter a valid URL.</value>
+  </data>
 </root>

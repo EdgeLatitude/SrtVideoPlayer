@@ -151,6 +151,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Enter the URL:.
+        /// </summary>
+        public static string EnterTheUrl {
+            get {
+                return ResourceManager.GetString("EnterTheUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Error.
         /// </summary>
         public static string Error {
@@ -196,6 +205,24 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Local storage.
+        /// </summary>
+        public static string LocalStorage {
+            get {
+                return ResourceManager.GetString("LocalStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No subtitles.
+        /// </summary>
+        public static string NoSubtitles {
+            get {
+                return ResourceManager.GetString("NoSubtitles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Notice.
         /// </summary>
         public static string Notice {
@@ -210,6 +237,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Please, enter a valid URL..
+        /// </summary>
+        public static string PleaseEnterAValidUrl {
+            get {
+                return ResourceManager.GetString("PleaseEnterAValidUrl", resourceCulture);
             }
         }
         
@@ -268,11 +304,47 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Subtitles source:.
+        /// </summary>
+        public static string SubtitlesSource {
+            get {
+                return ResourceManager.GetString("SubtitlesSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Theme.
         /// </summary>
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Video source:.
+        /// </summary>
+        public static string VideoSource {
+            get {
+                return ResourceManager.GetString("VideoSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Web.
+        /// </summary>
+        public static string Web {
+            get {
+                return ResourceManager.GetString("Web", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Web source.
+        /// </summary>
+        public static string WebSource {
+            get {
+                return ResourceManager.GetString("WebSource", resourceCulture);
             }
         }
     }

@@ -170,4 +170,28 @@
   <data name="SubtitleCopiedToClipboard" xml:space="preserve">
     <value>Subtítulo copiado al portapapeles</value>
   </data>
+  <data name="VideoSource" xml:space="preserve">
+    <value>Origen del video:</value>
+  </data>
+  <data name="Web" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="LocalStorage" xml:space="preserve">
+    <value>Almacenamiento local</value>
+  </data>
+  <data name="SubtitlesSource" xml:space="preserve">
+    <value>Origen de los subtítulos:</value>
+  </data>
+  <data name="NoSubtitles" xml:space="preserve">
+    <value>Sin subtítulos</value>
+  </data>
+  <data name="WebSource" xml:space="preserve">
+    <value>Origen web</value>
+  </data>
+  <data name="EnterTheUrl" xml:space="preserve">
+    <value>Ingresa el URL:</value>
+  </data>
+  <data name="PleaseEnterAValidUrl" xml:space="preserve">
+    <value>Por favor, ingresa un URL válido.</value>
+  </data>
 </root>
