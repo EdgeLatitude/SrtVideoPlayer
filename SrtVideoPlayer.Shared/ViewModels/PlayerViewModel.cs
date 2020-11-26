@@ -6,6 +6,7 @@ using SrtVideoPlayer.Shared.Models.Playback;
 using SrtVideoPlayer.Shared.PlatformServices;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -26,7 +27,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             LocalizedStrings.LocalStorage
         };
 
-        private Dictionary<TimeSpan, string> _subtitles;
+        private Subtitle[] _subtitles;
 
         public PlayerViewModel(
             IAlertsService alertsService,
@@ -116,7 +117,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             var subtitlesSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.SubtitlesSource,
                 LocalizedStrings.NoSubtitles,
                 _mediaSourceOptions);
-            Dictionary<TimeSpan, string> subtitles;
+            Subtitle[] subtitles;
             if (subtitlesSource != null
                 && _mediaSourceOptions.Contains(subtitlesSource))
                 if (subtitlesSource == LocalizedStrings.Web)
@@ -150,6 +151,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             var webSource = await PromptForWebSource();
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
+            return new Video(RemoveProtocolAndSlashesFromAddress(webSource), webSource);
         }
 
         private async Task<Video> LoadLocalVideo()
@@ -157,14 +159,17 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         }
 
-        private async Task<Dictionary<TimeSpan, string>> LoadWebSubtitles()
+        private async Task<Subtitle[]> LoadWebSubtitles()
         {
+            const string srtExtension = "srt";
             var webSource = await PromptForWebSource();
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
+            var filepath = await _fileDownloaderService.DownloadFileToCacheAsync(webSource, RemoveProtocolAndSlashesFromAddress(webSource), srtExtension, true);
+            return await General.GetSubtitlesFromContent(await File.ReadAllTextAsync(filepath));
         }
 
-        private async Task<Dictionary<TimeSpan, string>> LoadLocalSubtitles()
+        private async Task<Subtitle[]> LoadLocalSubtitles()
         {
 
         }
@@ -192,6 +197,17 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
 
             return input;
+        }
+
+        private string RemoveProtocolAndSlashesFromAddress(string address)
+        {
+            const string delimiter = "://";
+            const string slash = "/";
+            const string dash = "-";
+            var sections = address.Split(delimiter);
+            var addressWithoutProtocol = sections.Length > 1 ? sections[1] : sections[0];
+            var addressWithoutSlashes = addressWithoutProtocol.Replace(slash, dash);
+            return addressWithoutSlashes;
         }
 
         private async Task ShowHistory()

@@ -4,6 +4,6 @@ namespace SrtVideoPlayer.Shared.PlatformServices
 {
     public interface IFileDownloaderService
     {
-        Task<string> DownloadFileAsync(string url, string name, string extension, bool overwriteFile);
+        Task<string> DownloadFileToCacheAsync(string url, string name, string extension, bool overwriteFile);
     }
 }

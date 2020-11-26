@@ -20,7 +20,7 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
             _alertsService = alertsService;
         }
 
-        public async Task<string> DownloadFileAsync(string url, string name, string extension, bool overwriteFile)
+        public async Task<string> DownloadFileToCacheAsync(string url, string name, string extension, bool overwriteFile)
         {
             byte[] fileBytes = null;
             try
