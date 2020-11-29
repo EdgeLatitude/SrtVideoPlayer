@@ -57,12 +57,13 @@
     <Grid>
         <Grid>
             <MediaElement
+                x:Name="Player"
                 HorizontalOptions="Center"
                 KeepScreenOn="True"
-                MediaEnded="MediaElement_MediaEnded"
-                MediaFailed="MediaElement_MediaFailed"
-                MediaOpened="MediaElement_MediaOpened"
-                SeekCompleted="MediaElement_SeekCompleted"
+                MediaEnded="Player_MediaEnded"
+                MediaFailed="Player_MediaFailed"
+                MediaOpened="Player_MediaOpened"
+                SeekCompleted="Player_SeekCompleted"
                 ShowsPlaybackControls="True"
                 Source="{Binding Source}"
                 VerticalOptions="Center"
