@@ -4,7 +4,6 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
                        xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
-                       xmlns:constants="clr-namespace:SrtVideoPlayer.Shared.Constants;assembly=SrtVideoPlayer.Shared"
                        xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
                        xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
                        mc:Ignorable="d"
@@ -56,6 +55,19 @@
         </ToolbarItem>
     </controls:KeyboardPage.ToolbarItems>
     <Grid>
+        <Grid>
+            <MediaElement
+                HorizontalOptions="Center"
+                KeepScreenOn="True"
+                MediaEnded="MediaElement_MediaEnded"
+                MediaFailed="MediaElement_MediaFailed"
+                MediaOpened="MediaElement_MediaOpened"
+                SeekCompleted="MediaElement_SeekCompleted"
+                ShowsPlaybackControls="True"
+                Source="{Binding Source}"
+                VerticalOptions="Center"
+                Volume="{Binding Volume}" />
+        </Grid>
         <ContentView
             x:Name="SubtitleCopiedToClipboardToast"
             Style="{StaticResource ToastContentViewStyle}">

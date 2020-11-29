@@ -55,7 +55,7 @@ namespace SrtVideoPlayer.Mobile.Droid.CustomRenderers
                     handled = true;
 
                 if (handled)
-                    Page?.OnKeyUp(keyCharacter);
+                    Page?.OnKeyUp(keyCharacterAsString);
             }
 
             return handled || base.OnKeyUp(keyCode, keyEvent);

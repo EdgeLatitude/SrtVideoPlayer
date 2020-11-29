@@ -15,9 +15,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
 {
     public class PlayerViewModel : BaseViewModel
     {
+        private const double _one = 1d;
+        private const double _zero = 0d;
+
         private readonly IAlertsService _alertsService;
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IFileDownloaderService _fileDownloaderService;
+        private readonly IFilePickerService _filePickerService;
         private readonly INavigationService _navigationService;
         private readonly IPlatformInformationService _platformInformationService;
 
@@ -27,22 +31,27 @@ namespace SrtVideoPlayer.Shared.ViewModels
             LocalizedStrings.LocalStorage
         };
 
+        public event EventHandler PlayPauseRequested;
+
         private Subtitle[] _subtitles;
 
         public PlayerViewModel(
             IAlertsService alertsService,
             ICommandFactoryService commandFactoryService,
             IFileDownloaderService fileDownloaderService,
+            IFilePickerService filePickerService,
             INavigationService navigationService,
             IPlatformInformationService platformInformationService)
         {
             _alertsService = alertsService;
             _commandFactoryService = commandFactoryService;
             _fileDownloaderService = fileDownloaderService;
+            _filePickerService = filePickerService;
             _navigationService = navigationService;
             _platformInformationService = platformInformationService;
 
             LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
+            ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -62,16 +71,58 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private TimeSpan _time;
+        private TimeSpan _position = TimeSpan.Zero;
 
-        public TimeSpan Time
+        public TimeSpan Position
         {
-            get => _time;
+            get => _position;
             set
             {
-                if (_time == value)
+                if (_position == value)
                     return;
-                _time = value;
+                _position = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _subtitlesAreVisible = true;
+
+        public bool SubtitlesAreVisible
+        {
+            get => _subtitlesAreVisible;
+            set
+            {
+                if (_subtitlesAreVisible == value)
+                    return;
+                _subtitlesAreVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _subtitle;
+
+        public string Subtitle
+        {
+            get => _subtitle;
+            set
+            {
+                if (_subtitle == value)
+                    return;
+                _subtitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _volume = _one;
+
+        public double Volume
+        {
+            get => _volume;
+            set
+            {
+                if (_volume == value)
+                    return;
+                _volume = value;
                 OnPropertyChanged();
             }
         }
@@ -136,7 +187,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 return;
 
             Source = video.Location;
-            Time = TimeSpan.Zero;
+            Position = TimeSpan.Zero;
             _subtitles = subtitles;
             _ = Settings.Instance.ManageNewPlaybackAsync(new Playback
             {
@@ -151,12 +202,15 @@ namespace SrtVideoPlayer.Shared.ViewModels
             var webSource = await PromptForWebSource();
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
-            return new Video(RemoveProtocolAndSlashesFromAddress(webSource), webSource);
+            return new Video(General.RemoveProtocolAndSlashesFromAddress(webSource), webSource);
         }
 
         private async Task<Video> LoadLocalVideo()
         {
-
+            var filepath = await _filePickerService.SelectVideoAsync();
+            if (string.IsNullOrWhiteSpace(filepath))
+                return null;
+            return new Video(General.RemoveProtocolAndSlashesFromAddress(filepath), filepath);
         }
 
         private async Task<Subtitle[]> LoadWebSubtitles()
@@ -165,13 +219,16 @@ namespace SrtVideoPlayer.Shared.ViewModels
             var webSource = await PromptForWebSource();
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
-            var filepath = await _fileDownloaderService.DownloadFileToCacheAsync(webSource, RemoveProtocolAndSlashesFromAddress(webSource), srtExtension, true);
+            var filepath = await _fileDownloaderService.DownloadFileToCacheAsync(webSource, General.RemoveProtocolAndSlashesFromAddress(webSource), srtExtension, true);
             return await General.GetSubtitlesFromContent(await File.ReadAllTextAsync(filepath));
         }
 
         private async Task<Subtitle[]> LoadLocalSubtitles()
         {
-
+            var filepath = await _filePickerService.SelectSubtitlesAsync();
+            if (string.IsNullOrWhiteSpace(filepath))
+                return null;
+            return await General.GetSubtitlesFromContent(await File.ReadAllTextAsync(filepath));
         }
 
         private async Task<string> PromptForWebSource()
@@ -199,15 +256,35 @@ namespace SrtVideoPlayer.Shared.ViewModels
             return input;
         }
 
-        private string RemoveProtocolAndSlashesFromAddress(string address)
+        private void ManageInputFromHardware(string character)
         {
-            const string delimiter = "://";
-            const string slash = "/";
-            const string dash = "-";
-            var sections = address.Split(delimiter);
-            var addressWithoutProtocol = sections.Length > 1 ? sections[1] : sections[0];
-            var addressWithoutSlashes = addressWithoutProtocol.Replace(slash, dash);
-            return addressWithoutSlashes;
+            const double shortcutTimeSpanSeconds = 10d;
+            switch (character)
+            {
+                case KeyboardShortcuts.PlayPauseA:
+                case KeyboardShortcuts.PlayPauseB:
+                    PlayPauseRequested.Invoke(this, new EventArgs());
+                    break;
+                case KeyboardShortcuts.Back10_Seconds:
+                    Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+                    break;
+                case KeyboardShortcuts.Forward10_Seconds:
+                    Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+                    break;
+                case KeyboardShortcuts.Restart:
+                    Position = TimeSpan.Zero;
+                    break;
+                case KeyboardShortcuts.FullScreenOn:
+                    break;
+                case KeyboardShortcuts.MuteUnmute:
+                    Volume = Volume == _one ?
+                        _zero :
+                        _one;
+                    break;
+                case KeyboardShortcuts.CaptionsOnOff:
+                    SubtitlesAreVisible = !SubtitlesAreVisible;
+                    break;
+            }
         }
 
         private async Task ShowHistory()
@@ -244,7 +321,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             {
                 var videoDataFromHistory = videosFromHistoryByName[videoFromHistory];
                 Source = videoDataFromHistory.Video.Location;
-                Time = videoDataFromHistory.Time;
+                Position = videoDataFromHistory.Time;
                 _subtitles = videoDataFromHistory.Subtitles;
             }
             else if (videoFromHistory == LocalizedStrings.ClearHistory)

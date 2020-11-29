@@ -21,7 +21,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             BindingContext = _viewModel;
         }
 
-        public override void OnKeyUp(char character) =>
+        public override void OnKeyUp(string character) =>
             _viewModel.ManageInputFromHardwareCommand.Execute(character);
 
         public override void OnKeyCommand(KeyCommand command)
@@ -68,6 +68,26 @@ namespace SrtVideoPlayer.Mobile.Pages
 
                 return false;
             });
+        }
+
+        private void MediaElement_MediaEnded(object sender, EventArgs args)
+        {
+
+        }
+
+        private void MediaElement_MediaFailed(object sender, EventArgs args)
+        {
+
+        }
+
+        private void MediaElement_MediaOpened(object sender, EventArgs args)
+        {
+
+        }
+
+        private void MediaElement_SeekCompleted(object sender, EventArgs args)
+        {
+
         }
     }
 }

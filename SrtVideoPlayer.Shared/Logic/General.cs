@@ -8,6 +8,17 @@ namespace SrtVideoPlayer.Shared.Logic
 {
     public class General
     {
+        public static string RemoveProtocolAndSlashesFromAddress(string address)
+        {
+            const string protocolDelimiter = "://";
+            const string slash = "/";
+            const string dash = "-";
+            var sections = address.Split(protocolDelimiter);
+            var addressWithoutProtocol = sections.Length > 1 ? sections[1] : sections[0];
+            var addressWithoutSlashes = addressWithoutProtocol.Replace(slash, dash);
+            return addressWithoutSlashes;
+        }
+
         public static async Task<Subtitle[]> GetSubtitlesFromContent(string content) =>
             await Task.Run(() =>
             {

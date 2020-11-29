@@ -62,7 +62,7 @@ namespace SrtVideoPlayer.Mobile.iOS.CustomRenderers
                         handled = true;
 
                     if (handled)
-                        Page?.OnKeyUp(keyCharacter);
+                        Page?.OnKeyUp(keyCharacterAsString);
                 }
             }
         }
