@@ -52,6 +52,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
             ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
+            PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
+            GoBack5_SecondsCommand = _commandFactoryService.Create(GoBack5_Seconds);
+            GoForward5_SecondsCommand = _commandFactoryService.Create(GoForward5_Seconds);
+            ExitFullScreenCommand = _commandFactoryService.Create(ExitFullScreen);
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -263,7 +267,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             {
                 case KeyboardShortcuts.PlayPauseA:
                 case KeyboardShortcuts.PlayPauseB:
-                    PlayPauseRequested.Invoke(this, new EventArgs());
+                    PlayOrPause();
                     break;
                 case KeyboardShortcuts.Back10_Seconds:
                     Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
@@ -285,6 +289,26 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     SubtitlesAreVisible = !SubtitlesAreVisible;
                     break;
             }
+        }
+
+        private void PlayOrPause() =>
+            PlayPauseRequested.Invoke(this, new EventArgs());
+
+        private void GoBack5_Seconds()
+        {
+            const double shortcutTimeSpanSeconds = 5d;
+            Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+        }
+
+        private void GoForward5_Seconds()
+        {
+            const double shortcutTimeSpanSeconds = 5d;
+            Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+        }
+
+        private void ExitFullScreen()
+        {
+            return;
         }
 
         private async Task ShowHistory()
