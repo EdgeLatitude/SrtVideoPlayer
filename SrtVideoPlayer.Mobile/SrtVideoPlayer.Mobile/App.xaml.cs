@@ -8,6 +8,7 @@ namespace SrtVideoPlayer.Mobile
     {
         public App()
         {
+            Device.SetFlags(new string[] { "MediaElement_Experimental" });
             ViewModelLocator.Initialize();
             InitializeComponent();
             MainPage = new NavigationPage(new PlayerPage());
