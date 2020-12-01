@@ -11,8 +11,8 @@
              x:Class="SrtVideoPlayer.Mobile.App">
     <Application.Resources>
         <!-- Colors !-->
-        <Color x:Key="AccentColor">#006060</Color>
-        <Color x:Key="BarBackgroundColor">#004040</Color>
+        <Color x:Key="AccentColor">#004080</Color>
+        <Color x:Key="BarBackgroundColor">#00366C</Color>
         <Color x:Key="BarForegroundColor">#FFFFFF</Color>
         <!-- Implicit styles !-->
         <Style TargetType="Button">
