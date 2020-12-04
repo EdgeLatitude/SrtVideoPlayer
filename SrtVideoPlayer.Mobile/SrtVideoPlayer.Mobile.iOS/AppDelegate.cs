@@ -19,7 +19,13 @@ namespace SrtVideoPlayer.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+
+            if (options != null
+                && options.TryGetValue(UIApplication.LaunchOptionsUrlKey, out NSObject nsObject)
+                && nsObject is NSUrl nsUrl)
+                LoadApplication(new App(nsUrl.ToString()));
+            else
+                LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
         }
