@@ -9,12 +9,20 @@ namespace SrtVideoPlayer.Mobile.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayerPage : KeyboardPage
     {
-        private readonly PlayerViewModel _viewModel;
-
         private bool _subtitleCopiedToClipboardToastIsVisible;
         private int _subtitleCopiedToClipboardToastActiveTaps;
+        private PlayerViewModel _viewModel;
 
-        public PlayerPage()
+        public PlayerPage() =>
+            SharedInitialization();
+
+        public PlayerPage(string videoUri)
+        {
+            SharedInitialization();
+            _viewModel.Source = videoUri;
+        }
+
+        private void SharedInitialization()
         {
             InitializeComponent();
             _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();

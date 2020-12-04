@@ -8,10 +8,21 @@ namespace SrtVideoPlayer.Mobile
     {
         public App()
         {
+            SharedInitialization();
+            MainPage = new NavigationPage(new PlayerPage());
+        }
+
+        public App(string videoUri)
+        {
+            SharedInitialization();
+            MainPage = new NavigationPage(new PlayerPage(videoUri));
+        }
+
+        private void SharedInitialization()
+        {
             Device.SetFlags(new string[] { "MediaElement_Experimental" });
             ViewModelLocator.Initialize();
             InitializeComponent();
-            MainPage = new NavigationPage(new PlayerPage());
         }
 
         protected override void OnStart()

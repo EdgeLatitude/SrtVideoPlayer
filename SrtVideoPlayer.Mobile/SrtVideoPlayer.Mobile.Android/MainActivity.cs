@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace SrtVideoPlayer.Mobile.Droid
 {
-    [Activity(Theme = "@style/LaunchTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.SmallestScreenSize | ConfigChanges.UiMode)]
+    [Activity(
+        Theme = "@style/LaunchTheme",
+        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.SmallestScreenSize | ConfigChanges.UiMode
+    )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         public const int PickVideoId = 1000;
@@ -38,7 +41,12 @@ namespace SrtVideoPlayer.Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             UserDialogs.Init(this);
-            LoadApplication(new App());
+
+            var data = Intent?.Data;
+            if (data == null)
+                LoadApplication(new App());
+            else
+                LoadApplication(new App(data.ToString()));
 
             Shared.Logic.Theming.Instance.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
         }

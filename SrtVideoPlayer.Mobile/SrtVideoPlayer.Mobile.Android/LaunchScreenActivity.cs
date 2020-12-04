@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace SrtVideoPlayer.Mobile.Droid
 {
-    [Activity(Label = "@string/short_app_name", Icon = "@mipmap/icon", Theme = "@style/MainTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [IntentFilter(
+        new string[] { Intent.ActionView },
+        Categories = new string[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        DataScheme = "content",
+        DataHost = "*",
+        DataMimeType = "video/*"
+    )]
+    [Activity(
+        Label = "@string/short_app_name",
+        Icon = "@mipmap/icon",
+        Theme = "@style/MainTheme.Splash",
+        MainLauncher = true,
+        NoHistory = true
+    )]
     public class SplashActivity : AppCompatActivity
     {
         private bool _mainActivityCreationStarted;
@@ -25,6 +38,9 @@ namespace SrtVideoPlayer.Mobile.Droid
             {
                 using var mainActivityIntent = new Intent(Application.Context, typeof(MainActivity));
                 mainActivityIntent.AddFlags(ActivityFlags.NoAnimation);
+                var intentData = Intent?.Data;
+                if (intentData != null)
+                    mainActivityIntent.SetData(intentData);
                 StartActivity(mainActivityIntent);
             }).Start();
             _mainActivityCreationStarted = true;
