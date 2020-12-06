@@ -250,6 +250,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Please, grant access to your media files..
+        /// </summary>
+        public static string PleaseGrantAccessToYourMediaFiles {
+            get {
+                return ResourceManager.GetString("PleaseGrantAccessToYourMediaFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Save settings.
         /// </summary>
         public static string SaveSettings {

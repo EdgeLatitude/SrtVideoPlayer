@@ -23,6 +23,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private readonly IFileDownloaderService _fileDownloaderService;
         private readonly IFilePickerService _filePickerService;
         private readonly INavigationService _navigationService;
+        private readonly IPermissionsService _permissionsService;
         private readonly IPlatformInformationService _platformInformationService;
 
         private readonly string[] _mediaSourceOptions = new string[]
@@ -41,6 +42,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             IFileDownloaderService fileDownloaderService,
             IFilePickerService filePickerService,
             INavigationService navigationService,
+            IPermissionsService permissionsService,
             IPlatformInformationService platformInformationService)
         {
             _alertsService = alertsService;
@@ -48,6 +50,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _fileDownloaderService = fileDownloaderService;
             _filePickerService = filePickerService;
             _navigationService = navigationService;
+            _permissionsService = permissionsService;
             _platformInformationService = platformInformationService;
 
             LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
@@ -151,6 +154,12 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private async Task LoadVideo()
         {
+            if (!await CheckAndRequestMediaAccessPermission())
+            {
+                await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourMediaFiles);
+                return;
+            }
+
             var videoSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.VideoSource,
                 null,
                 _mediaSourceOptions);
@@ -200,6 +209,52 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 Subtitles = subtitles
             });
         }
+
+        public async Task LoadVideoWithExistingSource(string videoSource)
+        {
+            if (!await CheckAndRequestMediaAccessPermission())
+            {
+                await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourMediaFiles);
+                return;
+            }
+
+            var video = new Video(General.RemoveProtocolAndSlashesFromAddress(videoSource), videoSource);
+
+            var subtitlesSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.SubtitlesSource,
+                LocalizedStrings.NoSubtitles,
+                _mediaSourceOptions);
+            Subtitle[] subtitles;
+            if (subtitlesSource != null
+                && _mediaSourceOptions.Contains(subtitlesSource))
+                if (subtitlesSource == LocalizedStrings.Web)
+                    subtitles = await LoadWebSubtitles();
+                else if (subtitlesSource == LocalizedStrings.LocalStorage)
+                    subtitles = await LoadLocalSubtitles();
+                else
+                    return;
+            else if (subtitlesSource == LocalizedStrings.NoSubtitles)
+                subtitles = null;
+            else
+                return;
+
+            if (subtitlesSource != LocalizedStrings.NoSubtitles
+                && subtitles == null)
+                return;
+
+            Source = video.Location;
+            Position = TimeSpan.Zero;
+            _subtitles = subtitles;
+            _ = Settings.Instance.ManageNewPlaybackAsync(new Playback
+            {
+                Video = video,
+                Time = TimeSpan.Zero,
+                Subtitles = subtitles
+            });
+        }
+
+        private async Task<bool> CheckAndRequestMediaAccessPermission() =>
+            await _permissionsService.CheckMediaAccessPermission()
+                || await _permissionsService.RequestMediaAccessPermission();
 
         private async Task<Video> LoadWebVideo()
         {

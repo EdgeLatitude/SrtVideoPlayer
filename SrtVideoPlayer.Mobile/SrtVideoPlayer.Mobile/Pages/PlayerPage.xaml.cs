@@ -19,7 +19,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         public PlayerPage(string videoUri)
         {
             SharedInitialization();
-            _viewModel.Source = videoUri;
+            _ = _viewModel.LoadVideoWithExistingSource(videoUri);
         }
 
         private void SharedInitialization()
