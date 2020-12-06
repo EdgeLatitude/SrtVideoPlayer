@@ -155,10 +155,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private async Task LoadVideo()
         {
             if (!await CheckAndRequestMediaAccessPermission())
-            {
-                await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourMediaFiles);
                 return;
-            }
 
             var videoSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.VideoSource,
                 null,
@@ -213,10 +210,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public async Task LoadVideoWithExistingSource(string videoSource)
         {
             if (!await CheckAndRequestMediaAccessPermission())
-            {
-                await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourMediaFiles);
                 return;
-            }
 
             var video = new Video(General.RemoveProtocolAndSlashesFromAddress(videoSource), videoSource);
 
@@ -252,9 +246,14 @@ namespace SrtVideoPlayer.Shared.ViewModels
             });
         }
 
-        private async Task<bool> CheckAndRequestMediaAccessPermission() =>
-            await _permissionsService.CheckMediaAccessPermission()
+        private async Task<bool> CheckAndRequestMediaAccessPermission()
+        {
+            var accessGranted = await _permissionsService.CheckMediaAccessPermission()
                 || await _permissionsService.RequestMediaAccessPermission();
+            if (!accessGranted)
+                await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourMediaFiles);
+            return accessGranted;
+        }
 
         private async Task<Video> LoadWebVideo()
         {
