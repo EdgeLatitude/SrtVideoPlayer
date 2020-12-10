@@ -108,7 +108,7 @@
     <value>Acerca de</value>
   </data>
   <data name="HistoryLength" xml:space="preserve">
-    <value>Largo del historial de resultados</value>
+    <value>Largo del historial de reproducciones</value>
   </data>
   <data name="SaveSettings" xml:space="preserve">
     <value>Guardar configuración</value>
@@ -116,11 +116,11 @@
   <data name="Notice" xml:space="preserve">
     <value>Aviso</value>
   </data>
-  <data name="DisabledResultsHistory" xml:space="preserve">
-    <value>El historial de resultados está deshabilitado.</value>
+  <data name="DisabledPlaybackHistory" xml:space="preserve">
+    <value>El historial de reproducciones está deshabilitado.</value>
   </data>
-  <data name="EmptyResultsHistory" xml:space="preserve">
-    <value>El historial de resultados está vacío.</value>
+  <data name="EmptyPlaybackHistory" xml:space="preserve">
+    <value>El historial de reproducciones está vacío.</value>
   </data>
   <data name="ClearHistory" xml:space="preserve">
     <value>Limpiar historial</value>

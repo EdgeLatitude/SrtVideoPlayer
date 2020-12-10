@@ -124,11 +124,11 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a The results history is disabled..
+        ///   Busca una cadena traducida similar a The playback history is disabled..
         /// </summary>
-        public static string DisabledResultsHistory {
+        public static string DisabledPlaybackHistory {
             get {
-                return ResourceManager.GetString("DisabledResultsHistory", resourceCulture);
+                return ResourceManager.GetString("DisabledPlaybackHistory", resourceCulture);
             }
         }
         
@@ -142,11 +142,11 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a The results history is empty..
+        ///   Busca una cadena traducida similar a The playback history is empty..
         /// </summary>
-        public static string EmptyResultsHistory {
+        public static string EmptyPlaybackHistory {
             get {
-                return ResourceManager.GetString("EmptyResultsHistory", resourceCulture);
+                return ResourceManager.GetString("EmptyPlaybackHistory", resourceCulture);
             }
         }
         
@@ -187,7 +187,7 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Results history length.
+        ///   Busca una cadena traducida similar a Playback history length.
         /// </summary>
         public static string HistoryLength {
             get {

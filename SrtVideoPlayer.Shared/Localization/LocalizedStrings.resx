@@ -108,7 +108,7 @@
     <value>About</value>
   </data>
   <data name="HistoryLength" xml:space="preserve">
-    <value>Results history length</value>
+    <value>Playback history length</value>
   </data>
   <data name="SaveSettings" xml:space="preserve">
     <value>Save settings</value>
@@ -116,11 +116,11 @@
   <data name="Notice" xml:space="preserve">
     <value>Notice</value>
   </data>
-  <data name="DisabledResultsHistory" xml:space="preserve">
-    <value>The results history is disabled.</value>
+  <data name="DisabledPlaybackHistory" xml:space="preserve">
+    <value>The playback history is disabled.</value>
   </data>
-  <data name="EmptyResultsHistory" xml:space="preserve">
-    <value>The results history is empty.</value>
+  <data name="EmptyPlaybackHistory" xml:space="preserve">
+    <value>The playback history is empty.</value>
   </data>
   <data name="ClearHistory" xml:space="preserve">
     <value>Clear history</value>

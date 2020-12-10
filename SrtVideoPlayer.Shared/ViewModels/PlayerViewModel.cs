@@ -379,7 +379,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             if (Settings.Instance.GetPlaybackHistoryLength() == 0)
             {
                 var openSettings = await _alertsService.DisplayConfirmationAsync(LocalizedStrings.Notice,
-                    LocalizedStrings.DisabledResultsHistory,
+                    LocalizedStrings.DisabledPlaybackHistory,
                     LocalizedStrings.Settings);
                 if (openSettings)
                     await NavigateToSettingsAsync();
@@ -389,7 +389,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             if (!Settings.Instance.ContainsPlaybackHistory())
             {
                 await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice,
-                    LocalizedStrings.EmptyResultsHistory);
+                    LocalizedStrings.EmptyPlaybackHistory);
                 return;
             }
 
