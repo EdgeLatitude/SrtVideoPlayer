@@ -58,15 +58,12 @@
         <Grid>
             <MediaElement
                 x:Name="Player"
-                HorizontalOptions="Center"
                 KeepScreenOn="True"
                 MediaEnded="Player_MediaEnded"
                 MediaFailed="Player_MediaFailed"
                 MediaOpened="Player_MediaOpened"
                 SeekCompleted="Player_SeekCompleted"
-                ShowsPlaybackControls="True"
                 Source="{Binding Source}"
-                VerticalOptions="Center"
                 Volume="{Binding Volume}" />
         </Grid>
         <ContentView

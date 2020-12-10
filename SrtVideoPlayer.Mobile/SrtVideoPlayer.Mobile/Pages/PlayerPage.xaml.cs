@@ -9,6 +9,8 @@ namespace SrtVideoPlayer.Mobile.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayerPage : KeyboardPage
     {
+        private readonly string _videoUri;
+
         private bool _subtitleCopiedToClipboardToastIsVisible;
         private int _subtitleCopiedToClipboardToastActiveTaps;
         private PlayerViewModel _viewModel;
@@ -19,7 +21,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         public PlayerPage(string videoUri)
         {
             SharedInitialization();
-            _ = _viewModel.LoadVideoWithExistingSource(videoUri);
+            _videoUri = videoUri;
         }
 
         private void SharedInitialization()
@@ -50,6 +52,13 @@ namespace SrtVideoPlayer.Mobile.Pages
                     _viewModel.ExitFullScreenCommand.Execute(null);
                     break;
             }
+        }
+
+        protected override async void OnAppearing()
+        {
+            if (!string.IsNullOrWhiteSpace(_videoUri))
+                await _viewModel.LoadVideoWithExistingSource(_videoUri);
+            base.OnAppearing();
         }
 
         private void SubtitleLabel_Tapped(object sender, EventArgs args) =>
