@@ -89,6 +89,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     return;
                 _position = value;
                 OnPropertyChanged();
+
+                if (SubtitlesAreVisible &&
+                    _subtitles != null)
+                    FindSubtitle();
             }
         }
 
@@ -106,9 +110,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private string _subtitle;
+        private Subtitle _subtitle;
 
-        public string Subtitle
+        public Subtitle Subtitle
         {
             get => _subtitle;
             set
@@ -364,6 +368,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
         {
             return;
         }
+
+        private void FindSubtitle() =>
+            Subtitle = _subtitles.LastOrDefault(subtitle =>
+                subtitle.SubtitleSpan.Start <= Position
+                    && subtitle.SubtitleSpan.End >= Position);
 
         private async Task ShowHistory()
         {
