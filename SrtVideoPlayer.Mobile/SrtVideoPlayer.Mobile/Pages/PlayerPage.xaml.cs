@@ -11,6 +11,7 @@ namespace SrtVideoPlayer.Mobile.Pages
     {
         private readonly string _videoUri;
 
+        private bool _firstAppearance = true;
         private bool _subtitleCopiedToClipboardToastIsVisible;
         private int _subtitleCopiedToClipboardToastActiveTaps;
         private PlayerViewModel _viewModel;
@@ -56,8 +57,10 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         protected override async void OnAppearing()
         {
-            if (!string.IsNullOrWhiteSpace(_videoUri))
+            if (_firstAppearance
+                && !string.IsNullOrWhiteSpace(_videoUri))
                 await _viewModel.LoadVideoWithExistingSource(_videoUri);
+            _firstAppearance = false;
             base.OnAppearing();
         }
 
