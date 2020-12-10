@@ -44,6 +44,8 @@
 		<string>en</string>
 		<string>es</string>
 	</array>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>This app requires access to the library to be able to display videos and select subtitles.</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
