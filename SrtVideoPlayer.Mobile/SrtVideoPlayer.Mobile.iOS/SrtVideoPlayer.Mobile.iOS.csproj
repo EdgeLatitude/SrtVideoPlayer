@@ -185,6 +185,24 @@
       <Name>SrtVideoPlayer.Mobile</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\close_fullscreen.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\not_started.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\open_in_full.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pause.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\play_arrow.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\stop.svg" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties TriggeredFromHotReload="False" />
