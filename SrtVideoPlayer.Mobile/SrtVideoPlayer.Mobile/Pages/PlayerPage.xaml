@@ -3,6 +3,7 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                       xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                        xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
                        xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
                        xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
@@ -56,15 +57,36 @@
     </controls:KeyboardPage.ToolbarItems>
     <Grid>
         <Grid>
-            <MediaElement
-                x:Name="Player"
-                KeepScreenOn="True"
-                MediaEnded="Player_MediaEnded"
-                MediaFailed="Player_MediaFailed"
-                MediaOpened="Player_MediaOpened"
-                SeekCompleted="Player_SeekCompleted"
-                Source="{Binding Source}"
-                Volume="{Binding Volume}" />
+            <Grid>
+                <MediaElement
+                    x:Name="Player"
+                    KeepScreenOn="True"
+                    MediaEnded="Player_MediaEnded"
+                    MediaFailed="Player_MediaFailed"
+                    MediaOpened="Player_MediaOpened"
+                    SeekCompleted="Player_SeekCompleted"
+                    Source="{Binding Source}"
+                    Volume="{Binding Volume}" />
+                <Frame
+                    HeightRequest="96"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding MediaLoaded, Converter={StaticResource negateBooleanConverter}}"
+                    Style="{StaticResource ContainerFrameStyle}"
+                    VerticalOptions="Center"
+                    WidthRequest="96">
+                    <ffimageloadingsvg:SvgCachedImage
+                        HeightRequest="64"
+                        HorizontalOptions="Center"
+                        Source="not_started.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="64">
+                        <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding LoadVideoCommand}" />
+                        </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                    </ffimageloadingsvg:SvgCachedImage>
+                </Frame>
+            </Grid>
         </Grid>
         <ContentView
             x:Name="SubtitleCopiedToClipboardToast"

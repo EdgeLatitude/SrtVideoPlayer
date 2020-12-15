@@ -75,6 +75,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     return;
                 _source = value;
                 OnPropertyChanged();
+
+                MediaLoaded = !string.IsNullOrWhiteSpace(value);
             }
         }
 
@@ -120,6 +122,20 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 if (_subtitle == value)
                     return;
                 _subtitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _mediaLoaded;
+
+        public bool MediaLoaded
+        {
+            get => _mediaLoaded;
+            set
+            {
+                if (_mediaLoaded == value)
+                    return;
+                _mediaLoaded = value;
                 OnPropertyChanged();
             }
         }
