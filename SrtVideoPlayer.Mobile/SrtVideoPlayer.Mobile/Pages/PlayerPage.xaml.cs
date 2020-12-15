@@ -97,9 +97,11 @@ namespace SrtVideoPlayer.Mobile.Pages
             {
                 case MediaElementState.Playing:
                     Player.Pause();
+                    PlayOrPauseButton.Source = "play_arrow.svg";
                     break;
                 case MediaElementState.Paused:
                     Player.Play();
+                    PlayOrPauseButton.Source = "pause.svg";
                     break;
             }
         }

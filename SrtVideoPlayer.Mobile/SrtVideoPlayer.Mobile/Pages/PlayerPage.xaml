@@ -87,6 +87,28 @@
                     </ffimageloadingsvg:SvgCachedImage>
                 </Frame>
             </Grid>
+            <Frame
+                HeightRequest="48"
+                IsVisible="{Binding MediaLoaded}"
+                Style="{StaticResource ContainerFrameStyle}"
+                VerticalOptions="End">
+                <StackLayout
+                    Orientation="Horizontal"
+                    Padding="10,0"
+                    Spacing="5">
+                    <ffimageloadingsvg:SvgCachedImage
+                        x:Name="PlayOrPauseButton"
+                        HeightRequest="36"
+                        Source="pause.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="36">
+                        <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding PlayOrPauseCommand}" />
+                        </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                    </ffimageloadingsvg:SvgCachedImage>
+                </StackLayout>
+            </Frame>
         </Grid>
         <ContentView
             x:Name="SubtitleCopiedToClipboardToast"
