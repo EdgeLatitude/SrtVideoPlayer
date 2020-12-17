@@ -9,4 +9,10 @@
     <Color x:Key="iOSTextColor">#FFFFFF</Color>
     <Color x:Key="AndroidFieldBackgroundColor">#1E1E1E</Color>
     <Color x:Key="iOSFieldBackgroundColor">#2C2C2E</Color>
+    <x:String x:Key="CloseFullscreenImage">close_fullscreen_black.svg</x:String>
+    <x:String x:Key="NotStartedImage">not_started_black.svg</x:String>
+    <x:String x:Key="OpenFullscreenImage">open_in_full_black.svg</x:String>
+    <x:String x:Key="PauseImage">pause_black.svg</x:String>
+    <x:String x:Key="PlayImage">play_arrow_black.svg</x:String>
+    <x:String x:Key="StopImage">stop_black.svg</x:String>
 </ResourceDictionary>

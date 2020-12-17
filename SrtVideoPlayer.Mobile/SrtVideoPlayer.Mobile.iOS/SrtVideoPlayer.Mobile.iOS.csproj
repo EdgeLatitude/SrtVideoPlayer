@@ -186,22 +186,40 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\close_fullscreen.svg" />
+    <BundleResource Include="Resources\close_fullscreen_black.svg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\not_started.svg" />
+    <BundleResource Include="Resources\not_started_black.svg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\open_in_full.svg" />
+    <BundleResource Include="Resources\open_in_full_black.svg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\pause.svg" />
+    <BundleResource Include="Resources\pause_black.svg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\play_arrow.svg" />
+    <BundleResource Include="Resources\play_arrow_black.svg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\stop.svg" />
+    <BundleResource Include="Resources\stop_black.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\close_fullscreen_white.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\not_started_white.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\open_in_full_white.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pause_white.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\play_arrow_white.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\stop_white.svg" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

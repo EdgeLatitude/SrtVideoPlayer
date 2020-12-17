@@ -60,7 +60,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             StopCommand = _commandFactoryService.Create(Stop);
             GoBack5_SecondsCommand = _commandFactoryService.Create(GoBack5_Seconds);
             GoForward5_SecondsCommand = _commandFactoryService.Create(GoForward5_Seconds);
-            ExitFullScreenCommand = _commandFactoryService.Create(ExitFullScreen);
+            ExitFullscreenCommand = _commandFactoryService.Create(ExitFullscreen);
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -168,7 +168,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public ICommand GoForward5_SecondsCommand { get; }
 
-        public ICommand ExitFullScreenCommand { get; }
+        public ICommand ExitFullscreenCommand { get; }
 
         public ICommand ShowHistoryCommand { get; }
 
@@ -356,7 +356,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 case KeyboardShortcuts.Restart:
                     Position = TimeSpan.Zero;
                     break;
-                case KeyboardShortcuts.FullScreenOn:
+                case KeyboardShortcuts.FullscreenOn:
                     break;
                 case KeyboardShortcuts.MuteUnmute:
                     Volume = Volume == _one ?
@@ -390,7 +390,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
         }
 
-        private void ExitFullScreen()
+        private void ExitFullscreen()
         {
             return;
         }

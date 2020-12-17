@@ -78,7 +78,7 @@
                     <ffimageloadingsvg:SvgCachedImage
                         HeightRequest="64"
                         HorizontalOptions="Center"
-                        Source="not_started.svg"
+                        Source="{DynamicResource NotStartedImage}"
                         VerticalOptions="Center"
                         WidthRequest="64">
                         <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
@@ -100,7 +100,7 @@
                     <ffimageloadingsvg:SvgCachedImage
                         x:Name="PlayOrPauseButton"
                         HeightRequest="36"
-                        Source="pause.svg"
+                        Source="{DynamicResource PauseImage}"
                         VerticalOptions="Center"
                         WidthRequest="36">
                         <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
@@ -110,7 +110,7 @@
                     </ffimageloadingsvg:SvgCachedImage>
                     <ffimageloadingsvg:SvgCachedImage
                         HeightRequest="24"
-                        Source="stop.svg"
+                        Source="{DynamicResource StopImage}"
                         VerticalOptions="Center"
                         WidthRequest="24">
                         <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>

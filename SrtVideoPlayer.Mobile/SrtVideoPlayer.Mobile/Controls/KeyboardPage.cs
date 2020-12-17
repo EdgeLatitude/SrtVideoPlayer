@@ -13,6 +13,6 @@ namespace SrtVideoPlayer.Mobile.Controls
         PlayPause,
         Back5_Seconds,
         Forward5_Seconds,
-        FullScreenOff
+        FullscreenOff
     }
 }

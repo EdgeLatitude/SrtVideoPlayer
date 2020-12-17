@@ -50,8 +50,8 @@ namespace SrtVideoPlayer.Mobile.Pages
                 case KeyCommand.Forward5_Seconds:
                     _viewModel.GoForward5_SecondsCommand.Execute(null);
                     break;
-                case KeyCommand.FullScreenOff:
-                    _viewModel.ExitFullScreenCommand.Execute(null);
+                case KeyCommand.FullscreenOff:
+                    _viewModel.ExitFullscreenCommand.Execute(null);
                     break;
             }
         }
@@ -98,11 +98,11 @@ namespace SrtVideoPlayer.Mobile.Pages
             {
                 case MediaElementState.Playing:
                     Player.Pause();
-                    PlayOrPauseButton.Source = "play_arrow.svg";
+                    PlayOrPauseButton.Source = (string)Application.Current.Resources["PlayImage"];
                     break;
                 case MediaElementState.Paused:
                     Player.Play();
-                    PlayOrPauseButton.Source = "pause.svg";
+                    PlayOrPauseButton.Source = (string)Application.Current.Resources["PauseImage"];
                     break;
             }
         }
