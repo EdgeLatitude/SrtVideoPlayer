@@ -34,6 +34,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public event EventHandler PlayPauseRequested;
         public event EventHandler StopRequested;
+        public event EventHandler FullscreenOnOffRequested;
+        public event EventHandler FullscreenOnRequested;
+        public event EventHandler FullscreenOffRequested;
 
         private Subtitle[] _subtitles;
 
@@ -60,7 +63,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
             StopCommand = _commandFactoryService.Create(Stop);
             GoBack5_SecondsCommand = _commandFactoryService.Create(GoBack5_Seconds);
             GoForward5_SecondsCommand = _commandFactoryService.Create(GoForward5_Seconds);
-            ExitFullscreenCommand = _commandFactoryService.Create(ExitFullscreen);
+            FullscreenOnOffCommand = _commandFactoryService.Create(FullscreenOnOff);
+            FullscreenOnCommand = _commandFactoryService.Create(FullscreenOn);
+            FullscreenOffCommand = _commandFactoryService.Create(FullscreenOff);
+            MuteUnmuteCommand = _commandFactoryService.Create(MuteUnmute);
+            CaptionsOnOffCommand = _commandFactoryService.Create(CaptionsOnOff);
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -168,7 +175,15 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public ICommand GoForward5_SecondsCommand { get; }
 
-        public ICommand ExitFullscreenCommand { get; }
+        public ICommand FullscreenOnOffCommand { get; }
+
+        public ICommand FullscreenOnCommand { get; }
+
+        public ICommand FullscreenOffCommand { get; }
+
+        public ICommand MuteUnmuteCommand { get; }
+
+        public ICommand CaptionsOnOffCommand { get; }
 
         public ICommand ShowHistoryCommand { get; }
 
@@ -357,14 +372,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     Position = TimeSpan.Zero;
                     break;
                 case KeyboardShortcuts.FullscreenOn:
+                    FullscreenOn();
                     break;
                 case KeyboardShortcuts.MuteUnmute:
-                    Volume = Volume == _one ?
-                        _zero :
-                        _one;
+                    MuteUnmute();
                     break;
                 case KeyboardShortcuts.CaptionsOnOff:
-                    SubtitlesAreVisible = !SubtitlesAreVisible;
+                    CaptionsOnOff();
                     break;
             }
         }
@@ -390,10 +404,22 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
         }
 
-        private void ExitFullscreen()
-        {
-            return;
-        }
+        private void FullscreenOnOff() =>
+            FullscreenOnOffRequested.Invoke(this, new EventArgs());
+
+        private void FullscreenOn() =>
+            FullscreenOnRequested.Invoke(this, new EventArgs());
+
+        private void FullscreenOff() =>
+            FullscreenOffRequested.Invoke(this, new EventArgs());
+
+        private void MuteUnmute() =>
+            Volume = Volume == _one ?
+                _zero :
+                _one;
+
+        private void CaptionsOnOff() =>
+            SubtitlesAreVisible = !SubtitlesAreVisible;
 
         private void FindSubtitle() =>
             Subtitle = _subtitles.LastOrDefault(subtitle =>

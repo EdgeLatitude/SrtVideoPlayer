@@ -51,7 +51,7 @@ namespace SrtVideoPlayer.Mobile.Pages
                     _viewModel.GoForward5_SecondsCommand.Execute(null);
                     break;
                 case KeyCommand.FullscreenOff:
-                    _viewModel.ExitFullscreenCommand.Execute(null);
+                    _viewModel.FullscreenOffCommand.Execute(null);
                     break;
             }
         }
