@@ -4,8 +4,8 @@
     {
         public const string PlayPauseA = " ";
         public const string PlayPauseB = "k";
-        public const string Back10_Seconds = "j";
-        public const string Forward10_Seconds = "l";
+        public const string GoBack10_Seconds = "j";
+        public const string GoForward10_Seconds = "l";
         public const string Restart = "0";
         public const string FullscreenOn = "f";
         public const string MuteUnmute = "m";

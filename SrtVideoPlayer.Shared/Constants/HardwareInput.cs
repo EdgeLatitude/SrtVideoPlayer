@@ -6,8 +6,8 @@
         {
             KeyboardShortcuts.PlayPauseA,
             KeyboardShortcuts.PlayPauseB,
-            KeyboardShortcuts.Back10_Seconds,
-            KeyboardShortcuts.Forward10_Seconds,
+            KeyboardShortcuts.GoBack10_Seconds,
+            KeyboardShortcuts.GoForward10_Seconds,
             KeyboardShortcuts.Restart,
             KeyboardShortcuts.FullscreenOn,
             KeyboardShortcuts.MuteUnmute,
