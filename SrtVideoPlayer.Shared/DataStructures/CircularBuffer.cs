@@ -5,40 +5,44 @@ namespace SrtVideoPlayer.Shared.DataStructures
 {
     class CircularBuffer<T> : IEnumerable<T>
     {
-        public readonly int Capacity;
+        public readonly int _capacity;
 
-        private readonly Queue<T> Queue = new Queue<T>();
+        private readonly Queue<T> _queue = new Queue<T>();
 
         public CircularBuffer(int capacity)
         {
-            Capacity = capacity;
+            _capacity = capacity;
         }
 
         public CircularBuffer(int capacity, IEnumerable<T> source)
         {
-            Capacity = capacity;
+            _capacity = capacity;
             foreach (var item in source)
-                Write(item);
+                Enqueue(item);
         }
 
-        public bool IsEmpty => Queue.Count == 0;
+        public int Count => _queue.Count;
 
-        public bool IsFull => Queue.Count == Capacity;
+        public bool IsEmpty => _queue.Count == 0;
 
-        public void Write(T value)
+        public bool IsFull => _queue.Count == _capacity;
+
+        public void Enqueue(T value)
         {
-            Queue.Enqueue(value);
-            if (Queue.Count > Capacity)
-                Queue.Dequeue();
+            _queue.Enqueue(value);
+            if (_queue.Count > _capacity)
+                _queue.Dequeue();
         }
 
-        public T Read() => Queue.Dequeue();
+        public T Dequeue() => _queue.Dequeue();
+
+        public T Peek() => _queue.Peek();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (var item in Queue)
+            foreach (var item in _queue)
                 yield return item;
         }
     }

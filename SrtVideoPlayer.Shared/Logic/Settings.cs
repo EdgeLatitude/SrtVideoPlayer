@@ -6,6 +6,7 @@ using SrtVideoPlayer.Shared.Models.Theming;
 using SrtVideoPlayer.Shared.PlatformServices;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SrtVideoPlayer.Shared.Logic
@@ -53,7 +54,22 @@ namespace SrtVideoPlayer.Shared.Logic
         {
             var playbackHistory = new CircularBuffer<Playback>(GetPlaybackHistoryLength(),
                 ContainsPlaybackHistory() ? GetPlaybackHistory() : new List<Playback>());
-            playbackHistory.Write(playback);
+
+            var playbackWithTheSameVideoName = playbackHistory.FirstOrDefault(innerPlayback => innerPlayback.Video.Name == playback.Video.Name);
+            if (playbackWithTheSameVideoName != null)
+            {
+                var newPlaybackHistory = new CircularBuffer<Playback>(GetPlaybackHistoryLength());
+                while (playbackHistory.Any())
+                    if (playbackHistory.Peek() != playbackWithTheSameVideoName)
+                        newPlaybackHistory.Enqueue(playbackHistory.Dequeue());
+                    else
+                        playbackHistory.Dequeue();
+                newPlaybackHistory.Enqueue(playbackWithTheSameVideoName);
+                playbackHistory = newPlaybackHistory;
+            }
+            else
+                playbackHistory.Enqueue(playback);
+
             SetPlaybackHistory(new CircularBuffer<Playback>(GetPlaybackHistoryLength(), playbackHistory));
         }
 
