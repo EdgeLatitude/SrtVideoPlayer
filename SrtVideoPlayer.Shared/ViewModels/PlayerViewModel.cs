@@ -33,6 +33,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         };
 
         public event EventHandler PlayPauseRequested;
+        public event EventHandler StopRequested;
 
         private Subtitle[] _subtitles;
 
@@ -56,6 +57,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
             ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
             PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
+            StopCommand = _commandFactoryService.Create(Stop);
             GoBack5_SecondsCommand = _commandFactoryService.Create(GoBack5_Seconds);
             GoForward5_SecondsCommand = _commandFactoryService.Create(GoForward5_Seconds);
             ExitFullScreenCommand = _commandFactoryService.Create(ExitFullScreen);
@@ -159,6 +161,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public ICommand ManageInputFromHardwareCommand { get; }
 
         public ICommand PlayOrPauseCommand { get; }
+
+        public ICommand StopCommand { get; }
 
         public ICommand GoBack5_SecondsCommand { get; }
 
@@ -367,6 +371,12 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private void PlayOrPause() =>
             PlayPauseRequested.Invoke(this, new EventArgs());
+
+        private void Stop()
+        {
+            StopRequested.Invoke(this, new EventArgs());
+            Source = null;
+        }
 
         private void GoBack5_Seconds()
         {

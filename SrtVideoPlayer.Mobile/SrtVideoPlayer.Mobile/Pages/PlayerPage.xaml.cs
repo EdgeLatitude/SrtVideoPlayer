@@ -31,6 +31,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();
             BindingContext = _viewModel;
             _viewModel.PlayPauseRequested += Player_PlayPauseRequested;
+            _viewModel.StopRequested += Player_StopRequested;
         }
 
         public override void OnKeyUp(string character) =>
@@ -105,6 +106,9 @@ namespace SrtVideoPlayer.Mobile.Pages
                     break;
             }
         }
+
+        private void Player_StopRequested(object sender, EventArgs args) =>
+            Player.Stop();
 
         private void Player_MediaEnded(object sender, EventArgs args)
         {

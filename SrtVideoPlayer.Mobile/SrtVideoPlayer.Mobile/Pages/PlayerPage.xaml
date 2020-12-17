@@ -60,6 +60,7 @@
             <Grid>
                 <MediaElement
                     x:Name="Player"
+                    IsVisible="{Binding MediaLoaded}"
                     KeepScreenOn="True"
                     MediaEnded="Player_MediaEnded"
                     MediaFailed="Player_MediaFailed"
@@ -95,7 +96,7 @@
                 <StackLayout
                     Orientation="Horizontal"
                     Padding="10,0"
-                    Spacing="5">
+                    Spacing="10">
                     <ffimageloadingsvg:SvgCachedImage
                         x:Name="PlayOrPauseButton"
                         HeightRequest="36"
@@ -105,6 +106,16 @@
                         <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding PlayOrPauseCommand}" />
+                        </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                    </ffimageloadingsvg:SvgCachedImage>
+                    <ffimageloadingsvg:SvgCachedImage
+                        HeightRequest="24"
+                        Source="stop.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="24">
+                        <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding StopCommand}" />
                         </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
                     </ffimageloadingsvg:SvgCachedImage>
                 </StackLayout>
