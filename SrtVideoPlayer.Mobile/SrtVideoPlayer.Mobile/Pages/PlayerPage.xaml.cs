@@ -60,7 +60,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         {
             if (_firstAppearance
                 && !string.IsNullOrWhiteSpace(_videoUri))
-                await _viewModel.LoadVideoWithExistingSource(_videoUri);
+                await _viewModel.LoadVideo(_videoUri);
             _firstAppearance = false;
             base.OnAppearing();
         }

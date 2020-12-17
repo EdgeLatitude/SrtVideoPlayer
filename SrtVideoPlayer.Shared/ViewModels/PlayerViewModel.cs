@@ -200,67 +200,32 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public ICommand ShowAboutCommand { get; }
 
-        private async Task LoadVideo()
+        public async Task LoadVideo(string videoUri = null)
         {
             if (!await CheckAndRequestMediaAccessPermission())
                 return;
 
-            var videoSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.VideoSource,
-                null,
-                _mediaSourceOptions);
             Video video;
-            if (videoSource != null
-                && _mediaSourceOptions.Contains(videoSource))
-                if (videoSource == LocalizedStrings.Web)
-                    video = await LoadWebVideo();
-                else if (videoSource == LocalizedStrings.LocalStorage)
-                    video = await LoadLocalVideo();
-                else
-                    return;
-            else
-                return;
-
-            if (video == null)
-                return;
-
-            var subtitlesSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.SubtitlesSource,
-                LocalizedStrings.NoSubtitles,
-                _mediaSourceOptions);
-            Subtitle[] subtitles;
-            if (subtitlesSource != null
-                && _mediaSourceOptions.Contains(subtitlesSource))
-                if (subtitlesSource == LocalizedStrings.Web)
-                    subtitles = await LoadWebSubtitles();
-                else if (subtitlesSource == LocalizedStrings.LocalStorage)
-                    subtitles = await LoadLocalSubtitles();
-                else
-                    return;
-            else if (subtitlesSource == LocalizedStrings.NoSubtitles)
-                subtitles = null;
-            else
-                return;
-
-            if (subtitlesSource != LocalizedStrings.NoSubtitles
-                && subtitles == null)
-                return;
-
-            Source = video.Location;
-            Position = TimeSpan.Zero;
-            _subtitles = subtitles;
-            _ = Settings.Instance.ManageNewPlaybackAsync(new Playback
+            if (string.IsNullOrWhiteSpace(videoUri))
             {
-                Video = video,
-                Time = TimeSpan.Zero,
-                Subtitles = subtitles
-            });
-        }
-
-        public async Task LoadVideoWithExistingSource(string videoSource)
-        {
-            if (!await CheckAndRequestMediaAccessPermission())
-                return;
-
-            var video = new Video(General.RemoveProtocolAndSlashesFromAddress(videoSource), videoSource);
+                var videoSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.VideoSource,
+                    null,
+                    _mediaSourceOptions);
+                if (videoSource != null
+                    && _mediaSourceOptions.Contains(videoSource))
+                    if (videoSource == LocalizedStrings.Web)
+                        video = await LoadWebVideo();
+                    else if (videoSource == LocalizedStrings.LocalStorage)
+                        video = await LoadLocalVideo();
+                    else
+                        return;
+                else
+                    return;
+                if (video == null)
+                    return;
+            }
+            else
+                video = new Video(General.RemoveProtocolAndSlashesFromAddress(videoUri), videoUri);
 
             var subtitlesSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.SubtitlesSource,
                 LocalizedStrings.NoSubtitles,
