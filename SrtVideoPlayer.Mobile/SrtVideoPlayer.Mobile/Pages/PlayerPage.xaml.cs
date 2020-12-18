@@ -14,6 +14,8 @@ namespace SrtVideoPlayer.Mobile.Pages
         private bool _firstAppearance = true;
         private bool _subtitleCopiedToClipboardToastIsVisible;
         private int _subtitleCopiedToClipboardToastActiveTaps;
+        private bool _playbackControlsAreVisible;
+        private int _playbackControlsActiveTaps;
         private PlayerViewModel _viewModel;
 
         public PlayerPage() =>
@@ -92,6 +94,38 @@ namespace SrtVideoPlayer.Mobile.Pages
             });
         }
 
+        private void Player_Tapped(object sender, EventArgs args) =>
+            PlaybackControlsAnimation();
+
+        private void PlaybackControls_Tapped(object sender, EventArgs args) =>
+            PlaybackControlsAnimation();
+
+        private void PlaybackControlsAnimation()
+        {
+            if (!_playbackControlsAreVisible)
+            {
+                PlaybackControls.FadeTo(0.75);
+                PlaybackControls.InputTransparent = false;
+                _playbackControlsAreVisible = true;
+            }
+
+            _playbackControlsActiveTaps++;
+
+            Device.StartTimer(TimeSpan.FromSeconds(3.75), () =>
+            {
+                _playbackControlsActiveTaps--;
+
+                if (_playbackControlsActiveTaps == 0)
+                {
+                    PlaybackControls.FadeTo(0);
+                    PlaybackControls.InputTransparent = true;
+                    _playbackControlsAreVisible = false;
+                }
+
+                return false;
+            });
+        }
+
         private void Player_PlayPauseRequested(object sender, EventArgs args)
         {
             switch (Player.CurrentState)
@@ -120,10 +154,8 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         }
 
-        private void Player_MediaOpened(object sender, EventArgs args)
-        {
-
-        }
+        private void Player_MediaOpened(object sender, EventArgs args) =>
+            PlaybackControlsAnimation();
 
         private void Player_SeekCompleted(object sender, EventArgs args)
         {

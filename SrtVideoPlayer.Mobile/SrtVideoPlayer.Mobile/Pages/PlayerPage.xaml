@@ -58,16 +58,23 @@
     <Grid>
         <Grid>
             <Grid>
-                <MediaElement
-                    x:Name="Player"
-                    IsVisible="{Binding MediaLoaded}"
-                    KeepScreenOn="True"
-                    MediaEnded="Player_MediaEnded"
-                    MediaFailed="Player_MediaFailed"
-                    MediaOpened="Player_MediaOpened"
-                    SeekCompleted="Player_SeekCompleted"
-                    Source="{Binding Source}"
-                    Volume="{Binding Volume}" />
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="Player_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <MediaElement
+                        x:Name="Player"
+                        InputTransparent="True"
+                        IsVisible="{Binding MediaLoaded}"
+                        KeepScreenOn="True"
+                        MediaEnded="Player_MediaEnded"
+                        MediaFailed="Player_MediaFailed"
+                        MediaOpened="Player_MediaOpened"
+                        SeekCompleted="Player_SeekCompleted"
+                        Source="{Binding Source}"
+                        Volume="{Binding Volume}" />
+                </Grid>
                 <Frame
                     HeightRequest="96"
                     HorizontalOptions="Center"
@@ -89,14 +96,20 @@
                 </Frame>
             </Grid>
             <Frame
+                x:Name="PlaybackControls"
                 HeightRequest="48"
-                IsVisible="{Binding MediaLoaded}"
+                InputTransparent="True"
+                Opacity="0"
                 Style="{StaticResource ContainerFrameStyle}"
                 VerticalOptions="End">
                 <StackLayout
                     Orientation="Horizontal"
                     Padding="10,0"
                     Spacing="10">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="PlaybackControls_Tapped" />
+                    </StackLayout.GestureRecognizers>
                     <ffimageloadingsvg:SvgCachedImage
                         x:Name="PlayOrPauseButton"
                         HeightRequest="36"
@@ -105,7 +118,8 @@
                         WidthRequest="36">
                         <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
                             <TapGestureRecognizer
-                                Command="{Binding PlayOrPauseCommand}" />
+                                Command="{Binding PlayOrPauseCommand}"
+                                Tapped="PlaybackControls_Tapped" />
                         </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
                     </ffimageloadingsvg:SvgCachedImage>
                     <ffimageloadingsvg:SvgCachedImage
@@ -115,7 +129,8 @@
                         WidthRequest="24">
                         <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
                             <TapGestureRecognizer
-                                Command="{Binding StopCommand}" />
+                                Command="{Binding StopCommand}"
+                                Tapped="PlaybackControls_Tapped" />
                         </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
                     </ffimageloadingsvg:SvgCachedImage>
                 </StackLayout>
