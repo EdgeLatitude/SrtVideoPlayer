@@ -213,7 +213,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 if (_offset == value)
                     return;
                 if (!string.IsNullOrEmpty(value)
-                    && !value.All(c => char.IsNumber(c)))
+                    && !int.TryParse(value, out var _))
                 {
                     Offset = _offset;
                     OnPropertyChanged();
