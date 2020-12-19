@@ -197,4 +197,13 @@
   <data name="PleaseGrantAccessToYourMediaFiles" xml:space="preserve">
     <value>Por favor, concede acceso a tus archivos multimedia.</value>
   </data>
+  <data name="White" xml:space="preserve">
+    <value>Blanco</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Amarillo</value>
+  </data>
+  <data name="Cyan" xml:space="preserve">
+    <value>Cian</value>
+  </data>
 </root>

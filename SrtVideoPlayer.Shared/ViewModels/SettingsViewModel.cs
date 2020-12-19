@@ -22,11 +22,20 @@ namespace SrtVideoPlayer.Shared.ViewModels
             { LocalizedStrings.Dark, Theme.Dark }
         };
 
+        private readonly Dictionary<string, string> _subtitleColorsDictionary = new Dictionary<string, string>
+        {
+            { LocalizedStrings.White, Colors.White },
+            { LocalizedStrings.Yellow, Colors.Yellow },
+            { LocalizedStrings.Cyan, Colors.Cyan }
+        };
+
         private bool _loaded;
 
         private int _currentHistoryLength;
 
         private Theme? _currentTheme;
+
+        private string _currentSubtitleColor;
 
         public SettingsViewModel(
             ICommandFactoryService commandFactoryService,
@@ -35,8 +44,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _commandFactoryService = commandFactoryService;
             _uiThreadService = uiThreadService;
 
-            #region History settings
             SaveSettingsCommand = _commandFactoryService.Create(() => SaveSettings(), CanExecuteSaveSettings);
+
+            #region History settings
             _currentHistoryLength = Settings.Instance.GetPlaybackHistoryLength();
             HistoryLength = _currentHistoryLength.ToString();
             #endregion History settings
@@ -53,9 +63,19 @@ namespace SrtVideoPlayer.Shared.ViewModels
             {
                 Themes = _themesDictionary.Keys.ToArray();
                 SelectedTheme = _themesDictionary.FirstOrDefault(pair => pair.Value == _currentTheme).Key;
-                _loaded = true;
             });
             #endregion Theme settings
+
+            #region Subtitle color settings
+            _currentSubtitleColor = Settings.Instance.GetSubtitleColorLength();
+            _uiThreadService.ExecuteOnUiThread(() =>
+            {
+                SubtitleColors = _subtitleColorsDictionary.Keys.ToArray();
+                SelectedSubtitleColor = _subtitleColorsDictionary.FirstOrDefault(pair => pair.Value == _currentSubtitleColor).Key;
+            });
+            #endregion Subtitle color settings
+
+            _uiThreadService.ExecuteOnUiThread(() => _loaded = true);
         }
 
         private string _historyLength;
@@ -124,6 +144,79 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
+        private string[] _subtitleColors;
+
+        public string[] SubtitleColors
+        {
+            get => _subtitleColors;
+            private set
+            {
+                if (_subtitleColors == value)
+                    return;
+                _subtitleColors = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _selectedSubtitleColor;
+
+        public string SelectedSubtitleColor
+        {
+            get => _selectedSubtitleColor;
+            set
+            {
+                if (_selectedSubtitleColor == value)
+                    return;
+                _selectedSubtitleColor = value;
+                SettingsChanged = true;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _fontSize;
+
+        public string FontSize
+        {
+            get => _fontSize;
+            set
+            {
+                if (_fontSize == value)
+                    return;
+                if (!string.IsNullOrEmpty(value)
+                    && !value.All(c => char.IsNumber(c)))
+                {
+                    FontSize = _fontSize;
+                    OnPropertyChanged();
+                    return;
+                }
+                _fontSize = value;
+                SettingsChanged = true;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _offset;
+
+        public string Offset
+        {
+            get => _offset;
+            set
+            {
+                if (_offset == value)
+                    return;
+                if (!string.IsNullOrEmpty(value)
+                    && !value.All(c => char.IsNumber(c)))
+                {
+                    Offset = _offset;
+                    OnPropertyChanged();
+                    return;
+                }
+                _offset = value;
+                SettingsChanged = true;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _settingsChanged;
 
         public bool SettingsChanged
@@ -142,7 +235,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public bool StyleSectionIsVisible => DeviceSupportsManualDarkMode;
 
-        public ICommand SaveSettingsCommand { get; private set; }
+        public ICommand SaveSettingsCommand { get; }
 
         private void SaveSettings()
         {
