@@ -13,7 +13,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
     {
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IUiThreadService _uiThreadService;
-
         private readonly bool _deviceSupportsAutomaticDarkMode;
 
         private readonly Dictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
@@ -30,12 +29,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
         };
 
         private bool _loaded;
-
         private int _currentHistoryLength;
-
         private Theme? _currentTheme;
-
         private string _currentSubtitleColor;
+        private int _currentFontSize;
 
         public SettingsViewModel(
             ICommandFactoryService commandFactoryService,
@@ -74,6 +71,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 SelectedSubtitleColor = _subtitleColorsDictionary.FirstOrDefault(pair => pair.Value == _currentSubtitleColor).Key;
             });
             #endregion Subtitle color settings
+
+            #region Font size settings
+            _currentFontSize = Settings.Instance.GetFontSize();
+            FontSize = _currentFontSize.ToString();
+            #endregion Font size settings
 
             _uiThreadService.ExecuteOnUiThread(() => _loaded = true);
         }

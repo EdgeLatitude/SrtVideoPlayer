@@ -109,10 +109,10 @@ namespace SrtVideoPlayer.Shared.Logic
         public void SetSubtitleColorLength(string color) =>
             _settingsService.Set(Strings.SubtitleColor, color);
 
-        public bool ContainsSubtitleColor() =>
-            _settingsService.Contains(Strings.History);
+        public int GetFontSize() =>
+            _settingsService.Get(Strings.FontSize, Numbers.FontSizeDefault);
 
-        public void ClearSubtitleColor() =>
-            _settingsService.Remove(Strings.History);
+        public void SetFontSize(int size) =>
+            _settingsService.Set(Strings.FontSize, size);
     }
 }
