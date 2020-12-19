@@ -50,6 +50,47 @@
                         Style="{StaticResource SettingPickerStyle}" />
                 </StackLayout>
             </StackLayout>
+            <StackLayout
+                Style="{StaticResource ZoneStackLayoutStyle}">
+                <Label  
+                    Text="{x:Static localization:LocalizedStrings.Subtitles}"
+                    Style="{StaticResource SectionLabelStyle}" />
+                <StackLayout 
+                    Style="{StaticResource SectionStackLayoutStyle}">
+                    <Label  
+                        Text="{x:Static localization:LocalizedStrings.Color}" 
+                        Style="{StaticResource DescriptionLabelStyle}" />
+                    <controls:CustomPicker  
+                        ItemsSource="{Binding SubtitleColors}"
+                        SelectedItem="{Binding SelectedSubtitleColor}"
+                        WidthRequest="150"
+                        Style="{StaticResource SettingPickerStyle}" />
+                </StackLayout>
+                <StackLayout 
+                    Style="{StaticResource SectionStackLayoutStyle}">
+                    <Label  
+                        Text="{x:Static localization:LocalizedStrings.FontSize}" 
+                        Style="{StaticResource DescriptionLabelStyle}" />
+                    <Entry  
+                        Text="{Binding FontSize}"
+                        Keyboard="Numeric"
+                        MaxLength="2"
+                        WidthRequest="100"
+                        Style="{StaticResource SettingEntryStyle}" />
+                </StackLayout>
+                <StackLayout 
+                    Style="{StaticResource SectionStackLayoutStyle}">
+                    <Label  
+                        Text="{x:Static localization:LocalizedStrings.OffsetMs}" 
+                        Style="{StaticResource DescriptionLabelStyle}" />
+                    <Entry  
+                        Text="{Binding Offset}"
+                        Keyboard="Numeric"
+                        MaxLength="4"
+                        WidthRequest="100"
+                        Style="{StaticResource SettingEntryStyle}" />
+                </StackLayout>
+            </StackLayout>
             <Button  
                 Text="{x:Static localization:LocalizedStrings.SaveSettings}"
                 IsEnabled="{Binding SettingsChanged}"

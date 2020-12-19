@@ -106,6 +106,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Color.
+        /// </summary>
+        public static string Color {
+            get {
+                return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cyan.
         /// </summary>
         public static string Cyan {
@@ -187,6 +196,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Font size.
+        /// </summary>
+        public static string FontSize {
+            get {
+                return ResourceManager.GetString("FontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a History.
         /// </summary>
         public static string History {
@@ -237,6 +255,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string Notice {
             get {
                 return ResourceManager.GetString("Notice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Offset (ms).
+        /// </summary>
+        public static string OffsetMs {
+            get {
+                return ResourceManager.GetString("OffsetMs", resourceCulture);
             }
         }
         
@@ -318,6 +345,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string SubtitleCopiedToClipboard {
             get {
                 return ResourceManager.GetString("SubtitleCopiedToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Subtitles.
+        /// </summary>
+        public static string Subtitles {
+            get {
+                return ResourceManager.GetString("Subtitles", resourceCulture);
             }
         }
         

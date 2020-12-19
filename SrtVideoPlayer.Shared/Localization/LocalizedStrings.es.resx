@@ -197,6 +197,18 @@
   <data name="PleaseGrantAccessToYourMediaFiles" xml:space="preserve">
     <value>Por favor, concede acceso a tus archivos multimedia.</value>
   </data>
+  <data name="Subtitles" xml:space="preserve">
+    <value>Subtítulos</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>Tamaño de fuente</value>
+  </data>
+  <data name="OffsetMs" xml:space="preserve">
+    <value>Desviación (ms)</value>
+  </data>
   <data name="White" xml:space="preserve">
     <value>Blanco</value>
   </data>
