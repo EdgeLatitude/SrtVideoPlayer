@@ -65,7 +65,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             #endregion Theme settings
 
             #region Subtitle color settings
-            _currentSubtitleColor = Settings.Instance.GetSubtitleColorLength();
+            _currentSubtitleColor = Settings.Instance.GetSubtitleColor();
             _uiThreadService.ExecuteOnUiThread(() =>
             {
                 SubtitleColors = _subtitleColorsDictionary.Keys.ToArray();
@@ -249,6 +249,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
         {
             ManageHistoryLengthSettings();
             ManageThemeSettings();
+            ManageSubtitleColorSettings();
+            ManageFontSizeSettings();
+            ManageOffsetSettings();
             SettingsChanged = false;
         }
 
@@ -294,6 +297,43 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 Settings.Instance.ClearTheme();
             Theming.Instance.ManageAppTheme();
             _currentTheme = selectedTheme;
+        }
+
+        private void ManageSubtitleColorSettings()
+        {
+            var selectedSubtitleColor = _subtitleColorsDictionary[SelectedSubtitleColor];
+            if (_currentSubtitleColor == selectedSubtitleColor)
+                return;
+            Settings.Instance.SetSubtitleColor(selectedSubtitleColor);
+            _currentSubtitleColor = selectedSubtitleColor;
+        }
+
+        private void ManageFontSizeSettings()
+        {
+            // Try to use the value that the user inputted, else, use the configuration default
+            if (!int.TryParse(FontSize, out int fontSizeAsInt))
+            {
+                fontSizeAsInt = Numbers.FontSizeDefault;
+                FontSize = fontSizeAsInt.ToString();
+            }
+            if (_currentFontSize == fontSizeAsInt)
+                return;
+            Settings.Instance.SetFontSize(fontSizeAsInt);
+            _currentFontSize = fontSizeAsInt;
+        }
+
+        private void ManageOffsetSettings()
+        {
+            // Try to use the value that the user inputted, else, use the configuration default
+            if (!int.TryParse(Offset, out int fontSizeAsInt))
+            {
+                fontSizeAsInt = Numbers.OffsetDefault;
+                Offset = fontSizeAsInt.ToString();
+            }
+            if (_currentOffset == fontSizeAsInt)
+                return;
+            Settings.Instance.SetOffset(fontSizeAsInt);
+            _currentOffset = fontSizeAsInt;
         }
 
         private bool CanExecuteSaveSettings() =>
