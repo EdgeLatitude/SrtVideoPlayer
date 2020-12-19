@@ -33,6 +33,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private Theme? _currentTheme;
         private string _currentSubtitleColor;
         private int _currentFontSize;
+        private int _currentOffset;
 
         public SettingsViewModel(
             ICommandFactoryService commandFactoryService,
@@ -76,6 +77,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _currentFontSize = Settings.Instance.GetFontSize();
             FontSize = _currentFontSize.ToString();
             #endregion Font size settings
+
+            #region Offset settings
+            _currentOffset = Settings.Instance.GetOffset();
+            Offset = _currentOffset.ToString();
+            #endregion Offset settings
 
             _uiThreadService.ExecuteOnUiThread(() => _loaded = true);
         }

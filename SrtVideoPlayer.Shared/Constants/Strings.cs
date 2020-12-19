@@ -8,5 +8,6 @@
         public const string SubtitleColor = nameof(SubtitleColor);
         public const string SubtitleColorDefault = Colors.White;
         public const string FontSize = nameof(FontSize);
+        public const string Offset = nameof(Offset);
     }
 }

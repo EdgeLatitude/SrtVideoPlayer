@@ -4,5 +4,6 @@
     {
         public const int HistoryLengthDefault = 5;
         public const int FontSizeDefault = 16;
+        public const int OffsetDefault = 0;
     }
 }

@@ -114,5 +114,11 @@ namespace SrtVideoPlayer.Shared.Logic
 
         public void SetFontSize(int size) =>
             _settingsService.Set(Strings.FontSize, size);
+
+        public int GetOffset() =>
+            _settingsService.Get(Strings.Offset, Numbers.OffsetDefault);
+
+        public void SetOffset(int size) =>
+            _settingsService.Set(Strings.Offset, size);
     }
 }
