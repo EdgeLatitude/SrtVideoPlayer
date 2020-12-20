@@ -22,6 +22,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IFileDownloaderService _fileDownloaderService;
         private readonly IFilePickerService _filePickerService;
+        private readonly IMessagingService _messagingService;
         private readonly INavigationService _navigationService;
         private readonly IPermissionsService _permissionsService;
         private readonly IPlatformInformationService _platformInformationService;
@@ -45,6 +46,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             ICommandFactoryService commandFactoryService,
             IFileDownloaderService fileDownloaderService,
             IFilePickerService filePickerService,
+            IMessagingService messagingService,
             INavigationService navigationService,
             IPermissionsService permissionsService,
             IPlatformInformationService platformInformationService)
@@ -53,6 +55,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _commandFactoryService = commandFactoryService;
             _fileDownloaderService = fileDownloaderService;
             _filePickerService = filePickerService;
+            _messagingService = messagingService;
             _navigationService = navigationService;
             _permissionsService = permissionsService;
             _platformInformationService = platformInformationService;
@@ -74,6 +77,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
+
+            _messagingService.Subscribe(this, Strings.SettingsChanged, (viewmodel) => RefreshFromSettings());
         }
 
         private string _source;
@@ -469,5 +474,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
                         + Environment.NewLine :
                     string.Empty)
                 + LocalizedStrings.AppIconAttribution);
+
+        private void RefreshFromSettings()
+        {
+
+        }
     }
 }

@@ -12,7 +12,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
     public class SettingsViewModel : BaseViewModel
     {
         private readonly ICommandFactoryService _commandFactoryService;
+        private readonly IMessagingService _messagingService;
         private readonly IUiThreadService _uiThreadService;
+
         private readonly bool _deviceSupportsAutomaticDarkMode;
 
         private readonly Dictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
@@ -37,9 +39,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public SettingsViewModel(
             ICommandFactoryService commandFactoryService,
+            IMessagingService messagingService,
             IUiThreadService uiThreadService)
         {
             _commandFactoryService = commandFactoryService;
+            _messagingService = messagingService;
             _uiThreadService = uiThreadService;
 
             SaveSettingsCommand = _commandFactoryService.Create(() => SaveSettings(), CanExecuteSaveSettings);
@@ -253,6 +257,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             ManageFontSizeSettings();
             ManageOffsetSettings();
             SettingsChanged = false;
+            _messagingService.Send(this, Strings.SettingsChanged);
         }
 
         private async void ManageHistoryLengthSettings()
