@@ -111,7 +111,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
                 if (SubtitlesAreVisible &&
                     _subtitles != null)
-                    FindSubtitle();
+                    SetCurrentSubtitle();
             }
         }
 
@@ -423,10 +423,14 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private void CaptionsOnOff() =>
             SubtitlesAreVisible = !SubtitlesAreVisible;
 
-        private void FindSubtitle() =>
+        private void SetCurrentSubtitle()
+        {
+            var offset = Offset;
+            var positionWithOffset = Position.Add(TimeSpan.FromMilliseconds(-offset));
             Subtitle = _subtitles.LastOrDefault(subtitle =>
-                subtitle.SubtitleSpan.Start <= Position
-                    && subtitle.SubtitleSpan.End >= Position);
+                subtitle.SubtitleSpan.Start <= positionWithOffset
+                    && subtitle.SubtitleSpan.End >= positionWithOffset);
+        }
 
         private async Task ShowHistory()
         {
