@@ -71,9 +71,21 @@
                         MediaEnded="Player_MediaEnded"
                         MediaFailed="Player_MediaFailed"
                         MediaOpened="Player_MediaOpened"
+                        Position="{Binding Position}"
                         SeekCompleted="Player_SeekCompleted"
                         Source="{Binding Source}"
                         Volume="{Binding Volume}" />
+                    <Label
+                        FontSize="{Binding FontSize}"
+                        IsVisible="{Binding SubtitlesAreVisible}"
+                        Text="{Binding Subtitle.Text}"
+                        TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding CopySubtitleToClipboardCommand}"
+                                Tapped="SubtitleLabel_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </Grid>
                 <Frame
                     HeightRequest="96"

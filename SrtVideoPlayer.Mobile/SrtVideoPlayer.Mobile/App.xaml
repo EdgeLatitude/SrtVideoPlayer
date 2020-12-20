@@ -16,6 +16,7 @@
         <Color x:Key="BarBackgroundColor">#00366C</Color>
         <Color x:Key="BarForegroundColor">#FFFFFF</Color>
         <!-- Converters !-->
+        <converters:HexColorConverter x:Key="hexColorConverter" />
         <converters:NegateBooleanConverter x:Key="negateBooleanConverter" />
         <!-- Implicit styles !-->
         <Style TargetType="Button">

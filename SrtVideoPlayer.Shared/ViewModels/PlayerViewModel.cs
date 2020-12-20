@@ -19,6 +19,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private const double _zero = 0d;
 
         private readonly IAlertsService _alertsService;
+        private readonly IClipboardService _clipboardService;
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IFileDownloaderService _fileDownloaderService;
         private readonly IFilePickerService _filePickerService;
@@ -39,10 +40,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public event EventHandler FullscreenOnRequested;
         public event EventHandler FullscreenOffRequested;
 
-        private Subtitle[] _subtitles;
-
         public PlayerViewModel(
             IAlertsService alertsService,
+            IClipboardService clipboardService,
             ICommandFactoryService commandFactoryService,
             IFileDownloaderService fileDownloaderService,
             IFilePickerService filePickerService,
@@ -52,6 +52,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             IPlatformInformationService platformInformationService)
         {
             _alertsService = alertsService;
+            _clipboardService = clipboardService;
             _commandFactoryService = commandFactoryService;
             _fileDownloaderService = fileDownloaderService;
             _filePickerService = filePickerService;
@@ -61,6 +62,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _platformInformationService = platformInformationService;
 
             LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
+            CopySubtitleToClipboardCommand = _commandFactoryService.Create(CopySubtitleToClipboard);
             ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
             PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
             StopCommand = _commandFactoryService.Create(Stop);
@@ -108,10 +110,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     return;
                 _position = value;
                 OnPropertyChanged();
-
-                if (SubtitlesAreVisible &&
-                    _subtitles != null)
-                    SetCurrentSubtitle();
             }
         }
 
@@ -125,6 +123,20 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 if (_subtitlesAreVisible == value)
                     return;
                 _subtitlesAreVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Subtitle[] _subtitles;
+
+        public Subtitle[] Subtitles
+        {
+            get => _subtitles;
+            set
+            {
+                if (_subtitles == value)
+                    return;
+                _subtitles = value;
                 OnPropertyChanged();
             }
         }
@@ -181,6 +193,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Settings.Instance.GetOffset();
 
         public ICommand LoadVideoCommand { get; }
+
+        public ICommand CopySubtitleToClipboardCommand { get; }
 
         public ICommand ManageInputFromHardwareCommand { get; }
 
@@ -264,7 +278,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             Source = video.Location;
             Position = TimeSpan.Zero;
-            _subtitles = subtitles;
+            Subtitles = subtitles;
             _ = Settings.Instance.ManageNewPlaybackAsync(new Playback
             {
                 Video = video,
@@ -340,6 +354,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             return input;
         }
+
+        private async void CopySubtitleToClipboard() =>
+            await _clipboardService.SetTextAsync(Subtitle?.Text);
 
         private void ManageInputFromHardware(string character)
         {
