@@ -56,11 +56,21 @@ namespace SrtVideoPlayer.Mobile.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == PickVideoId)
-                if ((resultCode == Result.Ok) && (data != null))
-                    PickVideoTaskCompletionSource.SetResult(data.DataString);
-                else
-                    PickVideoTaskCompletionSource.SetResult(null);
+            switch (requestCode)
+            {
+                case PickVideoId:
+                    if (resultCode == Result.Ok && data != null)
+                        PickVideoTaskCompletionSource.SetResult(data.DataString);
+                    else
+                        PickVideoTaskCompletionSource.SetResult(null);
+                    break;
+                case PickSubtitlesId:
+                    if (resultCode == Result.Ok && data != null)
+                        PickSubtitlesTaskCompletionSource.SetResult(data.DataString);
+                    else
+                        PickSubtitlesTaskCompletionSource.SetResult(null);
+                    break;
+            }
         }
 
         private void GlobalEvents_ThemeChangeNeeded(object sender, ThemeChangeNeededEventArgs args)

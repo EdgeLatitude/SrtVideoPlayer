@@ -10,7 +10,7 @@ namespace SrtVideoPlayer.Mobile.Droid.Services
 {
     public class SubtitlesPickerService : ISubtitlesPickerService
     {
-        private const string _subtitlesMediaType = "text/plain";
+        private const string _subtitlesMediaType = "*/*";
 
         public Task<string> GetSubtitlesAsync()
         {
