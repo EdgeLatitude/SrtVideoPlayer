@@ -33,6 +33,7 @@ namespace SrtVideoPlayer.Mobile
             { typeof(PlatformInformationService), typeof(IPlatformInformationService) },
             { typeof(SettingsService), typeof(ISettingsService) },
             { typeof(ThemingService), typeof(IThemingService) },
+            { typeof(TimerService), typeof(ITimerService) },
             { typeof(UiThreadService), typeof(IUiThreadService) }
         };
 

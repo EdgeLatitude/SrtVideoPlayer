@@ -27,6 +27,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPermissionsService _permissionsService;
         private readonly IPlatformInformationService _platformInformationService;
+        private readonly ITimerService _timerService;
 
         private readonly string[] _mediaSourceOptions = new string[]
         {
@@ -49,7 +50,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             IMessagingService messagingService,
             INavigationService navigationService,
             IPermissionsService permissionsService,
-            IPlatformInformationService platformInformationService)
+            IPlatformInformationService platformInformationService,
+            ITimerService timerService)
         {
             _alertsService = alertsService;
             _clipboardService = clipboardService;
@@ -60,6 +62,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _navigationService = navigationService;
             _permissionsService = permissionsService;
             _platformInformationService = platformInformationService;
+            _timerService = timerService;
 
             LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
             CopySubtitleToClipboardCommand = _commandFactoryService.Create(CopySubtitleToClipboard);
@@ -138,6 +141,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     return;
                 _subtitles = value;
                 OnPropertyChanged();
+
+                if (value == null)
+                    Subtitle = null;
+                else
+                    _timerService.StartTimer(TimeSpan.FromMilliseconds(500), SetCurrentSubtitle);
             }
         }
 
@@ -394,6 +402,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
         {
             StopRequested.Invoke(this, new EventArgs());
             Source = null;
+            Position = TimeSpan.Zero;
+            Subtitles = null;
         }
 
         private void GoBack5_Seconds()
@@ -440,13 +450,25 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private void CaptionsOnOff() =>
             SubtitlesAreVisible = !SubtitlesAreVisible;
 
-        private void SetCurrentSubtitle()
+        private bool SetCurrentSubtitle()
         {
+            var subtitles = Subtitles;
+            if (subtitles == null)
+            {
+                Subtitle = null;
+                return false;
+            }
+
             var offset = Offset;
             var positionWithOffset = Position.Add(TimeSpan.FromMilliseconds(-offset));
-            Subtitle = _subtitles.LastOrDefault(subtitle =>
+            Subtitle = subtitles.LastOrDefault(subtitle =>
                 subtitle.SubtitleSpan.Start <= positionWithOffset
                     && subtitle.SubtitleSpan.End >= positionWithOffset);
+
+            var keepSetting = Subtitles != null;
+            if (!keepSetting)
+                Subtitle = null;
+            return keepSetting;
         }
 
         private async Task ShowHistory()
@@ -484,7 +506,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 var videoDataFromHistory = videosFromHistoryByName[videoFromHistory];
                 Source = videoDataFromHistory.Video.Location;
                 Position = videoDataFromHistory.Time;
-                _subtitles = videoDataFromHistory.Subtitles;
+                Subtitles = videoDataFromHistory.Subtitles;
             }
             else if (videoFromHistory == LocalizedStrings.ClearHistory)
                 Settings.Instance.ClearPlaybackHistory();
