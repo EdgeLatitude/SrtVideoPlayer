@@ -46,7 +46,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _messagingService = messagingService;
             _uiThreadService = uiThreadService;
 
-            SaveSettingsCommand = _commandFactoryService.Create(() => SaveSettings(), CanExecuteSaveSettings);
+            SaveSettingsCommand = _commandFactoryService.Create(SaveSettings, () => CanExecuteSaveSettings);
 
             #region History settings
             _currentHistoryLength = Settings.Instance.GetPlaybackHistoryLength();
@@ -245,9 +245,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        public bool StyleSectionIsVisible => DeviceSupportsManualDarkMode;
+        public bool StyleSectionIsVisible =>
+            DeviceSupportsManualDarkMode;
 
         public ICommand SaveSettingsCommand { get; }
+
+        private bool CanExecuteSaveSettings =>
+            SettingsChanged;
 
         private void SaveSettings()
         {
@@ -340,8 +344,5 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Settings.Instance.SetOffset(fontSizeAsInt);
             _currentOffset = fontSizeAsInt;
         }
-
-        private bool CanExecuteSaveSettings() =>
-            SettingsChanged;
     }
 }

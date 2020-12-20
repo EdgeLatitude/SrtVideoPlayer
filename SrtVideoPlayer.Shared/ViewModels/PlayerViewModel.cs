@@ -171,6 +171,15 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
+        public string SubtitleColor =>
+            Settings.Instance.GetSubtitleColor();
+
+        public int FontSize =>
+            Settings.Instance.GetFontSize();
+
+        public int Offset =>
+            Settings.Instance.GetOffset();
+
         public ICommand LoadVideoCommand { get; }
 
         public ICommand ManageInputFromHardwareCommand { get; }
@@ -477,7 +486,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private void RefreshFromSettings()
         {
-
+            OnPropertyChanged(nameof(SubtitleColor));
+            OnPropertyChanged(nameof(FontSize));
         }
     }
 }
