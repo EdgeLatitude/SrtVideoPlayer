@@ -1,6 +1,7 @@
 ﻿using SrtVideoPlayer.Shared.Models.Playback;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace SrtVideoPlayer.Shared.Logic
             {
                 const int subtitlesSetLines = 4;
                 const string timesDelimiter = "-->";
-                //const string timesFormat = "hh:mm:ss,fff";
+                const string timesFormat = @"hh\:mm\:ss\,fff";
                 var subtitles = new List<Subtitle>();
                 var lines = content.Split(Environment.NewLine).ToList();
                 var lineSets = new List<List<string>>();
@@ -32,7 +33,7 @@ namespace SrtVideoPlayer.Shared.Logic
                     lineSets.Add(lines.GetRange(i, Math.Min(subtitlesSetLines, lines.Count - i)));
                 foreach (var lineSet in lineSets)
                 {
-                    if (lines.Count != subtitlesSetLines)
+                    if (lineSet.Count != subtitlesSetLines)
                         continue;
 
                     var index = lineSet[0].Trim();
@@ -43,10 +44,10 @@ namespace SrtVideoPlayer.Shared.Logic
                     if (times.Length != 2)
                         continue;
                     var startTime = times[0].Trim();
-                    if (!TimeSpan.TryParse(startTime, out var startTimeAsTimeSpan))
+                    if (!TimeSpan.TryParseExact(startTime, timesFormat, CultureInfo.InvariantCulture, out var startTimeAsTimeSpan))
                         continue;
                     var endTime = times[1].Trim();
-                    if (!TimeSpan.TryParse(endTime, out var endTimeAsTimeSpan))
+                    if (!TimeSpan.TryParseExact(endTime, timesFormat, CultureInfo.InvariantCulture, out var endTimeAsTimeSpan))
                         continue;
 
                     var text = lineSet[2].Trim();
