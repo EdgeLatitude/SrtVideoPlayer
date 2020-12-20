@@ -12,14 +12,14 @@ namespace SrtVideoPlayer.Mobile.Droid.Services
     {
         private const string _subtitlesMediaType = "*/*";
 
-        public Task<string> GetSubtitlesAsync()
+        public Task<string> ReadSubtitlesAsync()
         {
             var intent = new Intent();
             intent.SetType(_subtitlesMediaType);
             intent.SetAction(Intent.ActionGetContent);
 
             var activity = MainActivity.Instance;
-            activity.StartActivityForResult(Intent.CreateChooser(intent, LocalizedStrings.SelectSubtitles), MainActivity.PickSubtitlesId);
+            activity.StartActivityForResult(Intent.CreateChooser(intent, LocalizedStrings.SelectSubtitles), MainActivity.ReadSubtitlesId);
             activity.PickSubtitlesTaskCompletionSource = new TaskCompletionSource<string>();
 
             return activity.PickSubtitlesTaskCompletionSource.Task;

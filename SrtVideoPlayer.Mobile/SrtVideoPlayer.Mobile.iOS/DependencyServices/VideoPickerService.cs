@@ -15,7 +15,7 @@ namespace SrtVideoPlayer.Mobile.iOS.Services
         private UIImagePickerController _videoPicker;
         private TaskCompletionSource<string> _taskCompletionSource;
 
-        public Task<string> GetVideoAsync()
+        public Task<string> SelectVideoAsync()
         {
             _videoPicker = new UIImagePickerController
             {

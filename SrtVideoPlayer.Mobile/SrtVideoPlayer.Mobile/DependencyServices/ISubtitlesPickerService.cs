@@ -4,6 +4,6 @@ namespace SrtVideoPlayer.Mobile.DependencyServices
 {
     public interface ISubtitlesPickerService
     {
-        Task<string> GetSubtitlesAsync();
+        Task<string> ReadSubtitlesAsync();
     }
 }

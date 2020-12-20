@@ -8,9 +8,9 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
     class FilePickerService : IFilePickerService
     {
         public async Task<string> SelectVideoAsync() =>
-            await DependencyService.Get<IVideoPickerService>().GetVideoAsync();
+            await DependencyService.Get<IVideoPickerService>().SelectVideoAsync();
 
-        public async Task<string> SelectSubtitlesAsync() =>
-            await DependencyService.Get<ISubtitlesPickerService>().GetSubtitlesAsync();
+        public async Task<string> ReadSubtitlesAsync() =>
+            await DependencyService.Get<ISubtitlesPickerService>().ReadSubtitlesAsync();
     }
 }

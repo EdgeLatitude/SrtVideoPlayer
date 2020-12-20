@@ -2,8 +2,11 @@
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Net;
 using Android.OS;
 using SrtVideoPlayer.Shared.Models.Theming;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SrtVideoPlayer.Mobile.Droid
@@ -14,9 +17,9 @@ namespace SrtVideoPlayer.Mobile.Droid
     )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        public const int PickVideoId = 1000;
+        public const int SelectVideoId = 1000;
 
-        public const int PickSubtitlesId = 1001;
+        public const int ReadSubtitlesId = 1001;
 
         public static MainActivity Instance { get; private set; }
 
@@ -52,21 +55,21 @@ namespace SrtVideoPlayer.Mobile.Droid
             Shared.Logic.Theming.Instance.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
         }
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
 
             switch (requestCode)
             {
-                case PickVideoId:
+                case SelectVideoId:
                     if (resultCode == Result.Ok && data != null)
                         PickVideoTaskCompletionSource.SetResult(data.DataString);
                     else
                         PickVideoTaskCompletionSource.SetResult(null);
                     break;
-                case PickSubtitlesId:
+                case ReadSubtitlesId:
                     if (resultCode == Result.Ok && data != null)
-                        PickSubtitlesTaskCompletionSource.SetResult(data.DataString);
+                        PickSubtitlesTaskCompletionSource.SetResult(await ReadContentFromContentUri(data.Data));
                     else
                         PickSubtitlesTaskCompletionSource.SetResult(null);
                     break;
@@ -84,6 +87,13 @@ namespace SrtVideoPlayer.Mobile.Droid
                     SetTheme(Resource.Style.MainTheme_Light);
                     break;
             }
+        }
+
+        private async Task<string> ReadContentFromContentUri(Uri contentUri)
+        {
+            using var stream = ContentResolver.OpenInputStream(contentUri);
+            using var streamReader = new StreamReader(stream, Encoding.UTF8);
+            return await streamReader.ReadToEndAsync();
         }
     }
 }

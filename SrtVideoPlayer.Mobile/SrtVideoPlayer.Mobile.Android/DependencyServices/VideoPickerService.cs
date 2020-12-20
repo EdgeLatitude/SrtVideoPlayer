@@ -12,14 +12,14 @@ namespace SrtVideoPlayer.Mobile.Droid.Services
     {
         private const string _videoMediaType = "video/*";
 
-        public Task<string> GetVideoAsync()
+        public Task<string> SelectVideoAsync()
         {
             var intent = new Intent();
             intent.SetType(_videoMediaType);
             intent.SetAction(Intent.ActionGetContent);
 
             var activity = MainActivity.Instance;
-            activity.StartActivityForResult(Intent.CreateChooser(intent, LocalizedStrings.SelectVideo), MainActivity.PickVideoId);
+            activity.StartActivityForResult(Intent.CreateChooser(intent, LocalizedStrings.SelectVideo), MainActivity.SelectVideoId);
             activity.PickVideoTaskCompletionSource = new TaskCompletionSource<string>();
 
             return activity.PickVideoTaskCompletionSource.Task;

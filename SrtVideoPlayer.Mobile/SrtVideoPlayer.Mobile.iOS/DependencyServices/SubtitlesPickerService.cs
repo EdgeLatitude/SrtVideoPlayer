@@ -19,7 +19,7 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
         private UIDocumentPickerViewController _documentPicker;
         private TaskCompletionSource<string> _taskCompletionSource;
 
-        public Task<string> GetSubtitlesAsync()
+        public Task<string> ReadSubtitlesAsync()
         {
             _documentPicker = new UIDocumentPickerViewController(_documentTypes, UIDocumentPickerMode.Open);
 

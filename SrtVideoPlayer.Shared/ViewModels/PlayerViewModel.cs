@@ -310,10 +310,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private async Task<Subtitle[]> LoadLocalSubtitles()
         {
-            var filepath = await _filePickerService.SelectSubtitlesAsync();
-            if (string.IsNullOrWhiteSpace(filepath))
+            var subtitlesContent = await _filePickerService.ReadSubtitlesAsync();
+            if (string.IsNullOrWhiteSpace(subtitlesContent))
                 return null;
-            return await General.GetSubtitlesFromContent(await File.ReadAllTextAsync(filepath));
+            return await General.GetSubtitlesFromContent(subtitlesContent);
         }
 
         private async Task<string> PromptForWebSource()

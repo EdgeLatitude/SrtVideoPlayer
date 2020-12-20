@@ -4,6 +4,6 @@ namespace SrtVideoPlayer.Mobile.DependencyServices
 {
     public interface IVideoPickerService
     {
-        Task<string> GetVideoAsync();
+        Task<string> SelectVideoAsync();
     }
 }
