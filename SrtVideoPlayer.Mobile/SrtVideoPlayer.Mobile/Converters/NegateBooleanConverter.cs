@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Globalization;
+using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.Converters
 {
-    class NegateBooleanConverter : Xamarin.Forms.IValueConverter
+    class NegateBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture) =>
-            !(bool)value;
+            value is bool boolValue ?
+                !boolValue :
+                false;
 
         public object ConvertBack(object value, Type targetType,
             object parameter, CultureInfo culture) =>
-            !(bool)value;
+            Convert(value, targetType, parameter, culture);
     }
 }
