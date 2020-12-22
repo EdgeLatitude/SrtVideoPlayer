@@ -1,5 +1,4 @@
-﻿using MobileCoreServices;
-using SrtVideoPlayer.Mobile.DependencyServices;
+﻿using SrtVideoPlayer.Mobile.DependencyServices;
 using SrtVideoPlayer.Mobile.iOS.DependencyServices;
 using System;
 using System.Linq;
@@ -12,8 +11,10 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
 {
     public class SubtitlesPickerService : ISubtitlesPickerService
     {
+        private const string _subtitlesMediaType = "public.data";
+
         private readonly string[] _documentTypes = {
-            UTType.Text
+            _subtitlesMediaType
         };
 
         private UIDocumentPickerViewController _documentPicker;
