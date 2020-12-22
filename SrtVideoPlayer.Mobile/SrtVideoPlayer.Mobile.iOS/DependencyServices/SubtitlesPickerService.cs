@@ -1,11 +1,13 @@
 ﻿using Foundation;
 using SrtVideoPlayer.Mobile.DependencyServices;
 using SrtVideoPlayer.Mobile.iOS.DependencyServices;
+using SrtVideoPlayer.Shared.Localization;
 using System;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TTGSnackBar;
 using UIKit;
 using Xamarin.Forms;
 
@@ -68,9 +70,18 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
 
         private async Task<string> ReadContentFromUrl(NSUrl url)
         {
-            using var stream = new FileStream(url.RelativePath, FileMode.Open, FileAccess.Read);
-            using var streamReader = new StreamReader(stream, Encoding.UTF8);
-            return await streamReader.ReadToEndAsync();
+            try
+            {
+                using var stream = new FileStream(url.RelativePath, FileMode.Open, FileAccess.Read);
+                using var streamReader = new StreamReader(stream, Encoding.UTF8);
+                return await streamReader.ReadToEndAsync();
+            }
+            catch (Exception)
+            {
+                const double _toastLength = 3.5d;
+                new TTGSnackbar(LocalizedStrings.InvalidSubtitlesFile) { Duration = TimeSpan.FromSeconds(_toastLength) }.Show();
+                return null;
+            }
         }
     }
 }

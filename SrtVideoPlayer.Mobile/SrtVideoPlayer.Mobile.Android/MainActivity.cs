@@ -4,6 +4,8 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Net;
 using Android.OS;
+using Android.Widget;
+using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Models.Theming;
 using System.IO;
 using System.Text;
@@ -91,9 +93,17 @@ namespace SrtVideoPlayer.Mobile.Droid
 
         private async Task<string> ReadContentFromContentUri(Uri contentUri)
         {
-            using var stream = ContentResolver.OpenInputStream(contentUri);
-            using var streamReader = new StreamReader(stream, Encoding.UTF8);
-            return await streamReader.ReadToEndAsync();
+            try
+            {
+                using var stream = ContentResolver.OpenInputStream(contentUri);
+                using var streamReader = new StreamReader(stream, Encoding.UTF8);
+                return await streamReader.ReadToEndAsync();
+            }
+            catch (System.Exception)
+            {
+                Toast.MakeText(this, LocalizedStrings.InvalidSubtitlesFile, ToastLength.Long).Show();
+                return null;
+            }
         }
     }
 }

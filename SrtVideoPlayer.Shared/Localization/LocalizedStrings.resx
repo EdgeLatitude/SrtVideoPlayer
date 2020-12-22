@@ -218,4 +218,7 @@
   <data name="Cyan" xml:space="preserve">
     <value>Cyan</value>
   </data>
+  <data name="InvalidSubtitlesFile" xml:space="preserve">
+    <value>Invalid subtitles file.</value>
+  </data>
 </root>

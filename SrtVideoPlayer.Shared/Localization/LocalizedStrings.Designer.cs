@@ -223,6 +223,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invalid subtitles file..
+        /// </summary>
+        public static string InvalidSubtitlesFile {
+            get {
+                return ResourceManager.GetString("InvalidSubtitlesFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Light.
         /// </summary>
         public static string Light {
