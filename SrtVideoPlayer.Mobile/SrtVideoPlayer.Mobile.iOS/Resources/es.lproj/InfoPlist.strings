@@ -1,3 +1,2 @@
 ﻿CFBundleDisplayName = "Reproductor de video";
 CFBundleName = "Reproductor de video SRT";
-NSPhotoLibraryUsageDescription = "Esta app requiere acceso a la librería para poder mostrar videos y seleccionar subtítulos.";

@@ -1,3 +1,2 @@
 ﻿CFBundleDisplayName = "Video Player";
 CFBundleName = "SRT Video Player";
-NSPhotoLibraryUsageDescription = "This app requires access to the library to be able to display videos and select subtitles.";
