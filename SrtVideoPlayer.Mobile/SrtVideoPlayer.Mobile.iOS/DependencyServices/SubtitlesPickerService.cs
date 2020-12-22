@@ -1,7 +1,10 @@
-﻿using SrtVideoPlayer.Mobile.DependencyServices;
+﻿using Foundation;
+using SrtVideoPlayer.Mobile.DependencyServices;
 using SrtVideoPlayer.Mobile.iOS.DependencyServices;
 using System;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Forms;
@@ -35,10 +38,15 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
             return _taskCompletionSource.Task;
         }
 
-        private void OnDocumentPickerDidPickDocumentAtUrls(object sender, UIDocumentPickedAtUrlsEventArgs args)
+        private async void OnDocumentPickerDidPickDocumentAtUrls(object sender, UIDocumentPickedAtUrlsEventArgs args)
         {
             if (args.Urls.Any())
-                _taskCompletionSource.SetResult(args.Urls[0].AbsoluteString);
+            {
+                var url = args.Urls[0];
+                url.StartAccessingSecurityScopedResource();
+                _taskCompletionSource.SetResult(await ReadContentFromUrl(url));
+                url.StopAccessingSecurityScopedResource();
+            }
             else
                 _taskCompletionSource.SetResult(null);
             _documentPicker.DismissModalViewController(true);
@@ -56,6 +64,13 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
         {
             _documentPicker.DidPickDocumentAtUrls -= OnDocumentPickerDidPickDocumentAtUrls;
             _documentPicker.WasCancelled -= OnDocumentPickerWasCancelled;
+        }
+
+        private async Task<string> ReadContentFromUrl(NSUrl url)
+        {
+            using var stream = new FileStream(url.RelativePath, FileMode.Open, FileAccess.Read);
+            using var streamReader = new StreamReader(stream, Encoding.UTF8);
+            return await streamReader.ReadToEndAsync();
         }
     }
 }
