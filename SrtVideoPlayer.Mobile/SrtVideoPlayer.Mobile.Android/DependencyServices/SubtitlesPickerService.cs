@@ -1,12 +1,12 @@
 ﻿using Android.Content;
 using SrtVideoPlayer.Mobile.DependencyServices;
-using SrtVideoPlayer.Mobile.Droid.Services;
+using SrtVideoPlayer.Mobile.Droid.DependencyServices;
 using SrtVideoPlayer.Shared.Localization;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(SubtitlesPickerService))]
-namespace SrtVideoPlayer.Mobile.Droid.Services
+namespace SrtVideoPlayer.Mobile.Droid.DependencyServices
 {
     public class SubtitlesPickerService : ISubtitlesPickerService
     {
