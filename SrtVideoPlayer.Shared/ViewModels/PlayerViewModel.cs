@@ -65,7 +65,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _timerService = timerService;
 
             LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
-            CopySubtitleToClipboardCommand = _commandFactoryService.Create(CopySubtitleToClipboard);
+            CopySubtitleToClipboardCommand = _commandFactoryService.Create(async () => await CopySubtitleToClipboard());
             ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
             PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
             StopCommand = _commandFactoryService.Create(Stop);
@@ -363,8 +363,12 @@ namespace SrtVideoPlayer.Shared.ViewModels
             return input;
         }
 
-        private async void CopySubtitleToClipboard() =>
-            await _clipboardService.SetTextAsync(Subtitle?.Text);
+        private async Task CopySubtitleToClipboard()
+        {
+            var subtitle = Subtitle?.Text;
+            if (!string.IsNullOrWhiteSpace(subtitle))
+                await _clipboardService.SetTextAsync(subtitle);
+        }
 
         private void ManageInputFromHardware(string character)
         {

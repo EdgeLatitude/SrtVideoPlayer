@@ -5,6 +5,7 @@ using SrtVideoPlayer.Shared.Models.Theming;
 using SrtVideoPlayer.Shared.PlatformServices;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SrtVideoPlayer.Shared.ViewModels
@@ -255,7 +256,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private void SaveSettings()
         {
-            ManageHistoryLengthSettings();
+            _ = ManageHistoryLengthSettings();
             ManageThemeSettings();
             ManageSubtitleColorSettings();
             ManageFontSizeSettings();
@@ -264,7 +265,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _messagingService.Send(this, Strings.SettingsChanged);
         }
 
-        private async void ManageHistoryLengthSettings()
+        private async Task ManageHistoryLengthSettings()
         {
             // Try to use the value that the user inputted, else, use the configuration default
             if (!int.TryParse(HistoryLength, out int historyLengthAsInt))
