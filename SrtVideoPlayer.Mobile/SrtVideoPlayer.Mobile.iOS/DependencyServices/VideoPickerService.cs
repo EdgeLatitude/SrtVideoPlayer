@@ -38,7 +38,12 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
         private void OnDocumentPickerDidPickDocumentAtUrls(object sender, UIDocumentPickedAtUrlsEventArgs args)
         {
             if (args.Urls.Any())
-                _taskCompletionSource.SetResult(args.Urls[0].AbsoluteString);
+            {
+                var url = args.Urls[0];
+                url.StartAccessingSecurityScopedResource();
+                _taskCompletionSource.SetResult(url.RelativePath);
+                url.StopAccessingSecurityScopedResource();
+            }
             else
                 _taskCompletionSource.SetResult(null);
             _documentPicker.DismissModalViewController(true);
