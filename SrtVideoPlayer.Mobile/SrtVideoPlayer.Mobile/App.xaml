@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
              xmlns:converters="clr-namespace:SrtVideoPlayer.Mobile.Converters"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
@@ -57,6 +58,9 @@
             <Setter Property="Visual"
                     Value="{OnPlatform Android=Material,
                                        iOS=Default}" />
+        </Style>
+        <Style TargetType="ffimageloadingsvg:SvgCachedImage">
+            <Setter Property="FadeAnimationEnabled" Value="False" />
         </Style>
         <Style TargetType="Frame">
             <Setter Property="BackgroundColor"
