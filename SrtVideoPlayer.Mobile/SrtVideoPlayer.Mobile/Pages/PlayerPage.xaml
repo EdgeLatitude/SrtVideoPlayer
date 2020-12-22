@@ -116,6 +116,7 @@
                 x:Name="PlaybackControls"
                 HeightRequest="48"
                 InputTransparent="True"
+                IsVisible="{Binding MediaLoaded}"
                 Opacity="0"
                 Style="{StaticResource ContainerFrameStyle}"
                 VerticalOptions="End">
