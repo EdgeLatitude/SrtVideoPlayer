@@ -76,10 +76,15 @@
                         Source="{Binding Source}"
                         Volume="{Binding Volume}" />
                     <Label
+                        x:Name="SubtitleLabel"
                         FontSize="{Binding FontSize}"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Margin="16,8"
                         IsVisible="{Binding SubtitlesAreVisible}"
                         Text="{Binding Subtitle.Text}"
-                        TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}">
+                        TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}"
+                        VerticalOptions="End">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding CopySubtitleToClipboardCommand}"

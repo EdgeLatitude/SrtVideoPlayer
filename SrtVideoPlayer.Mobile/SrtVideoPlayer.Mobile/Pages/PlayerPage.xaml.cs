@@ -67,8 +67,11 @@ namespace SrtVideoPlayer.Mobile.Pages
             base.OnAppearing();
         }
 
-        private void SubtitleLabel_Tapped(object sender, EventArgs args) =>
-            CopySubtitleToClipboardAnimation();
+        private void SubtitleLabel_Tapped(object sender, EventArgs args)
+        {
+            if (!string.IsNullOrWhiteSpace(SubtitleLabel.Text))
+                CopySubtitleToClipboardAnimation();
+        }
 
         private void CopySubtitleToClipboardAnimation()
         {
