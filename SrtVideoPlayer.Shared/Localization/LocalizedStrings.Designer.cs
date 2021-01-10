@@ -187,7 +187,7 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a An error occurred downloading file:.
+        ///   Busca una cadena traducida similar a An error occurred while downloading file:.
         /// </summary>
         public static string FileDownloadError {
             get {
@@ -246,6 +246,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string LocalStorage {
             get {
                 return ResourceManager.GetString("LocalStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a An error occurred while reading media file..
+        /// </summary>
+        public static string MediaError {
+            get {
+                return ResourceManager.GetString("MediaError", resourceCulture);
             }
         }
         

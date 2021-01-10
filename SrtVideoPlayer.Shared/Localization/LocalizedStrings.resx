@@ -162,7 +162,7 @@
     <value>Error</value>
   </data>
   <data name="FileDownloadError" xml:space="preserve">
-    <value>An error occurred downloading file:</value>
+    <value>An error occurred while downloading file:</value>
   </data>
   <data name="DownloadingFile" xml:space="preserve">
     <value>Downloading file...</value>
@@ -220,5 +220,8 @@
   </data>
   <data name="InvalidSubtitlesFile" xml:space="preserve">
     <value>Invalid subtitles file.</value>
+  </data>
+  <data name="MediaError" xml:space="preserve">
+    <value>An error occurred while reading media file.</value>
   </data>
 </root>

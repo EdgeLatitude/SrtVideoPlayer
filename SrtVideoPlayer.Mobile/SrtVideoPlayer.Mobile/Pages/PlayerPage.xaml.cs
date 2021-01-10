@@ -1,4 +1,5 @@
 ﻿using SrtVideoPlayer.Mobile.Controls;
+using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.ViewModels;
 using System;
 using Xamarin.CommunityToolkit.UI.Views;
@@ -148,18 +149,17 @@ namespace SrtVideoPlayer.Mobile.Pages
         private void Player_StopRequested(object sender, EventArgs args) =>
             Player.Stop();
 
-        private void Player_MediaEnded(object sender, EventArgs args)
-        {
-
-        }
-
-        private void Player_MediaFailed(object sender, EventArgs args)
-        {
-
-        }
-
-        private void Player_MediaOpened(object sender, EventArgs args) =>
+        private void Player_MediaEnded(object sender, EventArgs args) =>
             PlaybackControlsAnimation();
+
+        private async void Player_MediaFailed(object sender, EventArgs args) =>
+            await DisplayAlert(LocalizedStrings.Error, LocalizedStrings.MediaError, LocalizedStrings.Ok);
+
+        private void Player_MediaOpened(object sender, EventArgs args)
+        {
+            _viewModel.MediaLoaded = true;
+            PlaybackControlsAnimation();
+        }
 
         private void Player_SeekCompleted(object sender, EventArgs args)
         {

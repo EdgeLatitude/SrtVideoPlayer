@@ -98,7 +98,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 _source = value;
                 OnPropertyChanged();
 
-                MediaLoaded = !string.IsNullOrWhiteSpace(value);
+                if (string.IsNullOrWhiteSpace(value))
+                    MediaLoaded = false;
             }
         }
 
