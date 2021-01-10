@@ -1,6 +1,7 @@
 ﻿using SrtVideoPlayer.Mobile.Controls;
 using SrtVideoPlayer.Shared.ViewModels;
 using System;
+using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
