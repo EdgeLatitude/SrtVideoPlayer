@@ -12,6 +12,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
 {
     public class SettingsViewModel : BaseViewModel
     {
+        private const string _minusCharacter = "-";
+
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IMessagingService _messagingService;
         private readonly IUiThreadService _uiThreadService;
@@ -218,6 +220,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 if (_offset == value)
                     return;
                 if (!string.IsNullOrEmpty(value)
+                    && value != _minusCharacter
                     && !int.TryParse(value, out var _))
                 {
                     Offset = _offset;
@@ -268,7 +271,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private async Task ManageHistoryLengthSettings()
         {
             // Try to use the value that the user inputted, else, use the configuration default
-            if (!int.TryParse(HistoryLength, out int historyLengthAsInt))
+            if (!int.TryParse(HistoryLength, out var historyLengthAsInt))
             {
                 historyLengthAsInt = Numbers.HistoryLengthDefault;
                 HistoryLength = historyLengthAsInt.ToString();
@@ -321,7 +324,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private void ManageFontSizeSettings()
         {
             // Try to use the value that the user inputted, else, use the configuration default
-            if (!int.TryParse(FontSize, out int fontSizeAsInt))
+            if (!int.TryParse(FontSize, out var fontSizeAsInt))
             {
                 fontSizeAsInt = Numbers.FontSizeDefault;
                 FontSize = fontSizeAsInt.ToString();
@@ -335,7 +338,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private void ManageOffsetSettings()
         {
             // Try to use the value that the user inputted, else, use the configuration default
-            if (!int.TryParse(Offset, out int fontSizeAsInt))
+            if (!int.TryParse(Offset, out var fontSizeAsInt))
             {
                 fontSizeAsInt = Numbers.OffsetDefault;
                 Offset = fontSizeAsInt.ToString();

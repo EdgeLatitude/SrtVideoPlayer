@@ -20,7 +20,6 @@ namespace SrtVideoPlayer.Mobile
 
         private void SharedInitialization()
         {
-            Device.SetFlags(new string[] { "MediaElement_Experimental" });
             ViewModelLocator.Initialize();
             InitializeComponent();
         }

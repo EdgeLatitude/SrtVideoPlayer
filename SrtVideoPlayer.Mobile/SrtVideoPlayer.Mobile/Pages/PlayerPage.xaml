@@ -66,6 +66,7 @@
                     </Grid.GestureRecognizers>
                     <toolkit:MediaElement
                         x:Name="Player"
+                        AutoPlay="True"
                         InputTransparent="True"
                         IsVisible="{Binding MediaLoaded}"
                         KeepScreenOn="True"
