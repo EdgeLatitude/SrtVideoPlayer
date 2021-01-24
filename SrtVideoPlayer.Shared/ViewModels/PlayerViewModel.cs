@@ -69,10 +69,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
             ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
             PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
             StopCommand = _commandFactoryService.Create(Stop);
-            GoBack5_SecondsCommand = _commandFactoryService.Create(GoBack5_Seconds);
-            GoForward5_SecondsCommand = _commandFactoryService.Create(GoForward5_Seconds);
-            GoBack10_SecondsCommand = _commandFactoryService.Create(GoBack10_Seconds);
-            GoForward10_SecondsCommand = _commandFactoryService.Create(GoForward10_Seconds);
+            GoBack5_SecondsCommand = _commandFactoryService.Create(() => Move5_Seconds(false));
+            GoForward5_SecondsCommand = _commandFactoryService.Create(() => Move5_Seconds(true));
+            GoBack10_SecondsCommand = _commandFactoryService.Create(() => Move10_Seconds(false));
+            GoForward10_SecondsCommand = _commandFactoryService.Create(() => Move10_Seconds(true));
             RestartCommand = _commandFactoryService.Create(Restart);
             FullscreenOnOffCommand = _commandFactoryService.Create(FullscreenOnOff);
             FullscreenOnCommand = _commandFactoryService.Create(FullscreenOn);
@@ -380,10 +380,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     PlayOrPause();
                     break;
                 case KeyboardShortcuts.GoBack10_Seconds:
-                    GoBack10_Seconds();
+                    Move10_Seconds(false);
                     break;
                 case KeyboardShortcuts.GoForward10_Seconds:
-                    GoForward10_Seconds();
+                    Move10_Seconds(true);
                     break;
                 case KeyboardShortcuts.Restart:
                     Restart();
@@ -411,28 +411,22 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Subtitles = null;
         }
 
-        private void GoBack5_Seconds()
+        private void Move5_Seconds(bool forward)
         {
             const double shortcutTimeSpanSeconds = 5d;
-            Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+            if (forward)
+                Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+            else
+                Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
         }
 
-        private void GoForward5_Seconds()
-        {
-            const double shortcutTimeSpanSeconds = 5d;
-            Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
-        }
-
-        private void GoBack10_Seconds()
+        private void Move10_Seconds(bool forward)
         {
             const double shortcutTimeSpanSeconds = 10d;
-            Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
-        }
-
-        private void GoForward10_Seconds()
-        {
-            const double shortcutTimeSpanSeconds = 10d;
-            Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+            if (forward)
+                Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+            else
+                Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
         }
 
         private void Restart() =>
