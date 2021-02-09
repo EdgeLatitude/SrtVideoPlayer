@@ -23,11 +23,22 @@ namespace SrtVideoPlayer.Mobile.Pages
         private bool _playbackControlsAreVisible;
         private int _playbackControlsActiveTaps;
 
+        // Required for Activator in ThemingService.
+        public PlayerPage()
+        {
+            _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();
+            SharedInitialization();
+        }
+
         public PlayerPage(string videoUri = null)
         {
             _videoUri = videoUri;
-
             _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();
+            SharedInitialization();
+        }
+
+        private void SharedInitialization()
+        {
             BindingContext = _viewModel;
             _viewModel.PlayPauseRequested += Player_PlayPauseRequested;
             _viewModel.StopRequested += Player_StopRequested;

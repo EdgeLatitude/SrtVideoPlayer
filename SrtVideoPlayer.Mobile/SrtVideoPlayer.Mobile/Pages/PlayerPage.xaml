@@ -70,8 +70,7 @@
                         InputTransparent="True"
                         IsVisible="{Binding MediaLoaded}"
                         Position="{Binding Position}"
-                        Source="{Binding Source}"
-                        Volume="{Binding Volume}" />
+                        Source="{Binding Source}" />
                     <Label
                         x:Name="SubtitleLabel"
                         FontSize="{Binding FontSize}"
