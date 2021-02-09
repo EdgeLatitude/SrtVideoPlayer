@@ -11,6 +11,7 @@ namespace SrtVideoPlayer.Mobile
         {
             ViewModelLocator.Initialize();
             CrossMediaManager.Current.KeepScreenOn = true;
+            CrossMediaManager.Current.MediaPlayer.VideoAspect = MediaManager.Video.VideoAspectMode.AspectFit;
             InitializeComponent();
             MainPage = new NavigationPage(new PlayerPage(videoUri));
         }
