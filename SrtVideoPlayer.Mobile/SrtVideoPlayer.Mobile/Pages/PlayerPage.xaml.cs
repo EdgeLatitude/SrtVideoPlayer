@@ -47,6 +47,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.MediaItemFailed += Player_MediaItemFailed;
             CrossMediaManager.Current.MediaItemChanged += Player_MediaItemChanged;
             CrossMediaManager.Current.MediaItemFinished += Player_MediaItemFinished;
+            CrossMediaManager.Current.PositionChanged += Player_PositionChanged;
 
             InitializeComponent();
         }
@@ -173,21 +174,24 @@ namespace SrtVideoPlayer.Mobile.Pages
         private void Player_StopRequested(object sender, EventArgs args) =>
             CrossMediaManager.Current.Stop();
 
-        private void Player_BufferedChanged(object sender, BufferedChangedEventArgs e)
+        private void Player_BufferedChanged(object sender, BufferedChangedEventArgs args)
         {
 
         }
 
-        private void Player_MediaItemChanged(object sender, MediaItemEventArgs e)
+        private void Player_MediaItemChanged(object sender, MediaItemEventArgs args)
         {
             _viewModel.MediaLoaded = true;
             PlaybackControlsAnimation();
         }
 
-        private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs e) =>
+        private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs args) =>
             await DisplayAlert(LocalizedStrings.Error, LocalizedStrings.MediaError, LocalizedStrings.Ok);
 
-        private void Player_MediaItemFinished(object sender, MediaItemEventArgs e) =>
+        private void Player_MediaItemFinished(object sender, MediaItemEventArgs args) =>
             PlaybackControlsAnimation();
+
+        private void Player_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs args) =>
+            _viewModel.Position = args.Position;
     }
 }
