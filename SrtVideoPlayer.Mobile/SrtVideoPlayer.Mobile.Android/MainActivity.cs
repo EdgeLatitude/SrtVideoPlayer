@@ -14,8 +14,9 @@ using System.Threading.Tasks;
 namespace SrtVideoPlayer.Mobile.Droid
 {
     [Activity(
-        Theme = "@style/LaunchTheme",
-        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.SmallestScreenSize | ConfigChanges.UiMode
+        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.SmallestScreenSize | ConfigChanges.UiMode,
+        LaunchMode = LaunchMode.SingleTop,
+        Theme = "@style/LaunchTheme"
     )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
@@ -43,16 +44,13 @@ namespace SrtVideoPlayer.Mobile.Droid
 
             base.OnCreate(savedInstanceState);
 
+            MediaManager.CrossMediaManager.Current.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             UserDialogs.Init(this);
 
-            var data = Intent?.Data;
-            if (data == null)
-                LoadApplication(new App());
-            else
-                LoadApplication(new App(data.ToString()));
+            LoadApplication(new App(Intent?.Data?.ToString()));
 
             Shared.Logic.Theming.Instance.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
         }

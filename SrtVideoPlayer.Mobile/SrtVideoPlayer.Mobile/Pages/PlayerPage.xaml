@@ -3,8 +3,8 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-                       xmlns:toolkit="http://xamarin.com/schemas/2020/toolkit"
                        xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                       xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
                        xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
                        xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
                        xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
@@ -64,17 +64,12 @@
                         <TapGestureRecognizer
                             Tapped="Player_Tapped" />
                     </Grid.GestureRecognizers>
-                    <toolkit:MediaElement
+                    <mm:VideoView
                         x:Name="Player"
                         AutoPlay="True"
                         InputTransparent="True"
                         IsVisible="{Binding MediaLoaded}"
-                        KeepScreenOn="True"
-                        MediaEnded="Player_MediaEnded"
-                        MediaFailed="Player_MediaFailed"
-                        MediaOpened="Player_MediaOpened"
                         Position="{Binding Position}"
-                        SeekCompleted="Player_SeekCompleted"
                         Source="{Binding Source}"
                         Volume="{Binding Volume}" />
                     <Label

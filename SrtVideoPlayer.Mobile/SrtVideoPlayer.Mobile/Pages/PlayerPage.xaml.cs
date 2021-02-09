@@ -1,8 +1,11 @@
-﻿using SrtVideoPlayer.Mobile.Controls;
+﻿using MediaManager;
+using MediaManager.Media;
+using MediaManager.Playback;
+using MediaManager.Player;
+using SrtVideoPlayer.Mobile.Controls;
 using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.ViewModels;
 using System;
-using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,30 +15,40 @@ namespace SrtVideoPlayer.Mobile.Pages
     public partial class PlayerPage : KeyboardPage
     {
         private readonly string _videoUri;
+        private readonly PlayerViewModel _viewModel;
 
         private bool _firstAppearance = true;
         private bool _subtitleCopiedToClipboardToastIsVisible;
         private int _subtitleCopiedToClipboardToastActiveTaps;
         private bool _playbackControlsAreVisible;
         private int _playbackControlsActiveTaps;
-        private PlayerViewModel _viewModel;
 
-        public PlayerPage() =>
-            SharedInitialization();
-
-        public PlayerPage(string videoUri)
+        public PlayerPage(string videoUri = null)
         {
-            SharedInitialization();
             _videoUri = videoUri;
-        }
 
-        private void SharedInitialization()
-        {
-            InitializeComponent();
             _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();
             BindingContext = _viewModel;
             _viewModel.PlayPauseRequested += Player_PlayPauseRequested;
             _viewModel.StopRequested += Player_StopRequested;
+
+            CrossMediaManager.Current.BufferedChanged += Player_BufferedChanged;
+            CrossMediaManager.Current.MediaItemFailed += Player_MediaItemFailed;
+            CrossMediaManager.Current.MediaItemChanged += Player_MediaItemChanged;
+            CrossMediaManager.Current.MediaItemFinished += Player_MediaItemFinished;
+
+            InitializeComponent();
+        }
+
+        ~PlayerPage()
+        {
+            _viewModel.PlayPauseRequested -= Player_PlayPauseRequested;
+            _viewModel.StopRequested -= Player_StopRequested;
+
+            CrossMediaManager.Current.BufferedChanged -= Player_BufferedChanged;
+            CrossMediaManager.Current.MediaItemFailed -= Player_MediaItemFailed;
+            CrossMediaManager.Current.MediaItemChanged -= Player_MediaItemChanged;
+            CrossMediaManager.Current.MediaItemFinished -= Player_MediaItemFinished;
         }
 
         public override void OnKeyUp(string character) =>
@@ -133,37 +146,37 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private void Player_PlayPauseRequested(object sender, EventArgs args)
         {
-            switch (Player.CurrentState)
+            switch (Player.State)
             {
-                case MediaElementState.Playing:
-                    Player.Pause();
+                case MediaPlayerState.Playing:
+                    CrossMediaManager.Current.Pause();
                     PlayOrPauseButton.Source = (string)Application.Current.Resources["PlayImage"];
                     break;
-                case MediaElementState.Paused:
-                    Player.Play();
+                case MediaPlayerState.Paused:
+                    CrossMediaManager.Current.Play();
                     PlayOrPauseButton.Source = (string)Application.Current.Resources["PauseImage"];
                     break;
             }
         }
 
         private void Player_StopRequested(object sender, EventArgs args) =>
-            Player.Stop();
+            CrossMediaManager.Current.Stop();
 
-        private void Player_MediaEnded(object sender, EventArgs args) =>
-            PlaybackControlsAnimation();
+        private void Player_BufferedChanged(object sender, BufferedChangedEventArgs e)
+        {
 
-        private async void Player_MediaFailed(object sender, EventArgs args) =>
-            await DisplayAlert(LocalizedStrings.Error, LocalizedStrings.MediaError, LocalizedStrings.Ok);
+        }
 
-        private void Player_MediaOpened(object sender, EventArgs args)
+        private void Player_MediaItemChanged(object sender, MediaItemEventArgs e)
         {
             _viewModel.MediaLoaded = true;
             PlaybackControlsAnimation();
         }
 
-        private void Player_SeekCompleted(object sender, EventArgs args)
-        {
+        private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs e) =>
+            await DisplayAlert(LocalizedStrings.Error, LocalizedStrings.MediaError, LocalizedStrings.Ok);
 
-        }
+        private void Player_MediaItemFinished(object sender, MediaItemEventArgs e) =>
+            PlaybackControlsAnimation();
     }
 }

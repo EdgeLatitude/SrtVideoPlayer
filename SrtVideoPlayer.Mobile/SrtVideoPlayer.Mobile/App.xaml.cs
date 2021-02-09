@@ -1,4 +1,5 @@
-﻿using SrtVideoPlayer.Mobile.Pages;
+﻿using MediaManager;
+using SrtVideoPlayer.Mobile.Pages;
 using SrtVideoPlayer.Shared.Logic;
 using Xamarin.Forms;
 
@@ -6,22 +7,12 @@ namespace SrtVideoPlayer.Mobile
 {
     public partial class App : Application
     {
-        public App()
-        {
-            SharedInitialization();
-            MainPage = new NavigationPage(new PlayerPage());
-        }
-
-        public App(string videoUri)
-        {
-            SharedInitialization();
-            MainPage = new NavigationPage(new PlayerPage(videoUri));
-        }
-
-        private void SharedInitialization()
+        public App(string videoUri = null)
         {
             ViewModelLocator.Initialize();
+            CrossMediaManager.Current.KeepScreenOn = true;
             InitializeComponent();
+            MainPage = new NavigationPage(new PlayerPage(videoUri));
         }
 
         protected override void OnStart()
