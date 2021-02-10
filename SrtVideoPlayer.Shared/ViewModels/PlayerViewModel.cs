@@ -307,7 +307,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private async Task<Video> LoadWebVideo()
         {
+#if DEBUG
+            var webSource = await PromptForWebSource("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+#else
             var webSource = await PromptForWebSource();
+#endif
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
             return new Video(General.RemoveProtocolAndSlashesFromAddress(webSource), webSource);
@@ -324,7 +328,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private async Task<Subtitle[]> LoadWebSubtitles()
         {
             const string srtExtension = "srt";
+#if DEBUG
+            var webSource = await PromptForWebSource("https://raw.githubusercontent.com/moust/MediaPlayer/master/demo/subtitles.srt");
+#else
             var webSource = await PromptForWebSource();
+#endif
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
             var filepath = await _fileDownloaderService.DownloadFileToCacheAsync(webSource, General.RemoveProtocolAndSlashesFromAddress(webSource), srtExtension, true);
@@ -339,14 +347,14 @@ namespace SrtVideoPlayer.Shared.ViewModels
             return await General.GetSubtitlesFromContent(subtitlesContent);
         }
 
-        private async Task<string> PromptForWebSource()
+        private async Task<string> PromptForWebSource(string initialValue = null)
         {
             var input = await _alertsService.DisplayPromptAsync(
                 LocalizedStrings.WebSource,
                 LocalizedStrings.EnterTheUrl,
                 null,
                 null,
-                null,
+                initialValue,
                 KeyboardType.Url);
 
             if (string.IsNullOrWhiteSpace(input)
