@@ -210,6 +210,9 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private void SetSubtitlesPosition(bool pageSizeChanged)
         {
+            const double horizontalMargin = 16;
+            const double verticalMargin = 8;
+
             var videoHeight = Player.VideoHeight;
             var videoWidth = Player.VideoWidth;
 
@@ -234,10 +237,10 @@ namespace SrtVideoPlayer.Mobile.Pages
             var scaledVideoHeight = videoAspectRatio > playerAspectRatio ?
                 _lastVideoHeight * playerWidth / _lastVideoWidth :
                 playerHeight;
-            var bottonMargin = (playerHeight / 2) - (scaledVideoHeight / 2) + 8;
+            var bottonMargin = (playerHeight / 2) - (scaledVideoHeight / 2) + verticalMargin;
 
             Device.BeginInvokeOnMainThread(() =>
-                SubtitleLabel.Margin = new Thickness(16, 8, 16, bottonMargin));
+                SubtitleLabel.Margin = new Thickness(horizontalMargin, verticalMargin, horizontalMargin, bottonMargin));
         }
     }
 }
