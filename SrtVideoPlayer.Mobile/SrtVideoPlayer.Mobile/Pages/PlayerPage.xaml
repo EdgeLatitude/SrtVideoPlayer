@@ -59,8 +59,7 @@
     <Grid>
         <Grid>
             <Grid>
-                <Grid
-                    x:Name="ContainerGrid">
+                <Grid>
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer
                             Tapped="Player_Tapped" />
@@ -79,7 +78,7 @@
                         IsVisible="{Binding SubtitlesAreVisible}"
                         Text="{Binding Subtitle.Text}"
                         TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}"
-                        VerticalOptions="Center">
+                        VerticalOptions="End">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding CopySubtitleToClipboardCommand}"

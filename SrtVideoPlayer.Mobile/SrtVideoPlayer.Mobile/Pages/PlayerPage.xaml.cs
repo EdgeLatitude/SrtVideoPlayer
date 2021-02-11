@@ -23,6 +23,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         private bool _playbackControlsAreVisible;
         private int _playbackControlsActiveTaps;
         private int _lastVideoHeight;
+        private int _lastVideoWidth;
 
         // Required for Activator in ThemingService.
         public PlayerPage()
@@ -52,6 +53,8 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.PositionChanged += Player_PositionChanged;
 
             InitializeComponent();
+
+            SizeChanged += PlayerPage_SizeChanged;
         }
 
         ~PlayerPage()
@@ -64,6 +67,8 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.MediaItemChanged -= Player_MediaItemChanged;
             CrossMediaManager.Current.MediaItemFinished -= Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged -= Player_PositionChanged;
+
+            SizeChanged -= PlayerPage_SizeChanged;
         }
 
         public override void OnKeyUp(string character) =>
@@ -197,16 +202,42 @@ namespace SrtVideoPlayer.Mobile.Pages
         private void Player_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs args)
         {
             _viewModel.Position = args.Position;
-            SetSubtitlesLocation();
+            SetSubtitlesPosition(false);
         }
 
-        private void SetSubtitlesLocation()
+        private void PlayerPage_SizeChanged(object sender, EventArgs args) =>
+            SetSubtitlesPosition(true);
+
+        private void SetSubtitlesPosition(bool pageSizeChanged)
         {
             var videoHeight = Player.VideoHeight;
+            var videoWidth = Player.VideoWidth;
+
             if (videoHeight == default
-                ^ videoHeight == _lastVideoHeight)
+                || videoWidth == default)
                 return;
+
+            if (!pageSizeChanged
+                && videoHeight == _lastVideoHeight
+                && videoWidth == _lastVideoWidth)
+                return;
+
             _lastVideoHeight = videoHeight;
+            _lastVideoWidth = videoWidth;
+
+            var playerHeight = Player.Height;
+            var playerWidth = Player.Width;
+
+            var videoAspectRatio = _lastVideoWidth / _lastVideoHeight;
+            var playerAspectRatio = playerWidth / playerHeight;
+
+            var scaledVideoHeight = videoAspectRatio > playerAspectRatio ?
+                _lastVideoHeight * playerWidth / _lastVideoWidth :
+                playerHeight;
+            var bottonMargin = (playerHeight / 2) - (scaledVideoHeight / 2) + 8;
+
+            Device.BeginInvokeOnMainThread(() =>
+                SubtitleLabel.Margin = new Thickness(16, 8, 16, bottonMargin));
         }
     }
 }
