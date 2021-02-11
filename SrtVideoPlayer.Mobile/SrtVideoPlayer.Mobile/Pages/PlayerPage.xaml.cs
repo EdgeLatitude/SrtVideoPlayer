@@ -22,6 +22,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         private int _subtitleCopiedToClipboardToastActiveTaps;
         private bool _playbackControlsAreVisible;
         private int _playbackControlsActiveTaps;
+        private int _lastVideoHeight;
 
         // Required for Activator in ThemingService.
         public PlayerPage()
@@ -40,6 +41,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         private void SharedInitialization()
         {
             BindingContext = _viewModel;
+
             _viewModel.PlayPauseRequested += Player_PlayPauseRequested;
             _viewModel.StopRequested += Player_StopRequested;
 
@@ -61,6 +63,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.MediaItemFailed -= Player_MediaItemFailed;
             CrossMediaManager.Current.MediaItemChanged -= Player_MediaItemChanged;
             CrossMediaManager.Current.MediaItemFinished -= Player_MediaItemFinished;
+            CrossMediaManager.Current.PositionChanged -= Player_PositionChanged;
         }
 
         public override void OnKeyUp(string character) =>
@@ -191,7 +194,19 @@ namespace SrtVideoPlayer.Mobile.Pages
         private void Player_MediaItemFinished(object sender, MediaItemEventArgs args) =>
             PlaybackControlsAnimation();
 
-        private void Player_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs args) =>
+        private void Player_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs args)
+        {
             _viewModel.Position = args.Position;
+            SetSubtitlesLocation();
+        }
+
+        private void SetSubtitlesLocation()
+        {
+            var videoHeight = Player.VideoHeight;
+            if (videoHeight == default
+                ^ videoHeight == _lastVideoHeight)
+                return;
+            _lastVideoHeight = videoHeight;
+        }
     }
 }
