@@ -75,9 +75,6 @@
     <PackageReference Include="Acr.UserDialogs">
       <Version>7.1.0.475</Version>
     </PackageReference>
-    <PackageReference Include="Plugin.CurrentActivity">
-      <Version>2.1.0.4</Version>
-    </PackageReference>
     <PackageReference Include="Plugin.MediaManager">
       <Version>1.0.8</Version>
     </PackageReference>
@@ -110,9 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
-    <Compile Include="DependencyServices\SubtitlesPickerService.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
-    <Compile Include="DependencyServices\VideoPickerService.cs" />
     <Compile Include="Effects\ShadowEffect.cs" />
     <Compile Include="LaunchScreenActivity.cs" />
     <Compile Include="MainActivity.cs" />

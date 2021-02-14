@@ -319,10 +319,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private async Task<Video> LoadLocalVideo()
         {
-            var filepath = await _filePickerService.SelectVideoAsync();
-            if (string.IsNullOrWhiteSpace(filepath))
+            var file = await _filePickerService.SelectVideoAsync();
+            if (file == null)
                 return null;
-            return new Video(General.RemoveProtocolAndSlashesFromAddress(filepath), filepath);
+            return new Video(file.Name, file.Path);
         }
 
         private async Task<Subtitle[]> LoadWebSubtitles()
@@ -341,7 +341,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private async Task<Subtitle[]> LoadLocalSubtitles()
         {
-            var subtitlesContent = await _filePickerService.ReadSubtitlesAsync();
+            var file = await _filePickerService.SelectSubtitlesAsync();
+            if (file == null)
+                return null;
+            var subtitlesContent = await General.ReadSubtitlesFileContent(file.Path);
             if (string.IsNullOrWhiteSpace(subtitlesContent))
                 return null;
             return await General.GetSubtitlesFromContent(subtitlesContent);

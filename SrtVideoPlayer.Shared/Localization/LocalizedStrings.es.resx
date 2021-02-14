@@ -153,10 +153,10 @@
     <value>Ícono de la aplicación diseñado por Freepik de www.flaticon.es</value>
   </data>
   <data name="SelectVideo" xml:space="preserve">
-    <value>Selecciona video:</value>
+    <value>Selecciona el video</value>
   </data>
   <data name="SelectSubtitles" xml:space="preserve">
-    <value>Selecciona subtítulos:</value>
+    <value>Selecciona los subtítulos</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>

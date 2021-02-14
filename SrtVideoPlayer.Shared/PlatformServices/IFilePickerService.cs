@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using SrtVideoPlayer.Shared.Models.Files;
+using System.Threading.Tasks;
 
 namespace SrtVideoPlayer.Shared.PlatformServices
 {
     public interface IFilePickerService
     {
-        Task<string> SelectVideoAsync();
-        Task<string> ReadSubtitlesAsync();
+        Task<VideoFile> SelectVideoAsync();
+        Task<SubtitlesFile> SelectSubtitlesAsync();
     }
 }

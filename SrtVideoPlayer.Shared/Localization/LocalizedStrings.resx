@@ -153,10 +153,10 @@
     <value>App icon designed by Freepik from www.flaticon.com</value>
   </data>
   <data name="SelectVideo" xml:space="preserve">
-    <value>Select video:</value>
+    <value>Select video</value>
   </data>
   <data name="SelectSubtitles" xml:space="preserve">
-    <value>Select subtitles:</value>
+    <value>Select subtitles</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>

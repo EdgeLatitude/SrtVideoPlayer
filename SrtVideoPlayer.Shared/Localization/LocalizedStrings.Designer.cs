@@ -322,7 +322,7 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Select subtitles:.
+        ///   Busca una cadena traducida similar a Select subtitles.
         /// </summary>
         public static string SelectSubtitles {
             get {
@@ -331,7 +331,7 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Select video:.
+        ///   Busca una cadena traducida similar a Select video.
         /// </summary>
         public static string SelectVideo {
             get {

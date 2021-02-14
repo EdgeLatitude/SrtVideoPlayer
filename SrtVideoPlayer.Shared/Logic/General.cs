@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SrtVideoPlayer.Shared.Logic
@@ -18,6 +20,20 @@ namespace SrtVideoPlayer.Shared.Logic
             var addressWithoutProtocol = sections.Length > 1 ? sections[1] : sections[0];
             var addressWithoutSlashes = addressWithoutProtocol.Replace(slash, dash);
             return addressWithoutSlashes;
+        }
+
+        public static async Task<string> ReadSubtitlesFileContent(string path)
+        {
+            try
+            {
+                using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                using var streamReader = new StreamReader(stream, Encoding.UTF8);
+                return await streamReader.ReadToEndAsync();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static async Task<Subtitle[]> GetSubtitlesFromContent(string content) =>

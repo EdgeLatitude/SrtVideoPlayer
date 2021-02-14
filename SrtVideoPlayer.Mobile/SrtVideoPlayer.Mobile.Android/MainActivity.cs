@@ -46,6 +46,7 @@ namespace SrtVideoPlayer.Mobile.Droid
 
             MediaManager.CrossMediaManager.Current.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             UserDialogs.Init(this);

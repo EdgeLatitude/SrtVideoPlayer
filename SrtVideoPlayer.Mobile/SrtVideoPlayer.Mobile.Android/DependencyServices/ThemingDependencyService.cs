@@ -1,7 +1,6 @@
 ﻿using Android.Content.Res;
 using SrtVideoPlayer.Mobile.DependencyServices;
 using SrtVideoPlayer.Shared.Models.Theming;
-using Plugin.CurrentActivity;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -26,7 +25,7 @@ namespace SrtVideoPlayer.Mobile.Droid.DependencyServices
         {
             if (DeviceSupportsAutomaticDarkMode())
             {
-                var uiModeFlags = CrossCurrentActivity.Current.AppContext.Resources.Configuration.UiMode
+                var uiModeFlags = Xamarin.Essentials.Platform.CurrentActivity.ApplicationContext.Resources.Configuration.UiMode
                     & UiMode.NightMask;
                 switch (uiModeFlags)
                 {
@@ -36,7 +35,6 @@ namespace SrtVideoPlayer.Mobile.Droid.DependencyServices
                         return Task.FromResult(Theme.Light);
                 }
             }
-
             return Task.FromResult(GetDeviceDefaultTheme());
         }
     }
