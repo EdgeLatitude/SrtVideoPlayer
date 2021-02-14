@@ -327,7 +327,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private async Task<Subtitle[]> LoadWebSubtitles()
         {
-            const string srtExtension = "srt";
 #if DEBUG
             var webSource = await PromptForWebSource("https://raw.githubusercontent.com/moust/MediaPlayer/master/demo/subtitles.srt");
 #else
@@ -335,7 +334,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 #endif
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
-            var filepath = await _fileDownloaderService.DownloadFileToCacheAsync(webSource, General.RemoveProtocolAndSlashesFromAddress(webSource), srtExtension, true);
+            var filepath = await _fileDownloaderService.DownloadFileToCacheAsync(webSource, General.RemoveProtocolAndSlashesFromAddress(webSource), Strings.SrtFileExtension, true);
             return await General.GetSubtitlesFromContent(await File.ReadAllTextAsync(filepath));
         }
 

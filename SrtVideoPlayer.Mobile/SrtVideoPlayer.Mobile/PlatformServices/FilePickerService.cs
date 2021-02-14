@@ -1,6 +1,7 @@
 ﻿using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Models.Files;
 using SrtVideoPlayer.Shared.PlatformServices;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
@@ -31,6 +32,9 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
                 PickerTitle = LocalizedStrings.SelectSubtitles
             });
             if (file == null)
+                return null;
+            if (Path.GetExtension(file.FileName).ToLower()
+                != Shared.Constants.Strings.SrtFileExtension)
                 return null;
             return new SubtitlesFile
             {
