@@ -113,6 +113,7 @@
     <Compile Include="DependencyServices\SubtitlesPickerService.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
     <Compile Include="DependencyServices\VideoPickerService.cs" />
+    <Compile Include="Effects\ShadowEffect.cs" />
     <Compile Include="LaunchScreenActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -216,6 +217,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\stop_white.svg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

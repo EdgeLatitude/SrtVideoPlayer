@@ -71,6 +71,7 @@
     <Compile Include="DependencyServices\SubtitlesPickerService.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
     <Compile Include="DependencyServices\VideoPickerService.cs" />
+    <Compile Include="Effects\ShadowEffect.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <BundleResource Include="Base.lproj\InfoPlist.strings" />
@@ -227,6 +228,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\stop_white.svg" />
   </ItemGroup>
+  <ItemGroup />
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties TriggeredFromHotReload="False" />

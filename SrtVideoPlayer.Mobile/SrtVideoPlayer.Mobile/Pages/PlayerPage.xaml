@@ -6,6 +6,7 @@
                        xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                        xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
                        xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
+                       xmlns:effects="clr-namespace:SrtVideoPlayer.Mobile.Effects"
                        xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
                        xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
                        mc:Ignorable="d"
@@ -79,6 +80,13 @@
                         Text="{Binding Subtitle.Text}"
                         TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}"
                         VerticalOptions="End">
+                        <Label.Effects>
+                            <effects:ShadowEffect
+                                Color="Black"
+                                DistanceX="5"
+                                DistanceY="5"
+                                Radius="5" />
+                        </Label.Effects>
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding CopySubtitleToClipboardCommand}"
