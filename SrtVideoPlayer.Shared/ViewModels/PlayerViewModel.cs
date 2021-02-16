@@ -459,11 +459,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
         }
 
         private void PlayOrPause() =>
-            PlayPauseRequested.Invoke(this, new EventArgs());
+            PlayPauseRequested?.Invoke(this, new EventArgs());
 
         private void Stop()
         {
-            StopRequested.Invoke(this, new EventArgs());
+            StopRequested?.Invoke(this, new EventArgs());
             Source = null;
             Position = TimeSpan.Zero;
             Duration = null;
@@ -492,13 +492,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Position = TimeSpan.Zero;
 
         private void FullscreenOnOff() =>
-            FullscreenOnOffRequested.Invoke(this, new EventArgs());
+            FullscreenOnOffRequested?.Invoke(this, new EventArgs());
 
         private void FullscreenOn() =>
-            FullscreenOnRequested.Invoke(this, new EventArgs());
+            FullscreenOnRequested?.Invoke(this, new EventArgs());
 
         private void FullscreenOff() =>
-            FullscreenOffRequested.Invoke(this, new EventArgs());
+            FullscreenOffRequested?.Invoke(this, new EventArgs());
 
         private void MuteUnmute() =>
             Volume = Volume == _one ?

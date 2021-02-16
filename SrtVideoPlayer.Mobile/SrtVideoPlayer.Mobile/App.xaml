@@ -16,6 +16,9 @@
         <Color x:Key="AccentColor">#004080</Color>
         <Color x:Key="BarBackgroundColor">#00366C</Color>
         <Color x:Key="BarForegroundColor">#FFFFFF</Color>
+        <Color x:Key="SliderMaximumTrackColor">#006080</Color>
+        <Color x:Key="SliderMinimumTrackColor">#005080</Color>
+        <Color x:Key="SliderThumbColor">#004080</Color>
         <!-- Converters !-->
         <converters:HexColorConverter x:Key="hexColorConverter" />
         <converters:NegateBooleanConverter x:Key="negateBooleanConverter" />

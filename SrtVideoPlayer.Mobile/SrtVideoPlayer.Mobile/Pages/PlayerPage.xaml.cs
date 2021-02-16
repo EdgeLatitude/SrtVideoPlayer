@@ -24,6 +24,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         private int _playbackControlsActiveTaps;
         private int _lastVideoHeight;
         private int _lastVideoWidth;
+        private bool _progressSliderIsLocked;
 
         // Required for Activator in ThemingService.
         public PlayerPage()
@@ -190,7 +191,6 @@ namespace SrtVideoPlayer.Mobile.Pages
         private void Player_MediaItemChanged(object sender, MediaItemEventArgs args)
         {
             _viewModel.MediaLoaded = true;
-            _viewModel.Duration = CrossMediaManager.Current.Duration;
             PlaybackControlsAnimation();
         }
 
@@ -202,8 +202,25 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private void Player_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs args)
         {
-            _viewModel.Position = args.Position;
+            var duration = CrossMediaManager.Current.Duration;
+            var position = args.Position;
+            _viewModel.Duration = duration;
+            _viewModel.Position = position;
+
+            _progressSliderIsLocked = true;
+            ProgressSlider.Value = (double)position.Ticks / duration.Ticks;
+            _progressSliderIsLocked = false;
+
             SetSubtitlesPosition(false);
+        }
+
+        private void ProgressSlider_ValueChanged(object sender, ValueChangedEventArgs args)
+        {
+            if (_progressSliderIsLocked)
+                return;
+            var duration = CrossMediaManager.Current.Duration;
+            var position = duration * args.NewValue;
+            CrossMediaManager.Current.SeekTo(position);
         }
 
         private void PlayerPage_SizeChanged(object sender, EventArgs args) =>

@@ -153,6 +153,14 @@
                                 Tapped="PlaybackControls_Tapped" />
                         </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
                     </ffimageloadingsvg:SvgCachedImage>
+                    <Slider
+                        x:Name="ProgressSlider"
+                        HorizontalOptions="FillAndExpand"
+                        MaximumTrackColor="{StaticResource SliderMaximumTrackColor}"
+                        MinimumTrackColor="{StaticResource SliderMinimumTrackColor}"
+                        ThumbColor="{StaticResource SliderThumbColor}"
+                        ValueChanged="ProgressSlider_ValueChanged"
+                        VerticalOptions="Center" />
                 </StackLayout>
             </Frame>
         </Grid>
