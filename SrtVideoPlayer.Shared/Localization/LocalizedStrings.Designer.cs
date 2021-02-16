@@ -277,6 +277,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a --:--.
+        /// </summary>
+        public static string NullTime {
+            get {
+                return ResourceManager.GetString("NullTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Offset (ms).
         /// </summary>
         public static string OffsetMs {

@@ -1,4 +1,5 @@
-﻿using SrtVideoPlayer.Shared.Models.Playback;
+﻿using SrtVideoPlayer.Shared.Constants;
+using SrtVideoPlayer.Shared.Models.Playback;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -73,5 +74,18 @@ namespace SrtVideoPlayer.Shared.Logic
 
                 return subtitles.ToArray();
             });
+
+        public static string ConvertTimeSpanToShortestString(TimeSpan timeSpan) =>
+            timeSpan.TotalHours >= 1 ?
+                timeSpan.ToString(Strings.HoursMinutesAndSecondsFormat) :
+                timeSpan.ToString(Strings.MinutesAndSecondsFormat);
+
+        public static TimeSpan? ConvertShortestStringToTimeSpan(string stringTime) =>
+            TimeSpan.TryParseExact(stringTime,
+                new string[] { Strings.HoursMinutesAndSecondsFormat, Strings.MinutesAndSecondsFormat },
+                CultureInfo.InvariantCulture,
+                out var timeSpan) ?
+                timeSpan :
+                (TimeSpan?)null;
     }
 }

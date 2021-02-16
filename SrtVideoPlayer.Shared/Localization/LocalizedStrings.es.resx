@@ -224,4 +224,7 @@
   <data name="MediaError" xml:space="preserve">
     <value>Un error ocurrió mientras se leía el archivo de medios.</value>
   </data>
+  <data name="NullTime" xml:space="preserve">
+    <value>--:--</value>
+  </data>
 </root>

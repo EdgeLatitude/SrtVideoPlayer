@@ -11,5 +11,7 @@
         public const string FontSize = nameof(FontSize);
         public const string Offset = nameof(Offset);
         public const string SrtFileExtension = ".srt";
+        public const string HoursMinutesAndSecondsFormat = @"hh\:mm\:ss";
+        public const string MinutesAndSecondsFormat = @"mm\:ss";
     }
 }

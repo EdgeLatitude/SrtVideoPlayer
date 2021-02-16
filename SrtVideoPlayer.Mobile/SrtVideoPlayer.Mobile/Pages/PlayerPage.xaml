@@ -159,6 +159,22 @@
                         Style="{StaticResource ProgressSliderStyle}"
                         ValueChanged="ProgressSlider_ValueChanged"
                         VerticalOptions="Center" />
+                    <Label
+                        VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span
+                                    Style="{StaticResource PlayerPositionLabelStyle}"
+                                    Text="{Binding Position, Converter={StaticResource timeSpanFormatConverter}}" />
+                                <Span
+                                    Style="{StaticResource PlayerPositionLabelStyle}"
+                                    Text=" / " />
+                                <Span
+                                    Style="{StaticResource PlayerDurationLabelStyle}"
+                                    Text="{Binding Duration, Converter={StaticResource timeSpanFormatConverter}}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </Frame>
         </Grid>

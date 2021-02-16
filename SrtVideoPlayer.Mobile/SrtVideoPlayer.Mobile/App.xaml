@@ -19,6 +19,7 @@
         <!-- Converters !-->
         <converters:HexColorConverter x:Key="hexColorConverter" />
         <converters:NegateBooleanConverter x:Key="negateBooleanConverter" />
+        <converters:TimeSpanFormatConverter x:Key="timeSpanFormatConverter" />
         <!-- Implicit styles !-->
         <Style TargetType="Button">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -119,6 +120,16 @@
                     Value="{DynamicResource ProgressSliderBar}" />
             <Setter Property="ThumbColor"
                     Value="{DynamicResource ProgressSliderThumb}" />
+        </Style>
+        <Style x:Key="PlayerPositionLabelStyle" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
+                                       iOS={DynamicResource iOSPageBackgroundColor}}" />
+        </Style>
+        <Style x:Key="PlayerDurationLabelStyle" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
+                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
         </Style>
         <Style x:Key="SettingsParentStackLayoutStyle" TargetType="StackLayout">
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />
