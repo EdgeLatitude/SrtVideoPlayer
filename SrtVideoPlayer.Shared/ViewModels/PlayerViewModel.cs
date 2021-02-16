@@ -117,6 +117,20 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
+        private TimeSpan? _duration;
+
+        public TimeSpan? Duration
+        {
+            get => _duration;
+            set
+            {
+                if (_duration == value)
+                    return;
+                _duration = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _subtitlesAreVisible = true;
 
         public bool SubtitlesAreVisible
@@ -192,14 +206,47 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        public string SubtitleColor =>
-            Settings.Instance.GetSubtitleColor();
+        private int _offset = Settings.Instance.GetOffset();
 
-        public int FontSize =>
-            Settings.Instance.GetFontSize();
+        public int Offset
+        {
+            get => _offset;
+            set
+            {
+                if (_offset == value)
+                    return;
+                _offset = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public int Offset =>
-            Settings.Instance.GetOffset();
+        private string _subtitleColor = Settings.Instance.GetSubtitleColor();
+
+        public string SubtitleColor
+        {
+            get => _subtitleColor;
+            set
+            {
+                if (_subtitleColor == value)
+                    return;
+                _subtitleColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _fontSize = Settings.Instance.GetFontSize();
+
+        public int FontSize
+        {
+            get => _fontSize;
+            set
+            {
+                if (_fontSize == value)
+                    return;
+                _fontSize = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand LoadVideoCommand { get; }
 
@@ -287,6 +334,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             Source = video.Location;
             Position = TimeSpan.Zero;
+            Duration = null;
             Subtitles = subtitles;
             _ = Settings.Instance.ManageNewPlaybackAsync(new Playback
             {
@@ -418,6 +466,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             StopRequested.Invoke(this, new EventArgs());
             Source = null;
             Position = TimeSpan.Zero;
+            Duration = null;
             Subtitles = null;
         }
 
@@ -515,6 +564,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 var videoDataFromHistory = videosFromHistoryByName[videoFromHistory];
                 Source = videoDataFromHistory.Video.Location;
                 Position = videoDataFromHistory.Time;
+                Duration = null;
                 Subtitles = videoDataFromHistory.Subtitles;
             }
             else if (videoFromHistory == LocalizedStrings.ClearHistory)
@@ -538,8 +588,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private void RefreshFromSettings()
         {
-            OnPropertyChanged(nameof(SubtitleColor));
-            OnPropertyChanged(nameof(FontSize));
+            Offset = Settings.Instance.GetOffset();
+            SubtitleColor = Settings.Instance.GetSubtitleColor();
+            FontSize = Settings.Instance.GetFontSize();
         }
     }
 }

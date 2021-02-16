@@ -190,6 +190,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         private void Player_MediaItemChanged(object sender, MediaItemEventArgs args)
         {
             _viewModel.MediaLoaded = true;
+            _viewModel.Duration = CrossMediaManager.Current.Duration;
             PlaybackControlsAnimation();
         }
 
