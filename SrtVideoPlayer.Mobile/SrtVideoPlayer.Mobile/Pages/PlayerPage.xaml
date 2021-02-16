@@ -156,9 +156,7 @@
                     <Slider
                         x:Name="ProgressSlider"
                         HorizontalOptions="FillAndExpand"
-                        MaximumTrackColor="{StaticResource SliderMaximumTrackColor}"
-                        MinimumTrackColor="{StaticResource SliderMinimumTrackColor}"
-                        ThumbColor="{StaticResource SliderThumbColor}"
+                        Style="{StaticResource ProgressSliderStyle}"
                         ValueChanged="ProgressSlider_ValueChanged"
                         VerticalOptions="Center" />
                 </StackLayout>

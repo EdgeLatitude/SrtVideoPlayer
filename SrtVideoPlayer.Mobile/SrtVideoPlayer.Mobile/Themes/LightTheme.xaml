@@ -9,6 +9,8 @@
     <Color x:Key="iOSTextColor">#000000</Color>
     <Color x:Key="AndroidFieldBackgroundColor">#F5F5F5</Color>
     <Color x:Key="iOSFieldBackgroundColor">#F2F1F7</Color>
+    <Color x:Key="ProgressSliderBar">#0076EE</Color>
+    <Color x:Key="ProgressSliderThumb">#006DA5</Color>
     <x:String x:Key="CloseFullscreenImage">close_fullscreen_white.svg</x:String>
     <x:String x:Key="NotStartedImage">not_started_white.svg</x:String>
     <x:String x:Key="OpenFullscreenImage">open_in_full_white.svg</x:String>
