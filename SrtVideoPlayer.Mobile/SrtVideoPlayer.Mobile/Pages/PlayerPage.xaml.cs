@@ -52,6 +52,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.MediaItemChanged += Player_MediaItemChanged;
             CrossMediaManager.Current.MediaItemFinished += Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged += Player_PositionChanged;
+            CrossMediaManager.Current.StateChanged += Player_StateChanged;
 
             InitializeComponent();
 
@@ -68,6 +69,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.MediaItemChanged -= Player_MediaItemChanged;
             CrossMediaManager.Current.MediaItemFinished -= Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged -= Player_PositionChanged;
+            CrossMediaManager.Current.StateChanged -= Player_StateChanged;
 
             SizeChanged -= PlayerPage_SizeChanged;
         }
@@ -171,11 +173,9 @@ namespace SrtVideoPlayer.Mobile.Pages
             {
                 case MediaPlayerState.Playing:
                     CrossMediaManager.Current.Pause();
-                    PlayOrPauseButton.Source = (string)Application.Current.Resources["PlayImage"];
                     break;
                 case MediaPlayerState.Paused:
                     CrossMediaManager.Current.Play();
-                    PlayOrPauseButton.Source = (string)Application.Current.Resources["PauseImage"];
                     break;
             }
         }
@@ -212,6 +212,19 @@ namespace SrtVideoPlayer.Mobile.Pages
             _progressSliderIsLocked = false;
 
             SetSubtitlesPosition(false);
+        }
+
+        private void Player_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            switch (e.State)
+            {
+                case MediaPlayerState.Playing:
+                    PlayOrPauseButton.Source = (string)Application.Current.Resources["PauseImage"];
+                    break;
+                case MediaPlayerState.Paused:
+                    PlayOrPauseButton.Source = (string)Application.Current.Resources["PlayImage"];
+                    break;
+            }
         }
 
         private void ProgressSlider_ValueChanged(object sender, ValueChangedEventArgs args)
