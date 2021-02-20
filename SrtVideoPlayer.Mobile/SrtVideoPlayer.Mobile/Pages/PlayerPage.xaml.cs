@@ -45,34 +45,32 @@ namespace SrtVideoPlayer.Mobile.Pages
         {
             BindingContext = _viewModel;
 
-            _viewModel.PlayPauseRequested += Player_PlayPauseRequested;
-            _viewModel.StopRequested += Player_StopRequested;
+            _viewModel.PlayPauseRequested += ViewModel_PlayPauseRequested;
+            _viewModel.StopRequested += ViewModel_StopRequested;
 
             CrossMediaManager.Current.BufferedChanged += Player_BufferedChanged;
             CrossMediaManager.Current.MediaItemFailed += Player_MediaItemFailed;
-            CrossMediaManager.Current.MediaItemChanged += Player_MediaItemChanged;
             CrossMediaManager.Current.MediaItemFinished += Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged += Player_PositionChanged;
             CrossMediaManager.Current.StateChanged += Player_StateChanged;
 
             InitializeComponent();
 
-            SizeChanged += PlayerPage_SizeChanged;
+            SizeChanged += Page_SizeChanged;
         }
 
         ~PlayerPage()
         {
-            _viewModel.PlayPauseRequested -= Player_PlayPauseRequested;
-            _viewModel.StopRequested -= Player_StopRequested;
+            _viewModel.PlayPauseRequested -= ViewModel_PlayPauseRequested;
+            _viewModel.StopRequested -= ViewModel_StopRequested;
 
             CrossMediaManager.Current.BufferedChanged -= Player_BufferedChanged;
             CrossMediaManager.Current.MediaItemFailed -= Player_MediaItemFailed;
-            CrossMediaManager.Current.MediaItemChanged -= Player_MediaItemChanged;
             CrossMediaManager.Current.MediaItemFinished -= Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged -= Player_PositionChanged;
             CrossMediaManager.Current.StateChanged -= Player_StateChanged;
 
-            SizeChanged -= PlayerPage_SizeChanged;
+            SizeChanged -= Page_SizeChanged;
         }
 
         public override void OnKeyUp(string character) =>
@@ -168,7 +166,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             });
         }
 
-        private void Player_PlayPauseRequested(object sender, EventArgs args)
+        private void ViewModel_PlayPauseRequested(object sender, EventArgs args)
         {
             switch (Player.State)
             {
@@ -181,18 +179,12 @@ namespace SrtVideoPlayer.Mobile.Pages
             }
         }
 
-        private void Player_StopRequested(object sender, EventArgs args) =>
+        private void ViewModel_StopRequested(object sender, EventArgs args) =>
             CrossMediaManager.Current.Stop();
 
         private void Player_BufferedChanged(object sender, BufferedChangedEventArgs args)
         {
 
-        }
-
-        private void Player_MediaItemChanged(object sender, MediaItemEventArgs args)
-        {
-            _viewModel.MediaLoaded = true;
-            PlaybackControlsAnimation();
         }
 
         private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs args)
@@ -206,22 +198,31 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private void Player_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs args)
         {
+            if (!_viewModel.MediaLoaded)
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _viewModel.MediaLoaded = true;
+                    PlaybackControlsAnimation();
+                });
+
             var duration = CrossMediaManager.Current.Duration;
             var position = args.Position;
             _viewModel.Duration = duration;
             _viewModel.Position = position;
 
-            _progressSliderIsLocked = true;
             Device.BeginInvokeOnMainThread(() =>
-                ProgressSlider.Value = (double)position.Ticks / duration.Ticks);
-            _progressSliderIsLocked = false;
+            {
+                _progressSliderIsLocked = true;
+                ProgressSlider.Value = (double)position.Ticks / duration.Ticks;
+                _progressSliderIsLocked = false;
+            });
 
             SetSubtitlesPosition(false);
         }
 
-        private void Player_StateChanged(object sender, StateChangedEventArgs e)
+        private void Player_StateChanged(object sender, StateChangedEventArgs args)
         {
-            switch (e.State)
+            switch (args.State)
             {
                 case MediaPlayerState.Playing:
                     PlayOrPauseButton.Source = (string)Application.Current.Resources["PauseImage"];
@@ -241,7 +242,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.SeekTo(position);
         }
 
-        private void PlayerPage_SizeChanged(object sender, EventArgs args) =>
+        private void Page_SizeChanged(object sender, EventArgs args) =>
             SetSubtitlesPosition(true);
 
         private void SetSubtitlesPosition(bool pageSizeChanged)
