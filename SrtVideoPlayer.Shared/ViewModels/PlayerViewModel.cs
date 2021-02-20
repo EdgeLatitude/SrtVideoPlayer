@@ -313,7 +313,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     return;
             }
             else
-                video = new Video(General.RemoveProtocolAndSlashesFromAddress(videoUri), videoUri);
+                video = new Video(Path.GetFileName(videoUri), videoUri);
 
             Subtitle[] subtitles = default;
             string subtitlesSource;
