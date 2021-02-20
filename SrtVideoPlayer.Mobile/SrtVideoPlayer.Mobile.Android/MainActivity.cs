@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -20,6 +21,8 @@ namespace SrtVideoPlayer.Mobile.Droid
     )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        private const int _readExternalStorageRequestCode = 1;
+
         public const int SelectVideoId = 1000;
 
         public const int ReadSubtitlesId = 1001;
@@ -50,6 +53,9 @@ namespace SrtVideoPlayer.Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             UserDialogs.Init(this);
+
+            if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted)
+                RequestPermissions(new string[] { Manifest.Permission.ReadExternalStorage }, _readExternalStorageRequestCode);
 
             LoadApplication(new App(Intent?.Data?.ToString()));
 
