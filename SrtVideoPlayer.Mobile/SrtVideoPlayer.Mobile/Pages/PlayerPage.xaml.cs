@@ -198,6 +198,9 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private void Player_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs args)
         {
+            if (string.IsNullOrWhiteSpace(_viewModel.Source))
+                return;
+
             if (!_viewModel.MediaLoaded)
                 Device.BeginInvokeOnMainThread(() =>
                 {
