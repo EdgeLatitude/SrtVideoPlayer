@@ -268,16 +268,16 @@ namespace SrtVideoPlayer.Mobile.Pages
             _lastVideoHeight = videoHeight;
             _lastVideoWidth = videoWidth;
 
-            var playerHeight = Player.Height;
-            var playerWidth = Player.Width;
+            var containerHeight = ContainerGrid.Height;
+            var containerWidth = ContainerGrid.Width;
 
-            var videoAspectRatio = _lastVideoWidth / _lastVideoHeight;
-            var playerAspectRatio = playerWidth / playerHeight;
+            var videoAspectRatio = (double)_lastVideoWidth / _lastVideoHeight;
+            var containerAspectRatio = containerWidth / containerHeight;
 
-            var scaledVideoHeight = videoAspectRatio > playerAspectRatio ?
-                _lastVideoHeight * playerWidth / _lastVideoWidth :
-                playerHeight;
-            var bottonMargin = (playerHeight / 2) - (scaledVideoHeight / 2) + verticalMargin;
+            var scaledVideoHeight = videoAspectRatio > containerAspectRatio ?
+                _lastVideoHeight * containerWidth / _lastVideoWidth :
+                containerHeight;
+            var bottonMargin = (containerHeight / 2) - (scaledVideoHeight / 2) + verticalMargin;
 
             Device.BeginInvokeOnMainThread(() =>
                 SubtitleLabel.Margin = new Thickness(horizontalMargin, verticalMargin, horizontalMargin, bottonMargin));
