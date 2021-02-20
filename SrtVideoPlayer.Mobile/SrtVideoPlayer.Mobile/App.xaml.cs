@@ -1,19 +1,20 @@
 ﻿using MediaManager;
 using SrtVideoPlayer.Mobile.Pages;
 using SrtVideoPlayer.Shared.Logic;
+using SrtVideoPlayer.Shared.Models.Files;
 using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile
 {
     public partial class App : Application
     {
-        public App(string videoUri = null)
+        public App(VideoFile videoFile = null)
         {
             ViewModelLocator.Initialize();
             CrossMediaManager.Current.KeepScreenOn = true;
             CrossMediaManager.Current.MediaPlayer.VideoAspect = MediaManager.Video.VideoAspectMode.AspectFit;
             InitializeComponent();
-            MainPage = new NavigationPage(new PlayerPage(videoUri));
+            MainPage = new NavigationPage(new PlayerPage(videoFile));
         }
 
         protected override void OnStart()

@@ -4,6 +4,7 @@ using MediaManager.Playback;
 using MediaManager.Player;
 using SrtVideoPlayer.Mobile.Controls;
 using SrtVideoPlayer.Shared.Localization;
+using SrtVideoPlayer.Shared.Models.Files;
 using SrtVideoPlayer.Shared.ViewModels;
 using System;
 using Xamarin.Forms;
@@ -14,7 +15,7 @@ namespace SrtVideoPlayer.Mobile.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayerPage : KeyboardPage
     {
-        private readonly string _videoUri;
+        private readonly VideoFile _videoFile;
         private readonly PlayerViewModel _viewModel;
 
         private bool _firstAppearance = true;
@@ -33,9 +34,9 @@ namespace SrtVideoPlayer.Mobile.Pages
             SharedInitialization();
         }
 
-        public PlayerPage(string videoUri = null)
+        public PlayerPage(VideoFile videoFile = null)
         {
-            _videoUri = videoUri;
+            _videoFile = videoFile;
             _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();
             SharedInitialization();
         }
@@ -99,8 +100,8 @@ namespace SrtVideoPlayer.Mobile.Pages
         protected override async void OnAppearing()
         {
             if (_firstAppearance
-                && !string.IsNullOrWhiteSpace(_videoUri))
-                await _viewModel.LoadVideo(_videoUri);
+                && _videoFile != null)
+                await _viewModel.LoadVideo(_videoFile);
             _firstAppearance = false;
             base.OnAppearing();
         }
@@ -211,7 +212,8 @@ namespace SrtVideoPlayer.Mobile.Pages
             _viewModel.Position = position;
 
             _progressSliderIsLocked = true;
-            ProgressSlider.Value = (double)position.Ticks / duration.Ticks;
+            Device.BeginInvokeOnMainThread(() =>
+                ProgressSlider.Value = (double)position.Ticks / duration.Ticks);
             _progressSliderIsLocked = false;
 
             SetSubtitlesPosition(false);

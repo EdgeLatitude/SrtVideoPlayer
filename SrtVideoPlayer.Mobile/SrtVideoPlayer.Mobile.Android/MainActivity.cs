@@ -8,6 +8,7 @@ using Android.OS;
 using Android.Widget;
 using AndroidX.DocumentFile.Provider;
 using SrtVideoPlayer.Shared.Localization;
+using SrtVideoPlayer.Shared.Models.Files;
 using SrtVideoPlayer.Shared.Models.Theming;
 using System.IO;
 using System.Text;
@@ -64,7 +65,11 @@ namespace SrtVideoPlayer.Mobile.Droid
             else
             {
                 var documentFile = DocumentFile.FromSingleUri(ApplicationContext, intentData);
-                LoadApplication(new App(documentFile.Uri.ToString()));
+                LoadApplication(new App(new VideoFile
+                {
+                    Name = documentFile.Name,
+                    Path = documentFile.Uri.ToString()
+                }));
             }
 
             Shared.Logic.Theming.Instance.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;

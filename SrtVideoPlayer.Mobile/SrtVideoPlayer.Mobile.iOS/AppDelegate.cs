@@ -1,4 +1,6 @@
 ﻿using Foundation;
+using SrtVideoPlayer.Shared.Models.Files;
+using System.IO;
 using UIKit;
 
 namespace SrtVideoPlayer.Mobile.iOS
@@ -15,7 +17,17 @@ namespace SrtVideoPlayer.Mobile.iOS
             if (options != null
                 && options.TryGetValue(UIApplication.LaunchOptionsUrlKey, out NSObject nsObject)
                 && nsObject is NSUrl nsUrl)
-                LoadApplication(new App(nsUrl.ToString()));
+            {
+                var path = nsUrl.ToString();
+                var file = File.OpenRead(path);
+                var name = file.Name;
+                file.Close();
+                LoadApplication(new App(new VideoFile
+                {
+                    Name = name,
+                    Path = path
+                }));
+            }
             else
                 LoadApplication(new App());
 

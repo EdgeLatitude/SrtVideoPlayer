@@ -2,6 +2,7 @@
 using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Logic;
 using SrtVideoPlayer.Shared.Models.Enums;
+using SrtVideoPlayer.Shared.Models.Files;
 using SrtVideoPlayer.Shared.Models.Playback;
 using SrtVideoPlayer.Shared.PlatformServices;
 using System;
@@ -284,13 +285,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public ICommand ShowAboutCommand { get; }
 
-        public async Task LoadVideo(string videoUri = null)
+        public async Task LoadVideo(VideoFile videoFile = null)
         {
             if (!await CheckAndRequestMediaAccessPermission())
                 return;
 
             Video video = default;
-            if (string.IsNullOrWhiteSpace(videoUri))
+            if (videoFile == null)
             {
                 string videoSource;
                 do
@@ -313,7 +314,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     return;
             }
             else
-                video = new Video(Path.GetFileName(videoUri), videoUri);
+                video = new Video(videoFile.Name, videoFile.Path);
 
             Subtitle[] subtitles = default;
             string subtitlesSource;
