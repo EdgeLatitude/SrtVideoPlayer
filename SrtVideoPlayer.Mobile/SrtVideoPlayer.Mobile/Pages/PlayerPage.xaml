@@ -79,6 +79,7 @@
                         IsVisible="{Binding SubtitlesAreVisible}"
                         Text="{Binding Subtitle.Text}"
                         TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}"
+                        TextType="Html"
                         VerticalOptions="End">
                         <Label.Effects>
                             <effects:ShadowEffect
