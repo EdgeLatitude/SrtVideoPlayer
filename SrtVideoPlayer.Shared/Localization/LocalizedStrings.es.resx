@@ -222,7 +222,7 @@
     <value>Archivo de subtítulos no válido.</value>
   </data>
   <data name="MediaError" xml:space="preserve">
-    <value>Un error ocurrió mientras se leía el archivo de medios.</value>
+    <value>Un error ocurrió mientras se leía el archivo de medios:</value>
   </data>
   <data name="NullTime" xml:space="preserve">
     <value>--:--</value>

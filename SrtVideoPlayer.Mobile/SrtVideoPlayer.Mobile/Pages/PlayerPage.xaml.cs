@@ -194,8 +194,11 @@ namespace SrtVideoPlayer.Mobile.Pages
             PlaybackControlsAnimation();
         }
 
-        private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs args) =>
-            await DisplayAlert(LocalizedStrings.Error, LocalizedStrings.MediaError, LocalizedStrings.Ok);
+        private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs args)
+        {
+            await DisplayAlert(LocalizedStrings.Error, $"{LocalizedStrings.MediaError}{Environment.NewLine}{args.Message}", LocalizedStrings.Ok);
+            _viewModel.StopCommand.Execute(null);
+        }
 
         private void Player_MediaItemFinished(object sender, MediaItemEventArgs args) =>
             PlaybackControlsAnimation();

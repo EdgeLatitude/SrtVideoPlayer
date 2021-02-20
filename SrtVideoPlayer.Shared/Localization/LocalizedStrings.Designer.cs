@@ -250,7 +250,7 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a An error occurred while reading media file..
+        ///   Busca una cadena traducida similar a An error occurred while reading media file:.
         /// </summary>
         public static string MediaError {
             get {
