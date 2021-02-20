@@ -6,6 +6,7 @@ using Android.Content.PM;
 using Android.Net;
 using Android.OS;
 using Android.Widget;
+using AndroidX.DocumentFile.Provider;
 using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Models.Theming;
 using System.IO;
@@ -57,7 +58,14 @@ namespace SrtVideoPlayer.Mobile.Droid
             if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted)
                 RequestPermissions(new string[] { Manifest.Permission.ReadExternalStorage }, _readExternalStorageRequestCode);
 
-            LoadApplication(new App(Intent?.Data?.ToString()));
+            var intentData = Intent?.Data;
+            if (intentData == null)
+                LoadApplication(new App());
+            else
+            {
+                var documentFile = DocumentFile.FromSingleUri(ApplicationContext, intentData);
+                LoadApplication(new App(documentFile.Uri.ToString()));
+            }
 
             Shared.Logic.Theming.Instance.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
         }

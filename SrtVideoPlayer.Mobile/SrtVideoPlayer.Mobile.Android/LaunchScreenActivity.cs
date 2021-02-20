@@ -37,6 +37,7 @@ namespace SrtVideoPlayer.Mobile.Droid
             new Task(() =>
             {
                 using var mainActivityIntent = new Intent(Application.Context, typeof(MainActivity));
+                mainActivityIntent.AddFlags(ActivityFlags.GrantReadUriPermission);
                 mainActivityIntent.AddFlags(ActivityFlags.NoAnimation);
                 var intentData = Intent?.Data;
                 if (intentData != null)
