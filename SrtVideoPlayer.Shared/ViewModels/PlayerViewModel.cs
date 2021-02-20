@@ -289,44 +289,54 @@ namespace SrtVideoPlayer.Shared.ViewModels
             if (!await CheckAndRequestMediaAccessPermission())
                 return;
 
-            Video video;
+            Video video = default;
             if (string.IsNullOrWhiteSpace(videoUri))
             {
-                var videoSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.VideoSource,
-                    null,
-                    _mediaSourceOptions);
-                if (videoSource != null
-                    && _mediaSourceOptions.Contains(videoSource))
-                    if (videoSource == LocalizedStrings.Web)
-                        video = await LoadWebVideo();
-                    else if (videoSource == LocalizedStrings.LocalStorage)
-                        video = await LoadLocalVideo();
-                    else
-                        return;
-                else
-                    return;
+                string videoSource;
+                do
+                {
+                    videoSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.VideoSource,
+                        null,
+                        _mediaSourceOptions);
+
+                    if (videoSource != null
+                        && _mediaSourceOptions.Contains(videoSource))
+                        if (videoSource == LocalizedStrings.Web)
+                            video = await LoadWebVideo();
+                        else if (videoSource == LocalizedStrings.LocalStorage)
+                            video = await LoadLocalVideo();
+
+                } while (videoSource != LocalizedStrings.Cancel
+                    && video == null);
+
                 if (video == null)
                     return;
             }
             else
                 video = new Video(General.RemoveProtocolAndSlashesFromAddress(videoUri), videoUri);
 
-            var subtitlesSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.SubtitlesSource,
-                LocalizedStrings.NoSubtitles,
-                _mediaSourceOptions);
-            Subtitle[] subtitles;
-            if (subtitlesSource != null
-                && _mediaSourceOptions.Contains(subtitlesSource))
-                if (subtitlesSource == LocalizedStrings.Web)
-                    subtitles = await LoadWebSubtitles();
-                else if (subtitlesSource == LocalizedStrings.LocalStorage)
-                    subtitles = await LoadLocalSubtitles();
-                else
-                    return;
-            else if (subtitlesSource == LocalizedStrings.NoSubtitles)
-                subtitles = null;
-            else
-                return;
+            Subtitle[] subtitles = default;
+            string subtitlesSource;
+            do
+            {
+                subtitlesSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.SubtitlesSource,
+                    LocalizedStrings.NoSubtitles,
+                    _mediaSourceOptions);
+
+                if (subtitlesSource != null
+                    && _mediaSourceOptions.Contains(subtitlesSource))
+                {
+                    if (subtitlesSource == LocalizedStrings.Web)
+                        subtitles = await LoadWebSubtitles();
+                    else if (subtitlesSource == LocalizedStrings.LocalStorage)
+                        subtitles = await LoadLocalSubtitles();
+                }
+                else if (subtitlesSource == LocalizedStrings.NoSubtitles)
+                    subtitles = null;
+
+            } while (subtitlesSource != LocalizedStrings.NoSubtitles
+                && subtitlesSource != LocalizedStrings.Cancel
+                && subtitles == null);
 
             if (subtitlesSource != LocalizedStrings.NoSubtitles
                 && subtitles == null)
@@ -416,7 +426,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             if (!Uri.IsWellFormedUriString(input, UriKind.Absolute))
             {
                 await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseEnterAValidUrl);
-                return await PromptForWebSource();
+                return await PromptForWebSource(initialValue);
             }
 
             return input;
