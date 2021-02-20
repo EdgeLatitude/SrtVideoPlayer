@@ -426,7 +426,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             if (!Uri.IsWellFormedUriString(input, UriKind.Absolute))
             {
                 await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseEnterAValidUrl);
-                return await PromptForWebSource(initialValue);
+                return await PromptForWebSource(input);
             }
 
             return input;
