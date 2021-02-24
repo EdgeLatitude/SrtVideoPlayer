@@ -71,7 +71,7 @@
                         AutoPlay="True"
                         InputTransparent="True"
                         IsVisible="{Binding MediaLoaded}"
-                        Source="{Binding Source}" />
+                        Source="{Binding Source.Location}" />
                     <Label
                         x:Name="SubtitleLabel"
                         FontSize="{Binding FontSize}"

@@ -118,7 +118,13 @@ namespace SrtVideoPlayer.Shared.Logic
         public int GetOffset() =>
             _settingsService.Get(Strings.Offset, Numbers.OffsetDefault);
 
-        public void SetOffset(int size) =>
-            _settingsService.Set(Strings.Offset, size);
+        public void SetOffset(int offset) =>
+            _settingsService.Set(Strings.Offset, offset);
+
+        public TimeSpan GetLastPosition() =>
+            TimeSpan.FromTicks(_settingsService.Get(Strings.LastPosition, Numbers.LastPositionDefault));
+
+        public void SetLastPosition(TimeSpan position) =>
+            _settingsService.Set(Strings.LastPosition, position.Ticks);
     }
 }

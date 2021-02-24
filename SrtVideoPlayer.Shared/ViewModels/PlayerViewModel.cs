@@ -36,6 +36,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             LocalizedStrings.LocalStorage
         };
 
+        private TimeSpan _lastHistoryPosition = TimeSpan.Zero;
+
         public event EventHandler PlayPauseRequested;
         public event EventHandler SeekRequested;
         public event EventHandler StopRequested;
@@ -88,9 +90,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _messagingService.Subscribe(this, Strings.SettingsChanged, (viewmodel) => RefreshFromSettings());
         }
 
-        private string _source;
+        private Video _source;
 
-        public string Source
+        public Video Source
         {
             get => _source;
             set
@@ -100,7 +102,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 _source = value;
                 OnPropertyChanged();
 
-                if (string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value?.Location))
                     MediaLoaded = false;
             }
         }
@@ -116,6 +118,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     return;
                 _position = value;
                 OnPropertyChanged();
+
+                ManageLastPosition(value);
             }
         }
 
@@ -344,14 +348,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 && subtitles == null)
                 return;
 
-            Source = video.Location;
+            Source = video;
             Position = TimeSpan.Zero;
             Duration = null;
             Subtitles = subtitles;
             _ = Settings.Instance.ManageNewPlaybackAsync(new Playback
             {
                 Video = video,
-                Time = TimeSpan.Zero,
                 Subtitles = subtitles
             });
         }
@@ -568,8 +571,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 && videosFromHistoryByName.ContainsKey(videoFromHistory))
             {
                 var videoDataFromHistory = videosFromHistoryByName[videoFromHistory];
-                Source = videoDataFromHistory.Video.Location;
-                Position = videoDataFromHistory.Time;
+                Source = videoDataFromHistory.Video;
                 Duration = null;
                 Subtitles = videoDataFromHistory.Subtitles;
             }
@@ -597,6 +599,15 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Offset = Settings.Instance.GetOffset();
             SubtitleColor = Settings.Instance.GetSubtitleColor();
             FontSize = Settings.Instance.GetFontSize();
+        }
+
+        private void ManageLastPosition(TimeSpan position)
+        {
+            const int secondsDifferenceForSavingState = 5;
+            if (Math.Abs(_lastHistoryPosition.TotalSeconds - position.TotalSeconds) < secondsDifferenceForSavingState)
+                return;
+            Settings.Instance.SetLastPosition(position);
+            _lastHistoryPosition = position;
         }
     }
 }
