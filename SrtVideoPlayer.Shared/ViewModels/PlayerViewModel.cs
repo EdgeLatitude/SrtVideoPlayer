@@ -37,6 +37,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         };
 
         public event EventHandler PlayPauseRequested;
+        public event EventHandler SeekRequested;
         public event EventHandler StopRequested;
         public event EventHandler FullscreenOnOffRequested;
         public event EventHandler FullscreenOnRequested;
@@ -70,10 +71,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
             ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
             PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
             StopCommand = _commandFactoryService.Create(Stop);
-            GoBack5_SecondsCommand = _commandFactoryService.Create(() => Move5_Seconds(false));
-            GoForward5_SecondsCommand = _commandFactoryService.Create(() => Move5_Seconds(true));
-            GoBack10_SecondsCommand = _commandFactoryService.Create(() => Move10_Seconds(false));
-            GoForward10_SecondsCommand = _commandFactoryService.Create(() => Move10_Seconds(true));
+            GoBack5_SecondsCommand = _commandFactoryService.Create(() => Seek(false, 5));
+            GoForward5_SecondsCommand = _commandFactoryService.Create(() => Seek(true, 5));
+            GoBack10_SecondsCommand = _commandFactoryService.Create(() => Seek(false, 10));
+            GoForward10_SecondsCommand = _commandFactoryService.Create(() => Seek(true, 10));
             RestartCommand = _commandFactoryService.Create(Restart);
             FullscreenOnOffCommand = _commandFactoryService.Create(FullscreenOnOff);
             FullscreenOnCommand = _commandFactoryService.Create(FullscreenOn);
@@ -449,10 +450,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     PlayOrPause();
                     break;
                 case KeyboardShortcuts.GoBack10_Seconds:
-                    Move10_Seconds(false);
+                    Seek(false, 10);
                     break;
                 case KeyboardShortcuts.GoForward10_Seconds:
-                    Move10_Seconds(true);
+                    Seek(true, 10);
                     break;
                 case KeyboardShortcuts.Restart:
                     Restart();
@@ -481,26 +482,20 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Subtitles = null;
         }
 
-        private void Move5_Seconds(bool forward)
+        private void Seek(bool forward, int seconds)
         {
-            const double shortcutTimeSpanSeconds = 5d;
             if (forward)
-                Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+                Position = Position.Add(TimeSpan.FromSeconds(seconds));
             else
-                Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
+                Position = Position.Subtract(TimeSpan.FromSeconds(seconds));
+            SeekRequested?.Invoke(this, new EventArgs());
         }
 
-        private void Move10_Seconds(bool forward)
+        private void Restart()
         {
-            const double shortcutTimeSpanSeconds = 10d;
-            if (forward)
-                Position = Position.Add(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
-            else
-                Position = Position.Subtract(TimeSpan.FromSeconds(shortcutTimeSpanSeconds));
-        }
-
-        private void Restart() =>
             Position = TimeSpan.Zero;
+            SeekRequested?.Invoke(this, new EventArgs());
+        }
 
         private void FullscreenOnOff() =>
             FullscreenOnOffRequested?.Invoke(this, new EventArgs());

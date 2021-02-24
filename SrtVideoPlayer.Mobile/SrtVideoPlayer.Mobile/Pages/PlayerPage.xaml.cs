@@ -48,6 +48,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             BindingContext = _viewModel;
 
             _viewModel.PlayPauseRequested += ViewModel_PlayPauseRequested;
+            _viewModel.SeekRequested += ViewModel_SeekRequested; ;
             _viewModel.StopRequested += ViewModel_StopRequested;
 
             CrossMediaManager.Current.BufferedChanged += Player_BufferedChanged;
@@ -64,6 +65,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         ~PlayerPage()
         {
             _viewModel.PlayPauseRequested -= ViewModel_PlayPauseRequested;
+            _viewModel.SeekRequested -= ViewModel_SeekRequested; ;
             _viewModel.StopRequested -= ViewModel_StopRequested;
 
             CrossMediaManager.Current.BufferedChanged -= Player_BufferedChanged;
@@ -179,6 +181,13 @@ namespace SrtVideoPlayer.Mobile.Pages
                     CrossMediaManager.Current.Play();
                     break;
             }
+        }
+
+        private void ViewModel_SeekRequested(object sender, EventArgs args)
+        {
+            var duration = CrossMediaManager.Current.Duration;
+            _progressSliderIsLocked = false;
+            ProgressSlider.Value = (double)_viewModel.Position.Ticks / duration.Ticks;
         }
 
         private void ViewModel_StopRequested(object sender, EventArgs args) =>
