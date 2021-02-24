@@ -1,4 +1,5 @@
 ﻿using MediaManager;
+using MediaManager.Forms;
 using MediaManager.Media;
 using MediaManager.Playback;
 using MediaManager.Player;
@@ -26,6 +27,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         private int _lastVideoHeight;
         private int _lastVideoWidth;
         private bool _progressSliderIsLocked;
+        private bool _volumeBindingSet;
 
         // Required for Activator in ThemingService.
         public PlayerPage()
@@ -207,6 +209,12 @@ namespace SrtVideoPlayer.Mobile.Pages
                     _viewModel.MediaLoaded = true;
                     PlaybackControlsAnimation();
                 });
+
+            if (!_volumeBindingSet)
+            {
+                Player.SetBinding(VideoView.VolumeProperty, nameof(_viewModel.Volume));
+                _volumeBindingSet = true;
+            }
 
             var duration = CrossMediaManager.Current.Duration;
             var position = args.Position;
