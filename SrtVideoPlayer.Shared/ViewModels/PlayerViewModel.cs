@@ -254,6 +254,20 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
+        private bool _buffering;
+
+        public bool Buffering
+        {
+            get => _buffering;
+            set
+            {
+                if (_buffering == value)
+                    return;
+                _buffering = value;
+                OnPropertyChanged();
+            }
+        }
+
         public TimeSpan? LastPositionFromHistory { get; set; }
 
         public ICommand LoadVideoCommand { get; }

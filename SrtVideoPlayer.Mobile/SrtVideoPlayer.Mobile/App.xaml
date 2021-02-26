@@ -117,9 +117,9 @@
                     Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
                                        iOS={DynamicResource iOSPageBackgroundColor}}" />
             <Setter Property="MinimumTrackColor"
-                    Value="{DynamicResource ProgressSliderBar}" />
+                    Value="{DynamicResource ProgressSliderBarColor}" />
             <Setter Property="ThumbColor"
-                    Value="{DynamicResource ProgressSliderThumb}" />
+                    Value="{DynamicResource ProgressSliderThumbColor}" />
         </Style>
         <Style x:Key="PlayerPositionLabelStyle" TargetType="Label">
             <Setter Property="TextColor"

@@ -48,7 +48,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             BindingContext = _viewModel;
 
             _viewModel.PlayPauseRequested += ViewModel_PlayPauseRequested;
-            _viewModel.SeekRequested += ViewModel_SeekRequested; ;
+            _viewModel.SeekRequested += ViewModel_SeekRequested;
             _viewModel.StopRequested += ViewModel_StopRequested;
 
             CrossMediaManager.Current.BufferedChanged += Player_BufferedChanged;
@@ -65,7 +65,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         ~PlayerPage()
         {
             _viewModel.PlayPauseRequested -= ViewModel_PlayPauseRequested;
-            _viewModel.SeekRequested -= ViewModel_SeekRequested; ;
+            _viewModel.SeekRequested -= ViewModel_SeekRequested;
             _viewModel.StopRequested -= ViewModel_StopRequested;
 
             CrossMediaManager.Current.BufferedChanged -= Player_BufferedChanged;
@@ -250,6 +250,7 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private void Player_StateChanged(object sender, StateChangedEventArgs args)
         {
+            _viewModel.Buffering = args.State == MediaPlayerState.Buffering;
             switch (args.State)
             {
                 case MediaPlayerState.Playing:

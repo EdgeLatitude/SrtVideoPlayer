@@ -95,6 +95,14 @@
                                 Tapped="SubtitleLabel_Tapped" />
                         </Label.GestureRecognizers>
                     </Label>
+                    <ActivityIndicator
+                        Color="{DynamicResource ProgressSliderBarColor}"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        InputTransparent="True"
+                        IsRunning="{Binding Buffering}"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
                 </Grid>
                 <Frame
                     HeightRequest="96"
