@@ -27,7 +27,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         private int _lastVideoHeight;
         private int _lastVideoWidth;
         private bool _progressSliderIsLocked;
-        private bool _volumeBindingSet;
+        private bool _firstPlayback = true;
 
         // Required for Activator in ThemingService.
         public PlayerPage()
@@ -99,12 +99,13 @@ namespace SrtVideoPlayer.Mobile.Pages
             }
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
-            if (_firstAppearance
-                && _videoFile != null)
-                await _viewModel.LoadVideo(_videoFile);
-            _firstAppearance = false;
+            if (_firstAppearance)
+            {
+                _ = _viewModel.Launch(_videoFile);
+                _firstAppearance = false;
+            }
             base.OnAppearing();
         }
 
@@ -219,10 +220,12 @@ namespace SrtVideoPlayer.Mobile.Pages
                     PlaybackControlsAnimation();
                 });
 
-            if (!_volumeBindingSet)
+            var firstPlayback = _firstPlayback;
+
+            if (firstPlayback)
             {
+                _firstPlayback = false;
                 Player.SetBinding(VideoView.VolumeProperty, nameof(_viewModel.Volume));
-                _volumeBindingSet = true;
             }
 
             var duration = CrossMediaManager.Current.Duration;
@@ -230,12 +233,17 @@ namespace SrtVideoPlayer.Mobile.Pages
             _viewModel.Duration = duration;
             _viewModel.Position = position;
 
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                _progressSliderIsLocked = true;
-                ProgressSlider.Value = (double)position.Ticks / duration.Ticks;
-                _progressSliderIsLocked = false;
-            });
+            if (firstPlayback
+                && _viewModel.LastPositionFromHistory.HasValue)
+                Device.BeginInvokeOnMainThread(() =>
+                    ProgressSlider.Value = (double)_viewModel.LastPositionFromHistory.Value.Ticks / duration.Ticks);
+            else
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _progressSliderIsLocked = true;
+                    ProgressSlider.Value = (double)position.Ticks / duration.Ticks;
+                    _progressSliderIsLocked = false;
+                });
 
             SetSubtitlesPosition(false);
         }

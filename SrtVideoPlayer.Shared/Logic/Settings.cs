@@ -122,7 +122,7 @@ namespace SrtVideoPlayer.Shared.Logic
             _settingsService.Set(Strings.Offset, offset);
 
         public TimeSpan GetLastPosition() =>
-            TimeSpan.FromTicks(_settingsService.Get(Strings.LastPosition, Numbers.LastPositionDefault));
+            TimeSpan.FromTicks((long)_settingsService.Get(Strings.LastPosition, Numbers.LastPositionDefault));
 
         public void SetLastPosition(TimeSpan position) =>
             _settingsService.Set(Strings.LastPosition, position.Ticks);

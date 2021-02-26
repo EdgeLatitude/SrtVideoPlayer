@@ -259,6 +259,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No subtitles.
         /// </summary>
         public static string NoSubtitles {
@@ -318,6 +327,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string PleaseGrantAccessToYourMediaFiles {
             get {
                 return ResourceManager.GetString("PleaseGrantAccessToYourMediaFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Would you like to restore the last playback?.
+        /// </summary>
+        public static string RestoreLastPlaybackPrompt {
+            get {
+                return ResourceManager.GetString("RestoreLastPlaybackPrompt", resourceCulture);
             }
         }
         
@@ -444,6 +462,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string Yellow {
             get {
                 return ResourceManager.GetString("Yellow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

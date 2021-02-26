@@ -227,4 +227,13 @@
   <data name="NullTime" xml:space="preserve">
     <value>--:--</value>
   </data>
+  <data name="RestoreLastPlaybackPrompt" xml:space="preserve">
+    <value>Would you like to restore the last playback?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
 </root>

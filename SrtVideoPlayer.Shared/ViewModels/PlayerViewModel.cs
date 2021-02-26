@@ -254,6 +254,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
+        public TimeSpan? LastPositionFromHistory { get; set; }
+
         public ICommand LoadVideoCommand { get; }
 
         public ICommand CopySubtitleToClipboardCommand { get; }
@@ -290,7 +292,33 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public ICommand ShowAboutCommand { get; }
 
-        public async Task LoadVideo(VideoFile videoFile = null)
+        public async Task Launch(VideoFile videoFile = null)
+        {
+            if (videoFile != null)
+            {
+                await LoadVideo(videoFile);
+                return;
+            }
+
+            var lastPosition = Settings.Instance.GetLastPosition();
+            if (lastPosition > TimeSpan.Zero)
+            {
+                var lastPlayback = (await Settings.Instance.GetPlaybackHistoryAsync()).LastOrDefault();
+                if (lastPlayback != null
+                    && await _alertsService.DisplayConfirmationAsync(
+                        null,
+                        LocalizedStrings.RestoreLastPlaybackPrompt,
+                        LocalizedStrings.Yes,
+                        LocalizedStrings.No))
+                {
+                    Source = lastPlayback.Video;
+                    Subtitles = lastPlayback.Subtitles;
+                    LastPositionFromHistory = lastPosition;
+                }
+            }
+        }
+
+        private async Task LoadVideo(VideoFile videoFile = null)
         {
             if (!await CheckAndRequestMediaAccessPermission())
                 return;
@@ -544,7 +572,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             {
                 var openSettings = await _alertsService.DisplayConfirmationAsync(LocalizedStrings.Notice,
                     LocalizedStrings.DisabledPlaybackHistory,
-                    LocalizedStrings.Settings);
+                    LocalizedStrings.Settings,
+                    LocalizedStrings.Cancel);
                 if (openSettings)
                     await NavigateToSettingsAsync();
                 return;
