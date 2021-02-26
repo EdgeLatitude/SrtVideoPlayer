@@ -314,20 +314,23 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 return;
             }
 
-            var lastPosition = Settings.Instance.GetLastPosition();
-            if (lastPosition > TimeSpan.Zero)
+            if (Source == null)
             {
-                var lastPlayback = (await Settings.Instance.GetPlaybackHistoryAsync()).LastOrDefault();
-                if (lastPlayback != null
-                    && await _alertsService.DisplayConfirmationAsync(
-                        null,
-                        LocalizedStrings.RestoreLastPlaybackPrompt,
-                        LocalizedStrings.Yes,
-                        LocalizedStrings.No))
+                var lastPosition = Settings.Instance.GetLastPosition();
+                if (lastPosition > TimeSpan.Zero)
                 {
-                    Source = lastPlayback.Video;
-                    Subtitles = lastPlayback.Subtitles;
-                    LastPositionFromHistory = lastPosition;
+                    var lastPlayback = (await Settings.Instance.GetPlaybackHistoryAsync()).LastOrDefault();
+                    if (lastPlayback != null
+                        && await _alertsService.DisplayConfirmationAsync(
+                            null,
+                            LocalizedStrings.RestoreLastPlaybackPrompt,
+                            LocalizedStrings.Yes,
+                            LocalizedStrings.No))
+                    {
+                        Source = lastPlayback.Video;
+                        Subtitles = lastPlayback.Subtitles;
+                        LastPositionFromHistory = lastPosition;
+                    }
                 }
             }
         }
