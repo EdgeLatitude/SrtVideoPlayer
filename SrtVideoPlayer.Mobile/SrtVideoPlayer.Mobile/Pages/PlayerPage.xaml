@@ -11,7 +11,8 @@
                        xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
                        mc:Ignorable="d"
                        x:DataType="viewmodels:PlayerViewModel"
-                       x:Class="SrtVideoPlayer.Mobile.Pages.PlayerPage">
+                       x:Class="SrtVideoPlayer.Mobile.Pages.PlayerPage"
+                       SizeChanged="Page_SizeChanged">
     <controls:KeyboardPage.ToolbarItems>
         <ToolbarItem 
             Text="{x:Static localization:LocalizedStrings.History}"
@@ -61,20 +62,18 @@
         <Grid>
             <Grid>
                 <Grid
-                    x:Name="ContainerGrid">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Tapped="Player_Tapped" />
-                    </Grid.GestureRecognizers>
+                    x:Name="ContainerGrid"
+                    ColumnDefinitions="*, 2*, *">
                     <mm:VideoView
                         x:Name="Player"
                         AutoPlay="True"
-                        InputTransparent="True"
+                        Grid.ColumnSpan="3"
                         IsVisible="{Binding MediaLoaded}"
                         Source="{Binding Source.Location}" />
                     <Label
                         x:Name="SubtitleLabel"
                         FontSize="{Binding FontSize}"
+                        Grid.ColumnSpan="3"
                         HorizontalOptions="Center"
                         HorizontalTextAlignment="Center"
                         IsVisible="{Binding SubtitlesAreVisible}"
@@ -97,12 +96,65 @@
                     </Label>
                     <ActivityIndicator
                         Color="{DynamicResource ProgressSliderBarColor}"
+                        Grid.ColumnSpan="3"
                         HeightRequest="50"
                         HorizontalOptions="Center"
-                        InputTransparent="True"
                         IsRunning="{Binding Buffering}"
                         VerticalOptions="Center"
                         WidthRequest="50" />
+                    <BoxView>
+                        <BoxView.GestureRecognizers>
+                            <PinchGestureRecognizer
+                                PinchUpdated="Player_PinchUpdated" />
+                            <SwipeGestureRecognizer
+                                Command="{Binding GoBack5_SecondsCommand}"
+                                Direction="Left" />
+                            <SwipeGestureRecognizer
+                                Command="{Binding GoForward5_SecondsCommand}"
+                                Direction="Right" />
+                            <TapGestureRecognizer
+                                Tapped="Player_Tapped" />
+                            <TapGestureRecognizer
+                                Command="{Binding GoBack10_SecondsCommand}"
+                                NumberOfTapsRequired="2" />
+                        </BoxView.GestureRecognizers>
+                    </BoxView>
+                    <BoxView
+                        Grid.Column="1">
+                        <BoxView.GestureRecognizers>
+                            <PinchGestureRecognizer
+                                PinchUpdated="Player_PinchUpdated" />
+                            <SwipeGestureRecognizer
+                                Command="{Binding GoBack5_SecondsCommand}"
+                                Direction="Left" />
+                            <SwipeGestureRecognizer
+                                Command="{Binding GoForward5_SecondsCommand}"
+                                Direction="Right" />
+                            <TapGestureRecognizer
+                                Tapped="Player_Tapped" />
+                            <TapGestureRecognizer
+                                Command="{Binding FullscreenOnOffCommand}"
+                                NumberOfTapsRequired="2" />
+                        </BoxView.GestureRecognizers>
+                    </BoxView>
+                    <BoxView
+                        Grid.Column="2">
+                        <BoxView.GestureRecognizers>
+                            <PinchGestureRecognizer
+                                PinchUpdated="Player_PinchUpdated" />
+                            <SwipeGestureRecognizer
+                                Command="{Binding GoBack5_SecondsCommand}"
+                                Direction="Left" />
+                            <SwipeGestureRecognizer
+                                Command="{Binding GoForward5_SecondsCommand}"
+                                Direction="Right" />
+                            <TapGestureRecognizer
+                                Tapped="Player_Tapped" />
+                            <TapGestureRecognizer
+                                Command="{Binding GoForward10_SecondsCommand}"
+                                NumberOfTapsRequired="2" />
+                        </BoxView.GestureRecognizers>
+                    </BoxView>
                 </Grid>
                 <Frame
                     HeightRequest="96"

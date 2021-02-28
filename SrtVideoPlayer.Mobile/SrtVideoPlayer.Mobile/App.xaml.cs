@@ -1,4 +1,5 @@
 ﻿using MediaManager;
+using MediaManager.Video;
 using SrtVideoPlayer.Mobile.Pages;
 using SrtVideoPlayer.Shared.Logic;
 using SrtVideoPlayer.Shared.Models.Files;
@@ -12,7 +13,7 @@ namespace SrtVideoPlayer.Mobile
         {
             ViewModelLocator.Initialize();
             CrossMediaManager.Current.KeepScreenOn = true;
-            CrossMediaManager.Current.MediaPlayer.VideoAspect = MediaManager.Video.VideoAspectMode.AspectFit;
+            CrossMediaManager.Current.MediaPlayer.VideoAspect = VideoAspectMode.AspectFit;
             InitializeComponent();
             MainPage = new NavigationPage(new PlayerPage(videoFile));
         }

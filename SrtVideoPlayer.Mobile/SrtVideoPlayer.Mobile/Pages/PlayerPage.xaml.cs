@@ -3,6 +3,7 @@ using MediaManager.Forms;
 using MediaManager.Media;
 using MediaManager.Playback;
 using MediaManager.Player;
+using MediaManager.Video;
 using SrtVideoPlayer.Mobile.Controls;
 using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Models.Files;
@@ -16,9 +17,12 @@ namespace SrtVideoPlayer.Mobile.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayerPage : KeyboardPage
     {
+        private const double _defaultPinchScale = 1d;
+
         private readonly VideoFile _videoFile;
         private readonly PlayerViewModel _viewModel;
 
+        private double _pinchScale;
         private bool _firstAppearance = true;
         private bool _subtitleCopiedToClipboardToastIsVisible;
         private int _subtitleCopiedToClipboardToastActiveTaps;
@@ -58,8 +62,6 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.StateChanged += Player_StateChanged;
 
             InitializeComponent();
-
-            SizeChanged += Page_SizeChanged;
         }
 
         ~PlayerPage()
@@ -73,8 +75,6 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.MediaItemFinished -= Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged -= Player_PositionChanged;
             CrossMediaManager.Current.StateChanged -= Player_StateChanged;
-
-            SizeChanged -= Page_SizeChanged;
         }
 
         public override void OnKeyUp(string character) =>
@@ -139,8 +139,31 @@ namespace SrtVideoPlayer.Mobile.Pages
             });
         }
 
-        private void Player_Tapped(object sender, EventArgs args) =>
+        private void Player_PinchUpdated(object sender, PinchGestureUpdatedEventArgs args)
+        {
+            switch (args.Status)
+            {
+                case GestureStatus.Started:
+                    _pinchScale = args.Scale;
+                    break;
+                case GestureStatus.Running:
+                    _pinchScale = args.Scale;
+                    break;
+                case GestureStatus.Completed:
+                    if (_pinchScale > _defaultPinchScale)
+                        CrossMediaManager.Current.MediaPlayer.VideoAspect = VideoAspectMode.AspectFill;
+                    else if (_pinchScale < _defaultPinchScale)
+                        CrossMediaManager.Current.MediaPlayer.VideoAspect = VideoAspectMode.AspectFit;
+                    break;
+            }
+        }
+
+        private void Player_Tapped(object sender, EventArgs args)
+        {
+            if (_playbackControlsAreVisible)
+                _viewModel.PlayOrPauseCommand.Execute(null);
             PlaybackControlsAnimation();
+        }
 
         private void PlaybackControls_Tapped(object sender, EventArgs args) =>
             PlaybackControlsAnimation();
@@ -250,7 +273,8 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private void Player_StateChanged(object sender, StateChangedEventArgs args)
         {
-            _viewModel.Buffering = args.State == MediaPlayerState.Buffering;
+            _viewModel.Buffering = _viewModel.MediaLoaded
+                && args.State == MediaPlayerState.Buffering;
             switch (args.State)
             {
                 case MediaPlayerState.Playing:
@@ -300,7 +324,8 @@ namespace SrtVideoPlayer.Mobile.Pages
             var videoAspectRatio = (double)_lastVideoWidth / _lastVideoHeight;
             var containerAspectRatio = containerWidth / containerHeight;
 
-            var scaledVideoHeight = videoAspectRatio > containerAspectRatio ?
+            var scaledVideoHeight = CrossMediaManager.Current.MediaPlayer.VideoAspect == VideoAspectMode.AspectFit
+                && videoAspectRatio > containerAspectRatio ?
                 _lastVideoHeight * containerWidth / _lastVideoWidth :
                 containerHeight;
             var bottonMargin = (containerHeight / 2) - (scaledVideoHeight / 2) + verticalMargin;
