@@ -64,6 +64,24 @@
                 <Grid
                     x:Name="ContainerGrid"
                     ColumnDefinitions="*, 2*, *">
+                    <Grid.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Fullscreen}"
+                            TargetType="Grid"
+                            Value="False">
+                            <Setter
+                                Property="BackgroundColor"
+                                Value="Transparent" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Fullscreen}"
+                            TargetType="Grid"
+                            Value="True">
+                            <Setter
+                                Property="BackgroundColor"
+                                Value="Black" />
+                        </DataTrigger>
+                    </Grid.Triggers>
                     <mm:VideoView
                         x:Name="Player"
                         AutoPlay="True"
