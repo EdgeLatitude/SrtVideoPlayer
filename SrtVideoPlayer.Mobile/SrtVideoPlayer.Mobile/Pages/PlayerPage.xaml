@@ -255,6 +255,30 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
+                    <ffimageloadingsvg:SvgCachedImage
+                        HeightRequest="24"
+                        IsVisible="{Binding Fullscreen, Converter={StaticResource negateBooleanConverter}}"
+                        Source="{DynamicResource OpenFullscreenImage}"
+                        VerticalOptions="Center"
+                        WidthRequest="24">
+                        <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding FullscreenOnCommand}"
+                                Tapped="PlaybackControls_Tapped" />
+                        </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                    </ffimageloadingsvg:SvgCachedImage>
+                    <ffimageloadingsvg:SvgCachedImage
+                        HeightRequest="24"
+                        IsVisible="{Binding Fullscreen}"
+                        Source="{DynamicResource CloseFullscreenImage}"
+                        VerticalOptions="Center"
+                        WidthRequest="24">
+                        <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding FullscreenOffCommand}"
+                                Tapped="PlaybackControls_Tapped" />
+                        </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                    </ffimageloadingsvg:SvgCachedImage>
                 </StackLayout>
             </Frame>
         </Grid>
