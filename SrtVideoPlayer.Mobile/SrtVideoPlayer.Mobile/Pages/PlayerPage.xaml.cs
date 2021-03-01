@@ -109,6 +109,16 @@ namespace SrtVideoPlayer.Mobile.Pages
             base.OnAppearing();
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            if (_viewModel.Fullscreen)
+            {
+                _viewModel.FullscreenOffCommand.Execute(null);
+                return true;
+            }
+            return false;
+        }
+
         private void SubtitleLabel_Tapped(object sender, EventArgs args)
         {
             if (!string.IsNullOrWhiteSpace(SubtitleLabel.Text))
