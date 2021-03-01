@@ -47,17 +47,13 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
             Device.InvokeOnMainThreadAsync(() =>
             {
                 var rootController = UIApplication.SharedApplication.KeyWindow.RootViewController;
-                switch (rootController.PresentedViewController)
+                return rootController.PresentedViewController switch
                 {
-                    case UINavigationController navigationController:
-                        return navigationController.TopViewController;
-                    case UITabBarController tabBarController:
-                        return tabBarController.SelectedViewController;
-                    case null:
-                        return rootController;
-                    default:
-                        return rootController.PresentedViewController;
-                }
+                    UINavigationController navigationController => navigationController.TopViewController,
+                    UITabBarController tabBarController => tabBarController.SelectedViewController,
+                    null => rootController,
+                    _ => rootController.PresentedViewController,
+                };
             });
     }
 }

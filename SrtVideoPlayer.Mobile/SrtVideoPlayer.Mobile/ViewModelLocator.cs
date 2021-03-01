@@ -27,6 +27,7 @@ namespace SrtVideoPlayer.Mobile
             { typeof(CommandFactoryService), typeof(ICommandFactoryService) },
             { typeof(FileDownloaderService), typeof(IFileDownloaderService) },
             { typeof(FilePickerService), typeof(IFilePickerService) },
+            { typeof(FullscreenService), typeof(IFullscreenService) },
             { typeof(MessagingService), typeof(IMessagingService) },
             { typeof(NavigationService), typeof(INavigationService) },
             { typeof(PermissionsService), typeof(IPermissionsService) },

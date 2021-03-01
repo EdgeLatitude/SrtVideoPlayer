@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
+    <Compile Include="DependencyServices\FullscreenDependencyService.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
     <Compile Include="Effects\ShadowEffect.cs" />
     <Compile Include="LaunchScreenActivity.cs" />

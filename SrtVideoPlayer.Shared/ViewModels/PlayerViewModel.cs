@@ -24,6 +24,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IFileDownloaderService _fileDownloaderService;
         private readonly IFilePickerService _filePickerService;
+        private readonly IFullscreenService _fullscreenService;
         private readonly IMessagingService _messagingService;
         private readonly INavigationService _navigationService;
         private readonly IPermissionsService _permissionsService;
@@ -41,9 +42,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public event EventHandler PlayPauseRequested;
         public event EventHandler SeekRequested;
         public event EventHandler StopRequested;
-        public event EventHandler FullscreenOnOffRequested;
-        public event EventHandler FullscreenOnRequested;
-        public event EventHandler FullscreenOffRequested;
 
         public PlayerViewModel(
             IAlertsService alertsService,
@@ -51,6 +49,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             ICommandFactoryService commandFactoryService,
             IFileDownloaderService fileDownloaderService,
             IFilePickerService filePickerService,
+            IFullscreenService fullscreenService,
             IMessagingService messagingService,
             INavigationService navigationService,
             IPermissionsService permissionsService,
@@ -62,6 +61,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _commandFactoryService = commandFactoryService;
             _fileDownloaderService = fileDownloaderService;
             _filePickerService = filePickerService;
+            _fullscreenService = fullscreenService;
             _messagingService = messagingService;
             _navigationService = navigationService;
             _permissionsService = permissionsService;
@@ -95,7 +95,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public Video Source
         {
             get => _source;
-            set
+            private set
             {
                 if (_source == value)
                     return;
@@ -142,7 +142,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public bool SubtitlesAreVisible
         {
             get => _subtitlesAreVisible;
-            set
+            private set
             {
                 if (_subtitlesAreVisible == value)
                     return;
@@ -156,7 +156,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public Subtitle[] Subtitles
         {
             get => _subtitles;
-            set
+            private set
             {
                 if (_subtitles == value)
                     return;
@@ -175,7 +175,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public Subtitle Subtitle
         {
             get => _subtitle;
-            set
+            private set
             {
                 if (_subtitle == value)
                     return;
@@ -217,7 +217,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public int Offset
         {
             get => _offset;
-            set
+            private set
             {
                 if (_offset == value)
                     return;
@@ -231,7 +231,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public string SubtitleColor
         {
             get => _subtitleColor;
-            set
+            private set
             {
                 if (_subtitleColor == value)
                     return;
@@ -245,7 +245,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public int FontSize
         {
             get => _fontSize;
-            set
+            private set
             {
                 if (_fontSize == value)
                     return;
@@ -264,6 +264,34 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 if (_buffering == value)
                     return;
                 _buffering = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _fullscreen;
+
+        public bool Fullscreen
+        {
+            get => _fullscreen;
+            private set
+            {
+                if (_fullscreen == value)
+                    return;
+                _fullscreen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _wideVideo;
+
+        public bool WideVideo
+        {
+            get => _wideVideo;
+            set
+            {
+                if (_wideVideo == value)
+                    return;
+                _wideVideo = value;
                 OnPropertyChanged();
             }
         }
@@ -545,14 +573,25 @@ namespace SrtVideoPlayer.Shared.ViewModels
             SeekRequested?.Invoke(this, new EventArgs());
         }
 
-        private void FullscreenOnOff() =>
-            FullscreenOnOffRequested?.Invoke(this, new EventArgs());
+        private void FullscreenOnOff()
+        {
+            if (Fullscreen)
+                FullscreenOff();
+            else
+                FullscreenOn();
+        }
 
-        private void FullscreenOn() =>
-            FullscreenOnRequested?.Invoke(this, new EventArgs());
+        private void FullscreenOn()
+        {
+            _fullscreenService.Enable(WideVideo);
+            Fullscreen = true;
+        }
 
-        private void FullscreenOff() =>
-            FullscreenOffRequested?.Invoke(this, new EventArgs());
+        private void FullscreenOff()
+        {
+            _fullscreenService.Disable();
+            Fullscreen = false;
+        }
 
         private void MuteUnmute() =>
             Volume = Volume == _one ?
