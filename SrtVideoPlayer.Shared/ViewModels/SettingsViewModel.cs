@@ -28,8 +28,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private readonly Dictionary<string, string> _subtitleColorsDictionary = new Dictionary<string, string>
         {
-            { LocalizedStrings.White, Colors.White },
             { LocalizedStrings.Yellow, Colors.Yellow },
+            { LocalizedStrings.White, Colors.White },
             { LocalizedStrings.Cyan, Colors.Cyan }
         };
 
