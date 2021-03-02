@@ -328,7 +328,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             _lastVideoHeight = videoHeight;
             _lastVideoWidth = videoWidth;
 
-            _viewModel.WideVideo = _lastVideoWidth > _lastVideoHeight;
+            _viewModel.LandscapeVideo = _lastVideoWidth > _lastVideoHeight;
 
             var containerHeight = ContainerGrid.Height;
             var containerWidth = ContainerGrid.Width;

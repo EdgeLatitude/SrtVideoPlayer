@@ -1,5 +1,8 @@
 ﻿using Foundation;
+using SrtVideoPlayer.Mobile.Pages;
 using SrtVideoPlayer.Shared.Models.Files;
+using SrtVideoPlayer.Shared.ViewModels;
+using System.Linq;
 using UIKit;
 
 namespace SrtVideoPlayer.Mobile.iOS
@@ -30,6 +33,18 @@ namespace SrtVideoPlayer.Mobile.iOS
                 LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations(UIApplication application, UIWindow forWindow)
+        {
+            if (Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.Last() is PlayerPage playerPage
+                && playerPage.BindingContext is PlayerViewModel playerViewModel
+                && playerViewModel.Fullscreen)
+                if (playerViewModel.LandscapeVideo)
+                    return UIInterfaceOrientationMask.LandscapeRight;
+                else
+                    return UIInterfaceOrientationMask.Portrait;
+            return UIInterfaceOrientationMask.All;
         }
     }
 }

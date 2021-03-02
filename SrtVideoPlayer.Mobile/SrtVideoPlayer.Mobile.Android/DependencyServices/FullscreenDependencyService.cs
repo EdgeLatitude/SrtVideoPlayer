@@ -16,7 +16,9 @@ namespace SrtVideoPlayer.Mobile.Droid.DependencyServices
 
         public void Enable(bool landscapeMode) => Device.BeginInvokeOnMainThread(() =>
         {
-            Platform.CurrentActivity.RequestedOrientation = Android.Content.PM.ScreenOrientation.SensorLandscape;
+            Platform.CurrentActivity.RequestedOrientation = landscapeMode ?
+                Android.Content.PM.ScreenOrientation.SensorLandscape :
+                Android.Content.PM.ScreenOrientation.SensorPortrait;
             Platform.CurrentActivity.Window.DecorView.SystemUiVisibility =
                 (StatusBarVisibility)(SystemUiFlags.Fullscreen
                     | SystemUiFlags.HideNavigation

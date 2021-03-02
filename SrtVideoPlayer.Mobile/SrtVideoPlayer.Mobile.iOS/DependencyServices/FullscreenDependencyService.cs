@@ -23,6 +23,8 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
             UIApplication.SharedApplication.StatusBarHidden = true;
             if (landscapeMode)
                 UIDevice.CurrentDevice.SetValueForKey(new NSNumber((int)UIInterfaceOrientation.LandscapeRight), new NSString(_orientationKey));
+            else
+                UIDevice.CurrentDevice.SetValueForKey(new NSNumber((int)UIInterfaceOrientation.Portrait), new NSString(_orientationKey));
         }
     }
 }

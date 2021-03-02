@@ -58,7 +58,10 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
                     correspondingPage.On<iOS>().SetPrefersHomeIndicatorAutoHidden(true);
                     var lastPadding = correspondingPage.Padding;
                     correspondingPage.On<iOS>().SetUseSafeArea(false);
-                    correspondingPage.Padding = new Thickness(lastPadding.Left, 0, lastPadding.Right, 0);
+                    if (landscapeMode)
+                        correspondingPage.Padding = new Thickness(lastPadding.Left, 0, lastPadding.Right, 0);
+                    else
+                        correspondingPage.Padding = new Thickness(0, lastPadding.Top, 0, lastPadding.Bottom);
                 }
             }
         }

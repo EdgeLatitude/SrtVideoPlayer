@@ -282,16 +282,16 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private bool _wideVideo;
+        private bool _landscapeVideo;
 
-        public bool WideVideo
+        public bool LandscapeVideo
         {
-            get => _wideVideo;
+            get => _landscapeVideo;
             set
             {
-                if (_wideVideo == value)
+                if (_landscapeVideo == value)
                     return;
-                _wideVideo = value;
+                _landscapeVideo = value;
                 OnPropertyChanged();
             }
         }
@@ -583,14 +583,14 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private void FullscreenOn()
         {
-            _fullscreenService.Enable(this, WideVideo);
             Fullscreen = true;
+            _fullscreenService.Enable(this, LandscapeVideo);
         }
 
         private void FullscreenOff()
         {
-            _fullscreenService.Disable(this);
             Fullscreen = false;
+            _fullscreenService.Disable(this);
         }
 
         private void MuteUnmute() =>
