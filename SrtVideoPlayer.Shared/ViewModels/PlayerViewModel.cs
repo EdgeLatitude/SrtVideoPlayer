@@ -583,13 +583,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private void FullscreenOn()
         {
-            _fullscreenService.Enable(WideVideo);
+            _fullscreenService.Enable(this, WideVideo);
             Fullscreen = true;
         }
 
         private void FullscreenOff()
         {
-            _fullscreenService.Disable();
+            _fullscreenService.Disable(this);
             Fullscreen = false;
         }
 

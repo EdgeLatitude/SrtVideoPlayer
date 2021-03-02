@@ -71,5 +71,7 @@
       <string>audio</string>
       <string>fetch</string>
     </array>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
   </dict>
 </plist>

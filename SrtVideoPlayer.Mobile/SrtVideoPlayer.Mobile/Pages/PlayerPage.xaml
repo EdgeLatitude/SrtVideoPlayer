@@ -58,6 +58,24 @@
             </ToolbarItem.Priority>
         </ToolbarItem>
     </controls:KeyboardPage.ToolbarItems>
+    <controls:KeyboardPage.Triggers>
+        <DataTrigger
+            Binding="{Binding Fullscreen}"
+            TargetType="controls:KeyboardPage"
+            Value="False">
+            <Setter
+                Property="BackgroundColor"
+                Value="Transparent" />
+        </DataTrigger>
+        <DataTrigger
+            Binding="{Binding Fullscreen}"
+            TargetType="controls:KeyboardPage"
+            Value="True">
+            <Setter
+                Property="BackgroundColor"
+                Value="Black" />
+        </DataTrigger>
+    </controls:KeyboardPage.Triggers>
     <Grid>
         <Grid>
             <Grid>
