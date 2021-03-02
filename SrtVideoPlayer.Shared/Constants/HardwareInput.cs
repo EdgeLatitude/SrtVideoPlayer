@@ -9,7 +9,7 @@
             KeyboardShortcuts.GoBack10_Seconds,
             KeyboardShortcuts.GoForward10_Seconds,
             KeyboardShortcuts.Restart,
-            KeyboardShortcuts.FullscreenOn,
+            KeyboardShortcuts.FullscreenOnOff,
             KeyboardShortcuts.MuteUnmute,
             KeyboardShortcuts.CaptionsOnOff
         };

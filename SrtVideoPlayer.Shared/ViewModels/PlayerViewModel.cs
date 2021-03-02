@@ -534,8 +534,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 case KeyboardShortcuts.Restart:
                     Restart();
                     break;
-                case KeyboardShortcuts.FullscreenOn:
-                    FullscreenOn();
+                case KeyboardShortcuts.FullscreenOnOff:
+                    FullscreenOnOff();
                     break;
                 case KeyboardShortcuts.MuteUnmute:
                     MuteUnmute();
@@ -556,6 +556,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Position = TimeSpan.Zero;
             Duration = null;
             Subtitles = null;
+            if (Fullscreen)
+                FullscreenOff();
         }
 
         private void Seek(bool forward, int seconds)
