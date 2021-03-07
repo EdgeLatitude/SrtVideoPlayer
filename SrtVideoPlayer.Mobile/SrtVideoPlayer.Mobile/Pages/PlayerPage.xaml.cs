@@ -204,15 +204,15 @@ namespace SrtVideoPlayer.Mobile.Pages
             });
         }
 
-        private void ViewModel_PlayPauseRequested(object sender, EventArgs args)
+        private async void ViewModel_PlayPauseRequested(object sender, EventArgs args)
         {
             switch (Player.State)
             {
                 case MediaPlayerState.Playing:
-                    CrossMediaManager.Current.Pause();
+                    await CrossMediaManager.Current.Pause();
                     break;
                 case MediaPlayerState.Paused:
-                    CrossMediaManager.Current.Play();
+                    await CrossMediaManager.Current.Play();
                     break;
             }
         }
@@ -224,8 +224,8 @@ namespace SrtVideoPlayer.Mobile.Pages
             ProgressSlider.Value = (double)_viewModel.Position.Ticks / duration.Ticks;
         }
 
-        private void ViewModel_StopRequested(object sender, EventArgs args) =>
-            CrossMediaManager.Current.Stop();
+        private async void ViewModel_StopRequested(object sender, EventArgs args) =>
+            await CrossMediaManager.Current.Stop();
 
         private void Player_BufferedChanged(object sender, BufferedChangedEventArgs args)
         {
@@ -299,13 +299,13 @@ namespace SrtVideoPlayer.Mobile.Pages
             }
         }
 
-        private void ProgressSlider_ValueChanged(object sender, ValueChangedEventArgs args)
+        private async void ProgressSlider_ValueChanged(object sender, ValueChangedEventArgs args)
         {
             if (_progressSliderIsLocked)
                 return;
             var duration = CrossMediaManager.Current.Duration;
             var position = duration * args.NewValue;
-            CrossMediaManager.Current.SeekTo(position);
+            await CrossMediaManager.Current.SeekTo(position);
         }
 
         private void Page_SizeChanged(object sender, EventArgs args) =>
