@@ -234,6 +234,8 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs args)
         {
+            if (Player.State != MediaPlayerState.Failed)
+                return;
             await DisplayAlert(LocalizedStrings.Error, $"{LocalizedStrings.MediaError}{Environment.NewLine}{args.Message}", LocalizedStrings.Ok);
             _viewModel.StopCommand.Execute(null);
         }
@@ -258,6 +260,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             if (firstPlayback)
             {
                 _firstPlayback = false;
+                _viewModel.Volume = Player.Volume;
                 Player.SetBinding(VideoView.VolumeProperty, nameof(_viewModel.Volume));
             }
 
