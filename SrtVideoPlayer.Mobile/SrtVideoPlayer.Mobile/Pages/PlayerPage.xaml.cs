@@ -22,6 +22,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         private readonly VideoFile _videoFile;
         private readonly PlayerViewModel _viewModel;
 
+        private IVideoView _videoView;
         private double _pinchScale;
         private bool _firstAppearance = true;
         private bool _subtitleCopiedToClipboardToastIsVisible;
@@ -106,6 +107,11 @@ namespace SrtVideoPlayer.Mobile.Pages
                 _ = _viewModel.Launch(_videoFile);
                 _firstAppearance = false;
             }
+            if (Device.RuntimePlatform == Device.iOS)
+                if (CrossMediaManager.Current.MediaPlayer.VideoView == null)
+                    CrossMediaManager.Current.MediaPlayer.VideoView = _videoView;
+                else
+                    _videoView = CrossMediaManager.Current.MediaPlayer.VideoView;
             base.OnAppearing();
         }
 
