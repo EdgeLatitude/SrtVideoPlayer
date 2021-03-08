@@ -24,7 +24,7 @@
     <key>MinimumOSVersion</key>
     <string>8.0</string>
     <key>CFBundleDisplayName</key>
-    <string>Video Player</string>
+    <string>Video player</string>
     <key>CFBundleIdentifier</key>
     <string>com.edgelatitude.srtvideoplayer</string>
     <key>CFBundleVersion</key>
