@@ -40,10 +40,9 @@ namespace SrtVideoPlayer.Mobile.iOS
             if (Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.Last() is PlayerPage playerPage
                 && playerPage.BindingContext is PlayerViewModel playerViewModel
                 && playerViewModel.Fullscreen)
-                if (playerViewModel.LandscapeVideo)
-                    return UIInterfaceOrientationMask.LandscapeRight;
-                else
-                    return UIInterfaceOrientationMask.Portrait;
+                return playerViewModel.LandscapeVideo ?
+                    UIInterfaceOrientationMask.LandscapeRight :
+                    UIInterfaceOrientationMask.Portrait;
             return UIInterfaceOrientationMask.All;
         }
     }
