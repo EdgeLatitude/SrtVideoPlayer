@@ -45,6 +45,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         };
 
         private TimeSpan _lastHistoryPosition = TimeSpan.Zero;
+        private double? _originalVolume;
 
         public event EventHandler PlayPauseRequested;
         public event EventHandler SeekRequested;
@@ -205,7 +206,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private double _volume = _one;
+        private double _volume;
 
         public double Volume
         {
@@ -612,10 +613,16 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _fullscreenService.Disable(this);
         }
 
-        private void MuteUnmute() =>
-            Volume = Volume == _one ?
-                _zero :
-                _one;
+        private void MuteUnmute()
+        {
+            if (Volume > _zero)
+            {
+                _originalVolume = Volume;
+                Volume = _zero;
+            }
+            else
+                Volume = _originalVolume ?? _one;
+        }
 
         private void CaptionsOnOff() =>
             SubtitlesAreVisible = !SubtitlesAreVisible;
