@@ -344,20 +344,15 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public async Task Launch(VideoFile videoFile = null)
         {
+            var lastPosition = Settings.Instance.GetLastPosition();
+            var lastPlayback = (await Settings.Instance.GetPlaybackHistoryAsync()).LastOrDefault();
+
             if (videoFile != null)
             {
-                await LoadVideo(videoFile);
-                return;
-            }
-
-            if (Source == null)
-            {
-                var lastPosition = Settings.Instance.GetLastPosition();
-                if (lastPosition > TimeSpan.Zero)
-                {
-                    var lastPlayback = (await Settings.Instance.GetPlaybackHistoryAsync()).LastOrDefault();
-                    if (lastPlayback != null
-                        && await _alertsService.DisplayConfirmationAsync(
+                if (lastPosition > TimeSpan.Zero
+                    && lastPlayback != null
+                    && lastPlayback.Video.Location == videoFile.Path)
+                    if (await _alertsService.DisplayConfirmationAsync(
                             null,
                             LocalizedStrings.RestoreLastPlaybackPrompt,
                             LocalizedStrings.Yes,
@@ -366,11 +361,29 @@ namespace SrtVideoPlayer.Shared.ViewModels
                         Source = lastPlayback.Video;
                         Subtitles = lastPlayback.Subtitles;
                         LastPositionFromHistory = lastPosition;
+                        return;
                     }
                     else
                         Settings.Instance.SetLastPosition(TimeSpan.Zero);
-                }
+                await LoadVideo(videoFile);
+                return;
             }
+
+            if (Source == null
+                && lastPosition > TimeSpan.Zero
+                && lastPlayback != null)
+                if (await _alertsService.DisplayConfirmationAsync(
+                        null,
+                        LocalizedStrings.RestoreLastPlaybackPrompt,
+                        LocalizedStrings.Yes,
+                        LocalizedStrings.No))
+                {
+                    Source = lastPlayback.Video;
+                    Subtitles = lastPlayback.Subtitles;
+                    LastPositionFromHistory = lastPosition;
+                }
+                else
+                    Settings.Instance.SetLastPosition(TimeSpan.Zero);
         }
 
         private async Task LoadVideo(VideoFile videoFile = null)
