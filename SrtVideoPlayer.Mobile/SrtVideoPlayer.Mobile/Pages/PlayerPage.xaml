@@ -65,7 +65,8 @@
             Value="False">
             <Setter
                 Property="BackgroundColor"
-                Value="Transparent" />
+                Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
+                                   iOS={DynamicResource iOSPageBackgroundColor}}" />
         </DataTrigger>
         <DataTrigger
             Binding="{Binding Fullscreen}"
