@@ -4,7 +4,7 @@ namespace SrtVideoPlayer.Shared.PlatformServices
 {
     public interface IPermissionsService
     {
-        Task<bool> CheckMediaAccessPermission();
-        Task<bool> RequestMediaAccessPermission();
+        Task<bool> CheckMediaAndFilesAccessPermissions();
+        Task<bool> RequestMediaAndFilesAccessPermissions();
     }
 }

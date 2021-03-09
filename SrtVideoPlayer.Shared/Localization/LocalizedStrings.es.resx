@@ -176,8 +176,11 @@
   <data name="Web" xml:space="preserve">
     <value>Web</value>
   </data>
-  <data name="LocalStorage" xml:space="preserve">
-    <value>Almacenamiento local</value>
+  <data name="Gallery" xml:space="preserve">
+    <value>Galería</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Archivos</value>
   </data>
   <data name="SubtitlesSource" xml:space="preserve">
     <value>Origen de los subtítulos:</value>

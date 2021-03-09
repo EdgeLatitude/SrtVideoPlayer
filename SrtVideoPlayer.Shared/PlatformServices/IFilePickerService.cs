@@ -5,7 +5,8 @@ namespace SrtVideoPlayer.Shared.PlatformServices
 {
     public interface IFilePickerService
     {
-        Task<VideoFile> SelectVideoAsync();
+        Task<VideoFile> SelectVideoFromGalleryAsync();
+        Task<VideoFile> SelectVideoFromFilesAsync();
         Task<SubtitlesFile> SelectSubtitlesAsync();
     }
 }

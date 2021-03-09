@@ -9,7 +9,22 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
 {
     class FilePickerService : IFilePickerService
     {
-        public async Task<VideoFile> SelectVideoAsync()
+        public async Task<VideoFile> SelectVideoFromGalleryAsync()
+        {
+            var file = await MediaPicker.PickVideoAsync(new MediaPickerOptions
+            {
+                Title = LocalizedStrings.SelectVideo
+            });
+            if (file == null)
+                return null;
+            return new VideoFile
+            {
+                Name = file.FileName,
+                Path = file.FullPath
+            };
+        }
+
+        public async Task<VideoFile> SelectVideoFromFilesAsync()
         {
             var file = await FilePicker.PickAsync(new PickOptions
             {

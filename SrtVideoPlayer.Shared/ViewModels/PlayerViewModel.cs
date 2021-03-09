@@ -31,10 +31,17 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private readonly IPlatformInformationService _platformInformationService;
         private readonly ITimerService _timerService;
 
-        private readonly string[] _mediaSourceOptions = new string[]
+        private readonly string[] _videoSourceOptions = new string[]
         {
             LocalizedStrings.Web,
-            LocalizedStrings.LocalStorage
+            LocalizedStrings.Gallery,
+            LocalizedStrings.Files,
+        };
+
+        private readonly string[] _subtitlesSourceOptions = new string[]
+        {
+            LocalizedStrings.Web,
+            LocalizedStrings.Files
         };
 
         private TimeSpan _lastHistoryPosition = TimeSpan.Zero;
@@ -365,7 +372,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private async Task LoadVideo(VideoFile videoFile = null)
         {
-            if (!await CheckAndRequestMediaAccessPermission())
+            if (!await CheckAndRequestForMediaAndFilesAccessPermissions())
                 return;
 
             Video video = default;
@@ -376,14 +383,16 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 {
                     videoSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.VideoSource,
                         null,
-                        _mediaSourceOptions);
+                        _videoSourceOptions);
 
                     if (videoSource != null
-                        && _mediaSourceOptions.Contains(videoSource))
+                        && _videoSourceOptions.Contains(videoSource))
                         if (videoSource == LocalizedStrings.Web)
                             video = await LoadWebVideo();
-                        else if (videoSource == LocalizedStrings.LocalStorage)
-                            video = await LoadLocalVideo();
+                        else if (videoSource == LocalizedStrings.Gallery)
+                            video = await LoadLocalVideoFromGallery();
+                        else if (videoSource == LocalizedStrings.Files)
+                            video = await LoadLocalVideoFromFiles();
 
                 } while (videoSource != LocalizedStrings.Cancel
                     && video == null);
@@ -400,14 +409,14 @@ namespace SrtVideoPlayer.Shared.ViewModels
             {
                 subtitlesSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.SubtitlesSource,
                     LocalizedStrings.NoSubtitles,
-                    _mediaSourceOptions);
+                    _subtitlesSourceOptions);
 
                 if (subtitlesSource != null
-                    && _mediaSourceOptions.Contains(subtitlesSource))
+                    && _subtitlesSourceOptions.Contains(subtitlesSource))
                 {
                     if (subtitlesSource == LocalizedStrings.Web)
                         subtitles = await LoadWebSubtitles();
-                    else if (subtitlesSource == LocalizedStrings.LocalStorage)
+                    else if (subtitlesSource == LocalizedStrings.Files)
                         subtitles = await LoadLocalSubtitles();
                 }
                 else if (subtitlesSource == LocalizedStrings.NoSubtitles)
@@ -432,10 +441,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
             });
         }
 
-        private async Task<bool> CheckAndRequestMediaAccessPermission()
+        private async Task<bool> CheckAndRequestForMediaAndFilesAccessPermissions()
         {
-            var accessGranted = await _permissionsService.CheckMediaAccessPermission()
-                || await _permissionsService.RequestMediaAccessPermission();
+            var accessGranted = await _permissionsService.CheckMediaAndFilesAccessPermissions()
+                || await _permissionsService.RequestMediaAndFilesAccessPermissions();
             if (!accessGranted)
                 await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourMediaFiles);
             return accessGranted;
@@ -453,9 +462,17 @@ namespace SrtVideoPlayer.Shared.ViewModels
             return new Video(General.RemoveProtocolAndSlashesFromAddress(webSource), webSource);
         }
 
-        private async Task<Video> LoadLocalVideo()
+        private async Task<Video> LoadLocalVideoFromGallery()
         {
-            var file = await _filePickerService.SelectVideoAsync();
+            var file = await _filePickerService.SelectVideoFromGalleryAsync();
+            if (file == null)
+                return null;
+            return new Video(file.Name, file.Path);
+        }
+
+        private async Task<Video> LoadLocalVideoFromFiles()
+        {
+            var file = await _filePickerService.SelectVideoFromFilesAsync();
             if (file == null)
                 return null;
             return new Video(file.Name, file.Path);

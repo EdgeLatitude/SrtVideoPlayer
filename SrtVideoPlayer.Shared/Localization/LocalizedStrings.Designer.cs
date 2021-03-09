@@ -196,11 +196,29 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Files.
+        /// </summary>
+        public static string Files {
+            get {
+                return ResourceManager.GetString("Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Font size.
         /// </summary>
         public static string FontSize {
             get {
                 return ResourceManager.GetString("FontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Gallery.
+        /// </summary>
+        public static string Gallery {
+            get {
+                return ResourceManager.GetString("Gallery", resourceCulture);
             }
         }
         
@@ -237,15 +255,6 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string Light {
             get {
                 return ResourceManager.GetString("Light", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Local storage.
-        /// </summary>
-        public static string LocalStorage {
-            get {
-                return ResourceManager.GetString("LocalStorage", resourceCulture);
             }
         }
         

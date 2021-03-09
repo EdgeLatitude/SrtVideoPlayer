@@ -6,16 +6,30 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
 {
     class PermissionsService : IPermissionsService
     {
-        public async Task<bool> CheckMediaAccessPermission() =>
-            await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted;
+        public async Task<bool> CheckMediaAndFilesAccessPermissions() =>
+            await Permissions.CheckStatusAsync<Permissions.Photos>() == PermissionStatus.Granted
+                && await Permissions.CheckStatusAsync<Permissions.Photos>() == PermissionStatus.Granted;
 
-        public async Task<bool> RequestMediaAccessPermission()
+        public async Task<bool> RequestMediaAndFilesAccessPermissions()
         {
-            var storageReadAccessStatus = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+            var photosAccessStatus = await Permissions.CheckStatusAsync<Permissions.Photos>();
+            switch (photosAccessStatus)
+            {
+                case PermissionStatus.Unknown:
+                    if (await Permissions.RequestAsync<Permissions.Photos>() != PermissionStatus.Granted)
+                        return false;
+                    break;
+                case PermissionStatus.Denied:
+                case PermissionStatus.Disabled:
+                case PermissionStatus.Restricted:
+                    return false;
+            }
+
+            var storageReadAccessStatus = await Permissions.CheckStatusAsync<Permissions.Photos>();
             switch (storageReadAccessStatus)
             {
                 case PermissionStatus.Unknown:
-                    if (await Permissions.RequestAsync<Permissions.StorageRead>() != PermissionStatus.Granted)
+                    if (await Permissions.RequestAsync<Permissions.Photos>() != PermissionStatus.Granted)
                         return false;
                     break;
                 case PermissionStatus.Denied:
