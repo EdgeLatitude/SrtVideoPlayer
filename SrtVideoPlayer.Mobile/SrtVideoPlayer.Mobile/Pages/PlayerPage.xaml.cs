@@ -247,7 +247,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         }
 
         private void Player_MediaItemFinished(object sender, MediaItemEventArgs args) =>
-            PlaybackControlsAnimation();
+            _viewModel.StopCommand.Execute(null);
 
         private void Player_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs args)
         {
