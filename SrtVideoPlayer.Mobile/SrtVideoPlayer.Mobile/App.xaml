@@ -61,7 +61,9 @@
                                        iOS=Default}" />
         </Style>
         <Style TargetType="ffimageloadingsvg:SvgCachedImage">
+            <Setter Property="FadeAnimationDuration" Value="0" />
             <Setter Property="FadeAnimationEnabled" Value="False" />
+            <Setter Property="FadeAnimationForCachedImages" Value="False" />
         </Style>
         <Style TargetType="Frame">
             <Setter Property="BackgroundColor"
