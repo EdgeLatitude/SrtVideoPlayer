@@ -367,6 +367,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
                         Subtitles = lastPlayback.Subtitles;
                         LastPositionFromHistory = lastPosition;
                     }
+                    else
+                        Settings.Instance.SetLastPosition(TimeSpan.Zero);
                 }
             }
         }
