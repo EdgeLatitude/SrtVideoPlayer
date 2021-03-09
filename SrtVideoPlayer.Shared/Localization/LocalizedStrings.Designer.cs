@@ -331,11 +331,11 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Please, grant access to your media files..
+        ///   Busca una cadena traducida similar a Please, grant access to your gallery and files..
         /// </summary>
-        public static string PleaseGrantAccessToYourMediaFiles {
+        public static string PleaseGrantAccessToYourGalleryAndFiles {
             get {
-                return ResourceManager.GetString("PleaseGrantAccessToYourMediaFiles", resourceCulture);
+                return ResourceManager.GetString("PleaseGrantAccessToYourGalleryAndFiles", resourceCulture);
             }
         }
         

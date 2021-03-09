@@ -197,8 +197,8 @@
   <data name="PleaseEnterAValidUrl" xml:space="preserve">
     <value>Por favor, ingresa un URL válido.</value>
   </data>
-  <data name="PleaseGrantAccessToYourMediaFiles" xml:space="preserve">
-    <value>Por favor, concede acceso a tus archivos multimedia.</value>
+  <data name="PleaseGrantAccessToYourGalleryAndFiles" xml:space="preserve">
+    <value>Por favor, concede acceso a tu galería y archivos multimedia.</value>
   </data>
   <data name="Subtitles" xml:space="preserve">
     <value>Subtítulos</value>

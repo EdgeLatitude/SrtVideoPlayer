@@ -446,7 +446,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             var accessGranted = await _permissionsService.CheckMediaAndFilesAccessPermissions()
                 || await _permissionsService.RequestMediaAndFilesAccessPermissions();
             if (!accessGranted)
-                await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourMediaFiles);
+                await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourGalleryAndFiles);
             return accessGranted;
         }
 
