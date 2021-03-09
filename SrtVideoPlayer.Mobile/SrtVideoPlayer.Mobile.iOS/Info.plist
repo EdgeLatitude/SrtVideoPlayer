@@ -44,6 +44,8 @@
       <string>en</string>
       <string>es</string>
     </array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Access to the photo library is necessary to be able to select videos that are in it.</string>
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleLightContent</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>

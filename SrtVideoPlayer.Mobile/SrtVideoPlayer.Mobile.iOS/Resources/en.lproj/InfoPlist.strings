@@ -1,2 +1,3 @@
 ﻿CFBundleDisplayName = "Video player";
 CFBundleName = "Video player ft. subtitles";
+NSPhotoLibraryUsageDescription = "Access to the photo library is necessary to be able to select videos that are in it.";
