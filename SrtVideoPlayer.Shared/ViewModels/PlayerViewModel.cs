@@ -698,6 +698,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 return false;
             }
 
+            if (!SubtitlesLocationSet)
+                return true;
+
             var offset = Offset;
             var positionWithOffset = Position.Add(TimeSpan.FromMilliseconds(-offset));
             Subtitle = subtitles.LastOrDefault(subtitle =>

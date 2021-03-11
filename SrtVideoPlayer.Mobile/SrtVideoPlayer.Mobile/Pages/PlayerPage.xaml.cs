@@ -107,6 +107,7 @@ namespace SrtVideoPlayer.Mobile.Pages
                 _ = _viewModel.Launch(_videoFile);
                 _firstAppearance = false;
             }
+            // iOS bug fix.
             if (Device.RuntimePlatform == Device.iOS)
                 if (CrossMediaManager.Current.MediaPlayer.VideoView == null)
                     CrossMediaManager.Current.MediaPlayer.VideoView = _videoView;
@@ -279,15 +280,18 @@ namespace SrtVideoPlayer.Mobile.Pages
 
             if (firstPlayback
                 && _viewModel.LastPositionFromHistory.HasValue)
+            {
                 Device.BeginInvokeOnMainThread(() =>
                     ProgressSlider.Value = (double)_viewModel.LastPositionFromHistory.Value.Ticks / duration.Ticks);
-            else
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    _progressSliderIsLocked = true;
-                    ProgressSlider.Value = (double)position.Ticks / duration.Ticks;
-                    _progressSliderIsLocked = false;
-                });
+                return;
+            }
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                _progressSliderIsLocked = true;
+                ProgressSlider.Value = (double)position.Ticks / duration.Ticks;
+                _progressSliderIsLocked = false;
+            });
 
             SetSubtitlesPosition(false);
         }
