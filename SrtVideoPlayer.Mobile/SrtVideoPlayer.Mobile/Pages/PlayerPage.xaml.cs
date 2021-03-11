@@ -320,8 +320,11 @@ namespace SrtVideoPlayer.Mobile.Pages
             await CrossMediaManager.Current.SeekTo(position);
         }
 
-        private void Page_SizeChanged(object sender, EventArgs args) =>
-            SetSubtitlesPosition(true);
+        private void Page_SizeChanged(object sender, EventArgs args)
+        {
+            if (_viewModel.MediaLoaded)
+                SetSubtitlesPosition(true);
+        }
 
         private void SetSubtitlesPosition(bool pageSizeChanged)
         {
@@ -333,11 +336,7 @@ namespace SrtVideoPlayer.Mobile.Pages
 
             if (videoHeight == default
                 || videoWidth == default)
-            {
-                if (!_viewModel.SubtitlesLocationSet)
-                    Device.BeginInvokeOnMainThread(() => _viewModel.SubtitlesLocationSet = true);
                 return;
-            }
 
             if (!pageSizeChanged
                 && videoHeight == _lastVideoHeight
