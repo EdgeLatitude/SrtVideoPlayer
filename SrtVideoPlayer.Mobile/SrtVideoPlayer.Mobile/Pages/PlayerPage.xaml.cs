@@ -329,12 +329,20 @@ namespace SrtVideoPlayer.Mobile.Pages
 
             if (videoHeight == default
                 || videoWidth == default)
+            {
+                if (!_viewModel.SubtitlesLocationSet)
+                    Device.BeginInvokeOnMainThread(() => _viewModel.SubtitlesLocationSet = true);
                 return;
+            }
 
             if (!pageSizeChanged
                 && videoHeight == _lastVideoHeight
                 && videoWidth == _lastVideoWidth)
+            {
+                if (!_viewModel.SubtitlesLocationSet)
+                    Device.BeginInvokeOnMainThread(() => _viewModel.SubtitlesLocationSet = true);
                 return;
+            }
 
             _lastVideoHeight = videoHeight;
             _lastVideoWidth = videoWidth;
@@ -354,7 +362,10 @@ namespace SrtVideoPlayer.Mobile.Pages
             var bottonMargin = (containerHeight / 2) - (scaledVideoHeight / 2) + verticalMargin;
 
             Device.BeginInvokeOnMainThread(() =>
-                SubtitleLabel.Margin = new Thickness(horizontalMargin, verticalMargin, horizontalMargin, bottonMargin));
+            {
+                SubtitleLabel.Margin = new Thickness(horizontalMargin, verticalMargin, horizontalMargin, bottonMargin);
+                _viewModel.SubtitlesLocationSet = true;
+            });
         }
     }
 }

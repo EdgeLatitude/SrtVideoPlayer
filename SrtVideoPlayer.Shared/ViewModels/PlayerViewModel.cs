@@ -112,6 +112,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
                 if (string.IsNullOrWhiteSpace(value?.Location))
                     MediaLoaded = false;
+                else
+                    SubtitlesLocationSet = false;
             }
         }
 
@@ -145,17 +147,33 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private bool _subtitlesAreVisible = true;
+        private bool _subtitlesAreEnabled = true;
 
-        public bool SubtitlesAreVisible
+        public bool SubtitlesAreEnabled
         {
-            get => _subtitlesAreVisible;
+            get => _subtitlesAreEnabled;
             private set
             {
-                if (_subtitlesAreVisible == value)
+                if (_subtitlesAreEnabled == value)
                     return;
-                _subtitlesAreVisible = value;
+                _subtitlesAreEnabled = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SubtitlesAreVisible));
+            }
+        }
+
+        private bool _subtitlesLocationSet;
+
+        public bool SubtitlesLocationSet
+        {
+            get => _subtitlesLocationSet;
+            set
+            {
+                if (_subtitlesLocationSet == value)
+                    return;
+                _subtitlesLocationSet = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SubtitlesAreVisible));
             }
         }
 
@@ -317,6 +335,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public bool SubtitlesAreVisible => SubtitlesAreEnabled && SubtitlesLocationSet;
 
         public TimeSpan? LastPositionFromHistory { get; set; }
 
@@ -667,7 +687,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         }
 
         private void CaptionsOnOff() =>
-            SubtitlesAreVisible = !SubtitlesAreVisible;
+            SubtitlesAreEnabled = !SubtitlesAreEnabled;
 
         private bool SetCurrentSubtitle()
         {
