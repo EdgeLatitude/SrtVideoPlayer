@@ -18,6 +18,6 @@ namespace SrtVideoPlayer.Mobile.Converters
             object parameter, CultureInfo culture) =>
             value is string stringValue ?
                 General.ConvertShortestStringToTimeSpan(stringValue) :
-            null;
+                null;
     }
 }

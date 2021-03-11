@@ -17,6 +17,7 @@
         <Color x:Key="BarBackgroundColor">#00366C</Color>
         <Color x:Key="BarForegroundColor">#FFFFFF</Color>
         <!-- Converters !-->
+        <converters:FontSizeConverter x:Key="fontSizeConverter" />
         <converters:HexColorConverter x:Key="hexColorConverter" />
         <converters:NegateBooleanConverter x:Key="negateBooleanConverter" />
         <converters:TimeSpanFormatConverter x:Key="timeSpanFormatConverter" />

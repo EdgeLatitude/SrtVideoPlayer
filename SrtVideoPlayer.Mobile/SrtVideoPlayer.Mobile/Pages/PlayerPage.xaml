@@ -109,7 +109,7 @@
                         Source="{Binding Source.Location}" />
                     <Label
                         x:Name="SubtitleLabel"
-                        FontSize="{Binding FontSize}"
+                        FontSize="{Binding FontSize, Converter={StaticResource fontSizeConverter}}"
                         Grid.ColumnSpan="3"
                         HorizontalOptions="Center"
                         HorizontalTextAlignment="Center"
