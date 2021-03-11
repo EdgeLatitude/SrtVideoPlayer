@@ -167,6 +167,9 @@
   <data name="DownloadingFile" xml:space="preserve">
     <value>Descargando archivo...</value>
   </data>
+  <data name="DownloadingSubtitles" xml:space="preserve">
+    <value>Descargando subtítulos...</value>
+  </data>
   <data name="SubtitleCopiedToClipboard" xml:space="preserve">
     <value>Subtítulo copiado al portapapeles</value>
   </data>

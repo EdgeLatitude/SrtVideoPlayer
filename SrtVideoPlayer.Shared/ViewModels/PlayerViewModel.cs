@@ -525,7 +525,12 @@ namespace SrtVideoPlayer.Shared.ViewModels
 #endif
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
-            var filepath = await _fileDownloaderService.DownloadFileToCacheAsync(webSource, General.RemoveProtocolAndSlashesFromAddress(webSource), Strings.SrtFileExtension, true);
+            var filepath = await _fileDownloaderService.DownloadFileToCacheAsync(
+                webSource,
+                General.RemoveProtocolAndSlashesFromAddress(webSource),
+                Strings.SrtFileExtension,
+                true,
+                LocalizedStrings.DownloadingSubtitles);
             return await General.GetSubtitlesFromContent(await File.ReadAllTextAsync(filepath));
         }
 

@@ -20,12 +20,12 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
             _alertsService = alertsService;
         }
 
-        public async Task<string> DownloadFileToCacheAsync(string url, string name, string extension, bool overwriteFile)
+        public async Task<string> DownloadFileToCacheAsync(string url, string name, string extension, bool overwriteFile, string downloadingMessage = null)
         {
             byte[] fileBytes = null;
             try
             {
-                using (UserDialogs.Instance.Loading(LocalizedStrings.DownloadingFile))
+                using (UserDialogs.Instance.Loading(downloadingMessage ?? LocalizedStrings.DownloadingFile))
                     fileBytes = await _httpClient.GetByteArrayAsync(url);
             }
             catch (Exception exception)

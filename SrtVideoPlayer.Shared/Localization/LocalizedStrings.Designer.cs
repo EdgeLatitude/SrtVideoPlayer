@@ -160,6 +160,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Downloading subtitles....
+        /// </summary>
+        public static string DownloadingSubtitles {
+            get {
+                return ResourceManager.GetString("DownloadingSubtitles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The playback history is empty..
         /// </summary>
         public static string EmptyPlaybackHistory {
@@ -331,7 +340,7 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Please, grant access to your gallery and files..
+        ///   Busca una cadena traducida similar a Please, grant access to your gallery and media files..
         /// </summary>
         public static string PleaseGrantAccessToYourGalleryAndFiles {
             get {
