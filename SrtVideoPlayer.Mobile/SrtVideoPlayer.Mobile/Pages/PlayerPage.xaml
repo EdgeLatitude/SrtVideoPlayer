@@ -200,17 +200,27 @@
                     Style="{StaticResource ContainerFrameStyle}"
                     VerticalOptions="Center"
                     WidthRequest="96">
-                    <ffimageloadingsvg:SvgCachedImage
-                        HeightRequest="64"
-                        HorizontalOptions="Center"
-                        Source="{DynamicResource NotStartedImage}"
-                        VerticalOptions="Center"
-                        WidthRequest="64">
-                        <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding LoadVideoCommand}" />
-                        </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
-                    </ffimageloadingsvg:SvgCachedImage>
+                    <Grid>
+                        <ActivityIndicator
+                            Color="{DynamicResource ProgressSliderBarColor}"
+                            HeightRequest="64"
+                            HorizontalOptions="Center"
+                            IsRunning="{Binding SelectingVideo}"
+                            VerticalOptions="Center"
+                            WidthRequest="64" />
+                        <ffimageloadingsvg:SvgCachedImage
+                            HeightRequest="64"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding SelectingVideo, Converter={StaticResource negateBooleanConverter}}"
+                            Source="{DynamicResource NotStartedImage}"
+                            VerticalOptions="Center"
+                            WidthRequest="64">
+                            <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding LoadVideoCommand}" />
+                            </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                        </ffimageloadingsvg:SvgCachedImage>
+                    </Grid>
                 </Frame>
             </Grid>
             <Frame

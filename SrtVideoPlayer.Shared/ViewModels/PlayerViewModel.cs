@@ -304,6 +304,20 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
+        private bool _selectingVideo;
+
+        public bool SelectingVideo
+        {
+            get => _selectingVideo;
+            set
+            {
+                if (_selectingVideo == value)
+                    return;
+                _selectingVideo = value;
+                OnPropertyChanged();
+            }
+        }
+
         public TimeSpan? LastPositionFromHistory { get; set; }
 
         public ICommand LoadVideoCommand { get; }
@@ -391,6 +405,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             if (!await CheckAndRequestForMediaAndFilesAccessPermissions())
                 return;
 
+            SelectingVideo = true;
+
             Video video = default;
             if (videoFile == null)
             {
@@ -414,7 +430,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     && video == null);
 
                 if (video == null)
+                {
+                    SelectingVideo = false;
                     return;
+                }
             }
             else
                 video = new Video(videoFile.Name, videoFile.Path);
@@ -444,7 +463,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             if (subtitlesSource != LocalizedStrings.NoSubtitles
                 && subtitles == null)
+            {
+                SelectingVideo = false;
                 return;
+            }
 
             Source = video;
             Position = TimeSpan.Zero;

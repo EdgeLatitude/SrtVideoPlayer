@@ -242,6 +242,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         {
             if (Player.State != MediaPlayerState.Failed)
                 return;
+            _viewModel.SelectingVideo = false;
             await DisplayAlert(LocalizedStrings.Error, $"{LocalizedStrings.MediaError}{Environment.NewLine}{args.Message}", LocalizedStrings.Ok);
             _viewModel.StopCommand.Execute(null);
         }
@@ -258,6 +259,7 @@ namespace SrtVideoPlayer.Mobile.Pages
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     _viewModel.MediaLoaded = true;
+                    _viewModel.SelectingVideo = false;
                     PlaybackControlsAnimation();
                 });
 
