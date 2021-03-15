@@ -665,14 +665,28 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private void FullscreenOn()
         {
+            var subtitlesAreEnabled = SubtitlesAreEnabled;
+            if (subtitlesAreEnabled)
+                SubtitlesAreEnabled = false;
+
             Fullscreen = true;
             _fullscreenService.Enable(this, LandscapeVideo);
+
+            if (subtitlesAreEnabled)
+                SubtitlesAreEnabled = true;
         }
 
         private void FullscreenOff()
         {
+            var subtitlesAreEnabled = SubtitlesAreEnabled;
+            if (subtitlesAreEnabled)
+                SubtitlesAreEnabled = false;
+
             Fullscreen = false;
             _fullscreenService.Disable(this);
+
+            if (subtitlesAreEnabled)
+                SubtitlesAreEnabled = true;
         }
 
         private void MuteUnmute()
