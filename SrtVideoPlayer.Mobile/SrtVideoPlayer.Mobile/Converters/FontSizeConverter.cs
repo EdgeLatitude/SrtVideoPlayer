@@ -9,11 +9,11 @@ namespace SrtVideoPlayer.Mobile.Converters
     {
         private static readonly Dictionary<TargetIdiom, double> _scaleByIdiom = new Dictionary<TargetIdiom, double>
         {
-            { TargetIdiom.Phone, 1 },
-            { TargetIdiom.Tablet, 2},
-            { TargetIdiom.Desktop, 3 },
-            { TargetIdiom.TV, 4 },
-            { TargetIdiom.Watch, .5 }
+            { TargetIdiom.Phone, 1.5 },
+            { TargetIdiom.Tablet, 2 },
+            { TargetIdiom.Desktop, 2.5 },
+            { TargetIdiom.TV, 3 },
+            { TargetIdiom.Watch, 1 }
         };
 
         public object Convert(object value, Type targetType,
