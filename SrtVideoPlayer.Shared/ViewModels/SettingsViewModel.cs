@@ -182,9 +182,17 @@ namespace SrtVideoPlayer.Shared.ViewModels
             {
                 if (_selectedSubtitleColor == value)
                     return;
+                if (string.IsNullOrWhiteSpace(value)
+                    || !_subtitleColorsDictionary.ContainsKey(value))
+                {
+                    SelectedSubtitleColor = _selectedSubtitleColor;
+                    OnPropertyChanged();
+                    return;
+                }
                 _selectedSubtitleColor = value;
                 SettingsChanged = true;
                 OnPropertyChanged();
+                SubtitleColorPreview = _subtitleColorsDictionary[value];
             }
         }
 
@@ -207,6 +215,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 _fontSize = value;
                 SettingsChanged = true;
                 OnPropertyChanged();
+                FontSizePreview = int.Parse(value);
             }
         }
 
@@ -251,6 +260,34 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         public bool StyleSectionIsVisible =>
             DeviceSupportsManualDarkMode;
+
+        private string _subtitleColorPreview = Settings.Instance.GetSubtitleColor();
+
+        public string SubtitleColorPreview
+        {
+            get => _subtitleColorPreview;
+            private set
+            {
+                if (_subtitleColorPreview == value)
+                    return;
+                _subtitleColorPreview = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _fontSizePreview = Settings.Instance.GetFontSize();
+
+        public int FontSizePreview
+        {
+            get => _fontSizePreview;
+            private set
+            {
+                if (_fontSizePreview == value)
+                    return;
+                _fontSizePreview = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand SaveSettingsCommand { get; }
 
