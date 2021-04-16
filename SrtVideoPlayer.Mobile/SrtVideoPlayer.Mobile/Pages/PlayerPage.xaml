@@ -254,13 +254,18 @@
                     VerticalOptions="Center"
                     WidthRequest="96">
                     <Grid>
-                        <ActivityIndicator
-                            Color="{DynamicResource ProgressSliderBarColor}"
+                        <Grid
                             HeightRequest="64"
                             HorizontalOptions="Center"
-                            IsRunning="{Binding SelectingVideo}"
+                            IsVisible="{Binding SelectingVideo}"
                             VerticalOptions="Center"
-                            WidthRequest="64" />
+                            WidthRequest="64">
+                            <ActivityIndicator
+                                Color="{DynamicResource ProgressSliderBarColor}"
+                                HorizontalOptions="Center"
+                                IsRunning="{Binding SelectingVideo}"
+                                VerticalOptions="Center" />
+                        </Grid>
                         <ffimageloadingsvg:SvgCachedImage
                             HeightRequest="64"
                             HorizontalOptions="Center"
