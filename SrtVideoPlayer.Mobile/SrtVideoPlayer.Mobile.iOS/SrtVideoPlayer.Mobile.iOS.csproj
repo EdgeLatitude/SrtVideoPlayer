@@ -124,6 +124,7 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AccentColor.colorset\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -225,6 +226,9 @@
     <BundleResource Include="Resources\stop_white.svg" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\AccentColor.colorset\" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties TriggeredFromHotReload="False" />
