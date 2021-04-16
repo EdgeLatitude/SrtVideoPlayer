@@ -133,24 +133,45 @@
                         WidthRequest="100"
                         Style="{StaticResource SettingEntryStyle}" />
                 </StackLayout>
-                <Frame
-                    Opacity=".5"
-                    Style="{StaticResource ContainerFrameStyle}">
-                    <Label
-                        FontSize="{Binding FontSizePreview, Converter={StaticResource fontSizeConverter}}"
-                        HorizontalOptions="Center"
-                        HorizontalTextAlignment="Center"
-                        Text="{x:Static localization:LocalizedStrings.SubtitlesPreview}"
-                        TextColor="{Binding SubtitleColorPreview, Converter={StaticResource hexColorConverter}}">
-                        <Label.Effects>
-                            <effects:ShadowEffect
-                                Color="Black"
-                                DistanceX="5"
-                                DistanceY="5"
-                                Radius="5" />
-                        </Label.Effects>
-                    </Label>
-                </Frame>
+                <Grid>
+                    <Frame
+                        Opacity=".5"
+                        Style="{StaticResource ContainerFrameStyle}">
+                        <Label
+                            FontSize="{Binding FontSizePreview, Converter={StaticResource fontSizeConverter}}"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Opacity="0"
+                            Text="{x:Static localization:LocalizedStrings.SubtitlesPreview}">
+                            <Label.Effects>
+                                <effects:ShadowEffect
+                                    Color="Black"
+                                    DistanceX="5"
+                                    DistanceY="5"
+                                    Radius="5" />
+                            </Label.Effects>
+                        </Label>
+                    </Frame>
+                    <Frame
+                        BackgroundColor="Transparent"
+                        Opacity="1"
+                        Style="{StaticResource ContainerFrameStyle}">
+                        <Label
+                            FontSize="{Binding FontSizePreview, Converter={StaticResource fontSizeConverter}}"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="{x:Static localization:LocalizedStrings.SubtitlesPreview}"
+                            TextColor="{Binding SubtitleColorPreview, Converter={StaticResource hexColorConverter}}">
+                            <Label.Effects>
+                                <effects:ShadowEffect
+                                    Color="Black"
+                                    DistanceX="5"
+                                    DistanceY="5"
+                                    Radius="5" />
+                            </Label.Effects>
+                        </Label>
+                    </Frame>
+                </Grid>
             </StackLayout>
             <Button  
                 Text="{x:Static localization:LocalizedStrings.SaveSettings}"
