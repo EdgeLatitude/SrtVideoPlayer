@@ -242,4 +242,7 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="SubtitlesPreview" xml:space="preserve">
+    <value>Vista previa de los subtítulos</value>
+  </data>
 </root>

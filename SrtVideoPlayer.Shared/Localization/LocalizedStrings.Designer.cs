@@ -421,6 +421,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Subtitles preview.
+        /// </summary>
+        public static string SubtitlesPreview {
+            get {
+                return ResourceManager.GetString("SubtitlesPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Subtitles source:.
         /// </summary>
         public static string SubtitlesSource {

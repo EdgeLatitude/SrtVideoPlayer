@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
+             xmlns:effects="clr-namespace:SrtVideoPlayer.Mobile.Effects"
              xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
              xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
              mc:Ignorable="d"
@@ -132,6 +133,24 @@
                         WidthRequest="100"
                         Style="{StaticResource SettingEntryStyle}" />
                 </StackLayout>
+                <Frame
+                    Opacity=".5"
+                    Style="{StaticResource ContainerFrameStyle}">
+                    <Label
+                        FontSize="{Binding FontSizePreview, Converter={StaticResource fontSizeConverter}}"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="{x:Static localization:LocalizedStrings.SubtitlesPreview}"
+                        TextColor="{Binding SubtitleColorPreview, Converter={StaticResource hexColorConverter}}">
+                        <Label.Effects>
+                            <effects:ShadowEffect
+                                Color="Black"
+                                DistanceX="5"
+                                DistanceY="5"
+                                Radius="5" />
+                        </Label.Effects>
+                    </Label>
+                </Frame>
             </StackLayout>
             <Button  
                 Text="{x:Static localization:LocalizedStrings.SaveSettings}"

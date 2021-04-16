@@ -15,15 +15,6 @@
                        SizeChanged="Page_SizeChanged">
     <controls:KeyboardPage.Resources>
         <!-- Named styles !-->
-        <Style x:Key="ContainerFrameStyle" TargetType="Frame">
-            <Setter Property="BackgroundColor"
-                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
-                                       iOS={DynamicResource iOSTextColor}}" />
-            <Setter Property="HasShadow" Value="False" />
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="Opacity" Value="0.75" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
         <Style x:Key="ProgressSliderStyle" TargetType="Slider">
             <Setter Property="MaximumTrackColor"
                     Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},

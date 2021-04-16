@@ -215,7 +215,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 _fontSize = value;
                 SettingsChanged = true;
                 OnPropertyChanged();
-                FontSizePreview = int.Parse(value);
+                if (!string.IsNullOrEmpty(value))
+                    FontSizePreview = int.Parse(value);
             }
         }
 
