@@ -138,7 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs">
-      <Version>7.1.0.481</Version>
+      <Version>7.1.0.483</Version>
     </PackageReference>
     <PackageReference Include="Plugin.MediaManager">
       <Version>1.0.8</Version>
@@ -228,9 +228,7 @@
     <BundleResource Include="Resources\stop_white.svg" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Assets.xcassets\AccentColor.colorset\" />
-  </ItemGroup>
+  <ItemGroup />
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties TriggeredFromHotReload="False" />

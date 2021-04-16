@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.481" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.483" />
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Plugin.MediaManager" Version="1.0.8" />
     <PackageReference Include="Plugin.MediaManager.Forms" Version="1.0.8" />
