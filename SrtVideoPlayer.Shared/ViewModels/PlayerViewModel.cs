@@ -98,6 +98,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _messagingService.Subscribe(this, Strings.SettingsChanged, (viewmodel) => RefreshFromSettings());
         }
 
+        ~PlayerViewModel() =>
+            _messagingService.Unsubscribe(this, Strings.SettingsChanged);
+
         private Video _source;
 
         public Video Source
