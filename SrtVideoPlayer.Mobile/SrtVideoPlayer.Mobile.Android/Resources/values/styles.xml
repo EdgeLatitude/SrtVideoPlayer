@@ -13,11 +13,15 @@
     <item name="windowActionBar">false</item>
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorAccent">@color/colorAccentDark</item>
     <item name="windowActionModeOverlay">true</item>
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
     <item name="android:navigationBarColor">@color/colorPrimary</item>
     <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+  </style>
+
+  <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+    <item name="colorAccent">@color/colorAccentDark</item>
   </style>
 
   <style name="MainTheme.Light" parent="MainTheme.Base.Light">
@@ -30,7 +34,7 @@
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="windowActionModeOverlay">true</item>
-    <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+    <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle.Light</item>
     <item name="android:navigationBarColor">@color/colorPrimary</item>
     <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
   </style>
@@ -43,7 +47,7 @@
     <item name="android:windowContentOverlay">@null</item>
   </style>
 
-  <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+  <style name="AppCompatDialogStyle.Light" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
