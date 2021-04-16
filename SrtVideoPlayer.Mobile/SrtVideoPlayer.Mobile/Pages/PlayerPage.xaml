@@ -13,6 +13,59 @@
                        x:DataType="viewmodels:PlayerViewModel"
                        x:Class="SrtVideoPlayer.Mobile.Pages.PlayerPage"
                        SizeChanged="Page_SizeChanged">
+    <controls:KeyboardPage.Resources>
+        <!-- Named styles !-->
+        <Style x:Key="ContainerFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
+                                       iOS={DynamicResource iOSTextColor}}" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Opacity" Value="0.75" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style x:Key="ProgressSliderStyle" TargetType="Slider">
+            <Setter Property="MaximumTrackColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
+                                       iOS={DynamicResource iOSPageBackgroundColor}}" />
+            <Setter Property="MinimumTrackColor"
+                    Value="{DynamicResource ProgressSliderBarColor}" />
+            <Setter Property="ThumbColor"
+                    Value="{DynamicResource ProgressSliderThumbColor}" />
+        </Style>
+        <Style x:Key="PlayerPositionLabelStyle" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
+                                       iOS={DynamicResource iOSPageBackgroundColor}}" />
+        </Style>
+        <Style x:Key="PlayerDurationLabelStyle" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
+                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
+        </Style>
+        <Style x:Key="ToastFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
+                                       iOS={DynamicResource iOSTextColor}}" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+        <Style x:Key="ToastContentViewStyle" TargetType="ContentView">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="InputTransparent" Value="True" />
+            <Setter Property="Margin" Value="0,5,0,15" />
+            <Setter Property="Opacity" Value="0" />
+            <Setter Property="VerticalOptions" Value="End" />
+        </Style>
+        <Style x:Key="ToastLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="MaxLines" Value="1" />
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
+                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
+        </Style>
+    </controls:KeyboardPage.Resources>
     <controls:KeyboardPage.ToolbarItems>
         <ToolbarItem 
             Text="{x:Static localization:LocalizedStrings.History}"
