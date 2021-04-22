@@ -56,6 +56,13 @@
                     Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
                                        iOS={DynamicResource iOSFieldBackgroundColor}}" />
         </Style>
+        <StyleSheet>
+            <![CDATA[
+            .subtitleLabel {
+                text-align: center;
+            }
+            ]]>
+        </StyleSheet>
     </controls:KeyboardPage.Resources>
     <controls:KeyboardPage.ToolbarItems>
         <ToolbarItem 
@@ -158,6 +165,7 @@
                         HorizontalOptions="Center"
                         HorizontalTextAlignment="Center"
                         IsVisible="{Binding SubtitlesAreVisible}"
+                        StyleClass="subtitleLabel"
                         Text="{Binding Subtitle.Text}"
                         TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}"
                         TextType="Html"
