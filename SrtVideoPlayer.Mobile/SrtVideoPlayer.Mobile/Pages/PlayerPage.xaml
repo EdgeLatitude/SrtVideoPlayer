@@ -196,10 +196,10 @@
                             <PinchGestureRecognizer
                                 PinchUpdated="Player_PinchUpdated" />
                             <SwipeGestureRecognizer
-                                Command="{Binding GoBack5_SecondsCommand}"
+                                Command="{Binding GoForward5_SecondsCommand}"
                                 Direction="Left" />
                             <SwipeGestureRecognizer
-                                Command="{Binding GoForward5_SecondsCommand}"
+                                Command="{Binding GoBack5_SecondsCommand}"
                                 Direction="Right" />
                             <TapGestureRecognizer
                                 Tapped="Player_Tapped" />
@@ -214,10 +214,10 @@
                             <PinchGestureRecognizer
                                 PinchUpdated="Player_PinchUpdated" />
                             <SwipeGestureRecognizer
-                                Command="{Binding GoBack5_SecondsCommand}"
+                                Command="{Binding GoForward5_SecondsCommand}"
                                 Direction="Left" />
                             <SwipeGestureRecognizer
-                                Command="{Binding GoForward5_SecondsCommand}"
+                                Command="{Binding GoBack5_SecondsCommand}"
                                 Direction="Right" />
                             <TapGestureRecognizer
                                 Tapped="Player_Tapped" />
@@ -232,10 +232,10 @@
                             <PinchGestureRecognizer
                                 PinchUpdated="Player_PinchUpdated" />
                             <SwipeGestureRecognizer
-                                Command="{Binding GoBack5_SecondsCommand}"
+                                Command="{Binding GoForward5_SecondsCommand}"
                                 Direction="Left" />
                             <SwipeGestureRecognizer
-                                Command="{Binding GoForward5_SecondsCommand}"
+                                Command="{Binding GoBack5_SecondsCommand}"
                                 Direction="Right" />
                             <TapGestureRecognizer
                                 Tapped="Player_Tapped" />
