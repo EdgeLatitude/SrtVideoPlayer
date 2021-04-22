@@ -1,4 +1,4 @@
-﻿CFBundleDisplayName = "Video player";
+﻿CFBundleDisplayName = "Video player";
 CFBundleName = "Video player ft. subtitles";
 NSPhotoLibraryUsageDescription = "Access to the photo library is necessary to be able to select videos that are in it.";
 NSMicrophoneUsageDescription = "At this time, access to the microphone is necessary to be able to use the gallery selector, the microphone is not used.";
