@@ -10,6 +10,7 @@
              mc:Ignorable="d"
              x:DataType="viewmodels:SettingsViewModel"
              x:Class="SrtVideoPlayer.Mobile.Pages.SettingsPage"
+             Appearing="SettingsPage_Appearing"
              Title="{x:Static localization:LocalizedStrings.Settings}">
     <ContentPage.Resources>
         <!-- Named styles !-->
@@ -133,7 +134,9 @@
                         WidthRequest="100"
                         Style="{StaticResource SettingEntryStyle}" />
                 </StackLayout>
-                <Grid>
+                <Grid
+                    x:Name="PreviewGrid"
+                    IsVisible="False">
                     <Frame
                         Opacity=".5"
                         Style="{StaticResource ContainerFrameStyle}">
