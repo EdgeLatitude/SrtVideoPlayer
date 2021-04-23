@@ -1,7 +1,9 @@
-﻿using SrtVideoPlayer.Shared.Constants;
+﻿using HtmlAgilityPack;
+using SrtVideoPlayer.Shared.Constants;
 using SrtVideoPlayer.Shared.Models.Playback;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -37,7 +39,7 @@ namespace SrtVideoPlayer.Shared.Logic
             }
         }
 
-        public static async Task<Subtitle[]> GetSubtitlesFromContent(string content) =>
+        public static async Task<Subtitle[]> GetSubtitlesFromContent(string content, bool removeHtmlFormatting) =>
             await Task.Run(() =>
             {
                 const int subtitlesSetLines = 4;
@@ -68,6 +70,18 @@ namespace SrtVideoPlayer.Shared.Logic
                         continue;
 
                     var text = lineSet[2].Trim();
+
+                    if (removeHtmlFormatting)
+                        try
+                        {
+                            var htmlText = new HtmlDocument();
+                            htmlText.LoadHtml(text);
+                            text = htmlText.ParsedText;
+                        }
+                        catch (Exception exception)
+                        {
+                            Debug.WriteLine($"Error removing HTML formatting from subtitle line: {exception.Message}");
+                        }
 
                     subtitles.Add(new Subtitle(indexAsInt, new SubtitleSpan(startTimeAsTimeSpan, endTimeAsTimeSpan), text));
                 }

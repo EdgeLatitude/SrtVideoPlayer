@@ -15,5 +15,11 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
             { KeyboardType.Phone, Keyboard.Telephone },
             { KeyboardType.Url, Keyboard.Url }
         };
+
+        public static readonly Dictionary<string, DeviceOs> DeviceOss = new Dictionary<string, DeviceOs>()
+        {
+            { Device.Android, DeviceOs.Android },
+            { Device.iOS, DeviceOs.iOS }
+        };
     }
 }

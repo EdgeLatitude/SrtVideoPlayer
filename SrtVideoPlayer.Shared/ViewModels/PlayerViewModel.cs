@@ -554,7 +554,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 Strings.SrtFileExtension,
                 true,
                 LocalizedStrings.DownloadingSubtitles);
-            return await General.GetSubtitlesFromContent(await File.ReadAllTextAsync(filepath));
+            return await General.GetSubtitlesFromContent(
+                await File.ReadAllTextAsync(filepath),
+                _platformInformationService.GetDeviceOs() == DeviceOs.iOS);
         }
 
         private async Task<Subtitle[]> LoadLocalSubtitles()
@@ -565,7 +567,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
             var subtitlesContent = await General.ReadSubtitlesFileContent(file.Path);
             if (string.IsNullOrWhiteSpace(subtitlesContent))
                 return null;
-            return await General.GetSubtitlesFromContent(subtitlesContent);
+            return await General.GetSubtitlesFromContent(
+                subtitlesContent,
+                _platformInformationService.GetDeviceOs() == DeviceOs.iOS);
         }
 
         private async Task<string> PromptForWebSource(string initialValue = null)

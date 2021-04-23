@@ -168,7 +168,6 @@
                         StyleClass="subtitleLabel"
                         Text="{Binding Subtitle.Text}"
                         TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}"
-                        TextType="Html"
                         VerticalOptions="End">
                         <Label.Effects>
                             <effects:ShadowEffect
@@ -182,6 +181,14 @@
                                 Command="{Binding CopySubtitleToClipboardCommand}"
                                 Tapped="SubtitleLabel_Tapped" />
                         </Label.GestureRecognizers>
+                        <Label.TextType>
+                            <OnPlatform x:TypeArguments="TextType">
+                                <OnPlatform.Platforms>
+                                    <On Platform="Android" Value="Html" />
+                                    <On Platform="iOS" Value="Text" />
+                                </OnPlatform.Platforms>
+                            </OnPlatform>
+                        </Label.TextType>
                     </Label>
                     <ActivityIndicator
                         Color="{DynamicResource ProgressSliderBarColor}"
