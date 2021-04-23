@@ -42,35 +42,55 @@ namespace SrtVideoPlayer.Shared.Logic
         public static async Task<Subtitle[]> GetSubtitlesFromContent(string content, bool removeHtmlFormatting) =>
             await Task.Run(() =>
             {
-                const int subtitlesSetLines = 4;
+                const int subtitlesSetLines = 3;
                 const string timesDelimiter = "-->";
                 const string timesFormat = @"hh\:mm\:ss\,fff";
+
+                var joinSeparator = removeHtmlFormatting ?
+                    Environment.NewLine :
+                    "<br>";
+
                 var subtitles = new List<Subtitle>();
                 var lines = content.Split(Environment.NewLine).ToList();
                 var lineSets = new List<List<string>>();
-                for (int i = 0; i < lines.Count; i += subtitlesSetLines)
-                {
-                    lineSets.Add(lines.GetRange(i, Math.Min(subtitlesSetLines, lines.Count - i)));
 
-                    if (i < lines.Count)
+                for (var i = 0; i < lines.Count; i++)
+                {
+                    var line = lines[i];
+                    line = line.Replace("\r", string.Empty);
+                    line = line.Replace("\n", string.Empty);
+                    lines[i] = line;
+                }
+
+                var j = 0;
+                while (j < lines.Count)
+                {
+                    var nextStep = Math.Min(subtitlesSetLines, lines.Count - j);
+                    lineSets.Add(lines.GetRange(j, nextStep));
+                    j += subtitlesSetLines;
+
+                    if (j < lines.Count)
                     {
                         var lastLineSet = lineSets.Last();
                         var lastLineSetLastIndex = lastLineSet.Count - 1;
 
-                        var nextLine = lines[i];
-                        while (i < lines.Count
-                            && !string.IsNullOrWhiteSpace(nextLine))
+                        do
                         {
+                            var nextLine = lines[j];
+
+                            j++;
+
+                            if (string.IsNullOrWhiteSpace(nextLine))
+                                break;
+
                             var lastLine = lastLineSet[lastLineSetLastIndex];
-                            lastLine = string.Concat(lastLine, nextLine);
+                            lastLine = string.Join(joinSeparator, lastLine, nextLine);
                             lastLineSet[lastLineSetLastIndex] = lastLine;
 
-                            if (i < lines.Count)
-                            {
-                                i++;
-                                nextLine = lines[i];
-                            }
-                        }
+                            if (j == lines.Count)
+                                break;
+
+                        } while (true);
                     }
                 }
 
