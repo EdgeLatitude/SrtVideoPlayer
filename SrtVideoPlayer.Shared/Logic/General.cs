@@ -100,6 +100,10 @@ namespace SrtVideoPlayer.Shared.Logic
                         {
                             var htmlText = new HtmlDocument();
                             htmlText.LoadHtml(text);
+                            var currentNode = htmlText.DocumentNode;
+                            while (currentNode.HasChildNodes)
+                                currentNode = currentNode.ChildNodes.First();
+                            htmlText.LoadHtml(currentNode.InnerText);
                             text = htmlText.ParsedText;
                         }
                         catch (Exception exception)
