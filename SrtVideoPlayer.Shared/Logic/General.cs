@@ -49,7 +49,31 @@ namespace SrtVideoPlayer.Shared.Logic
                 var lines = content.Split(Environment.NewLine).ToList();
                 var lineSets = new List<List<string>>();
                 for (int i = 0; i < lines.Count; i += subtitlesSetLines)
+                {
                     lineSets.Add(lines.GetRange(i, Math.Min(subtitlesSetLines, lines.Count - i)));
+
+                    if (i < lines.Count)
+                    {
+                        var lastLineSet = lineSets.Last();
+                        var lastLineSetLastIndex = lastLineSet.Count - 1;
+
+                        var nextLine = lines[i];
+                        while (i < lines.Count
+                            && !string.IsNullOrWhiteSpace(nextLine))
+                        {
+                            var lastLine = lastLineSet[lastLineSetLastIndex];
+                            lastLine = string.Concat(lastLine, nextLine);
+                            lastLineSet[lastLineSetLastIndex] = lastLine;
+
+                            if (i < lines.Count)
+                            {
+                                i++;
+                                nextLine = lines[i];
+                            }
+                        }
+                    }
+                }
+
                 foreach (var lineSet in lineSets)
                 {
                     if (lineSet.Count != subtitlesSetLines)
