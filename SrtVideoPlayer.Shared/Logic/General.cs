@@ -45,10 +45,13 @@ namespace SrtVideoPlayer.Shared.Logic
                 const int subtitlesSetLines = 3;
                 const string timesDelimiter = "-->";
                 const string timesFormat = @"hh\:mm\:ss\,fff";
+                const string htmlLineBreak = "<br>";
+                const string carriageReturn = "\r";
+                const string lineFeed = "\n";
 
                 var joinSeparator = removeHtmlFormatting ?
                     Environment.NewLine :
-                    "<br>";
+                    htmlLineBreak;
 
                 var subtitles = new List<Subtitle>();
                 var lines = content.Split(Environment.NewLine).ToList();
@@ -57,8 +60,8 @@ namespace SrtVideoPlayer.Shared.Logic
                 for (var i = 0; i < lines.Count; i++)
                 {
                     var line = lines[i];
-                    line = line.Replace("\r", string.Empty);
-                    line = line.Replace("\n", string.Empty);
+                    line = line.Replace(carriageReturn, string.Empty);
+                    line = line.Replace(lineFeed, string.Empty);
                     lines[i] = line;
                 }
 
