@@ -56,7 +56,7 @@
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidDexTool>d8</AndroidDexTool>
     <AndroidLinkTool>r8</AndroidLinkTool>
-    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidPackageFormat>aab</AndroidPackageFormat>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
     <LangVersion>8.0</LangVersion>
@@ -72,7 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs">
-      <Version>7.1.0.483</Version>
+      <Version>7.1.0.514</Version>
     </PackageReference>
     <PackageReference Include="Plugin.MediaManager">
       <Version>1.0.8</Version>
