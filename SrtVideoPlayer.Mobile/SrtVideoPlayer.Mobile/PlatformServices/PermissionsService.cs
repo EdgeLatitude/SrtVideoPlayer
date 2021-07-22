@@ -4,7 +4,7 @@ using Xamarin.Essentials;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class PermissionsService : IPermissionsService
+    internal class PermissionsService : IPermissionsService
     {
         public async Task<bool> CheckMediaAndFilesAccessPermissions() =>
             await Permissions.CheckStatusAsync<Permissions.Photos>() == PermissionStatus.Granted

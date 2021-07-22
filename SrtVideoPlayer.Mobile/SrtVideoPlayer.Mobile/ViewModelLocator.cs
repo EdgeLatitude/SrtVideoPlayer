@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SrtVideoPlayer.Mobile
 {
-    class ViewModelLocator
+    internal class ViewModelLocator
     {
         public static ViewModelLocator Instance
         {

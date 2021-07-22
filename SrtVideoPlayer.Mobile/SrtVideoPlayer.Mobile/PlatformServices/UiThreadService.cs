@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class UiThreadService : IUiThreadService
+    internal class UiThreadService : IUiThreadService
     {
         public void ExecuteOnUiThread(Action action) =>
             Device.BeginInvokeOnMainThread(action);

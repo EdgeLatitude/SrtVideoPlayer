@@ -9,7 +9,7 @@ using Xamarin.Essentials;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class FileDownloaderService : IFileDownloaderService
+    internal class FileDownloaderService : IFileDownloaderService
     {
         private static readonly HttpClient _httpClient = new HttpClient();
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SrtVideoPlayer.Shared.DataStructures
 {
-    class CircularBuffer<T> : IEnumerable<T>
+    internal class CircularBuffer<T> : IEnumerable<T>
     {
         public readonly int _capacity;
 

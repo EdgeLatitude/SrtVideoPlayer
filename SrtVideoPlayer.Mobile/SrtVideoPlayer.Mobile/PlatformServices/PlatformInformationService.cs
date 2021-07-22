@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class PlatformInformationService : IPlatformInformationService
+    internal class PlatformInformationService : IPlatformInformationService
     {
         public bool PlatformSupportsGettingApplicationVersion() =>
             true;

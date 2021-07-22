@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class ThemingService : IThemingService
+    internal class ThemingService : IThemingService
     {
         private static readonly IThemingDependencyService _themingDependencyService
             = DependencyService.Get<IThemingDependencyService>();

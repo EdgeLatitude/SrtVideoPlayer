@@ -9,7 +9,7 @@ using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class FullscreenService : IFullscreenService
+    internal class FullscreenService : IFullscreenService
     {
         private static readonly IFullscreenDependencyService _fullscreenDependencyService
             = DependencyService.Get<IFullscreenDependencyService>();

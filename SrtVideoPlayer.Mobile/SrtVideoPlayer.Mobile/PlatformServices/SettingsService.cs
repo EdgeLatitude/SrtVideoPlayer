@@ -4,7 +4,7 @@ using Xamarin.Essentials;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class SettingsService : ISettingsService
+    internal class SettingsService : ISettingsService
     {
         public bool Get(string key, bool defaultValue) =>
             Preferences.Get(key, defaultValue);

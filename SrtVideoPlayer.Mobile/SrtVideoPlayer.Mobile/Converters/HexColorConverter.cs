@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.Converters
 {
-    class HexColorConverter : IValueConverter
+    internal class HexColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture) =>

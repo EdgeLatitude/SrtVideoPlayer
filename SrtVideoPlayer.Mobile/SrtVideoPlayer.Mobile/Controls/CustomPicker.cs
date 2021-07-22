@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.Controls
 {
-    class CustomPicker : Picker
+    internal class CustomPicker : Picker
     {
         private bool _customPickerIsShowing;
 

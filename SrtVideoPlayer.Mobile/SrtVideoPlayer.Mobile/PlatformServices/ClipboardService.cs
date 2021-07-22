@@ -4,7 +4,7 @@ using Xamarin.Essentials;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class ClipboardService : IClipboardService
+    internal class ClipboardService : IClipboardService
     {
         public async Task SetTextAsync(string text) =>
             await Clipboard.SetTextAsync(text);

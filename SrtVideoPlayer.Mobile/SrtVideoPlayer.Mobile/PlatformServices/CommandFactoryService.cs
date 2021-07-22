@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class CommandFactoryService : ICommandFactoryService
+    internal class CommandFactoryService : ICommandFactoryService
     {
         public ICommand Create(Action execute) =>
             new Command(execute);

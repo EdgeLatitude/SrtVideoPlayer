@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.Converters
 {
-    class FontSizeConverter : IValueConverter
+    internal class FontSizeConverter : IValueConverter
     {
         private static readonly Dictionary<TargetIdiom, double> _scaleByIdiom = new Dictionary<TargetIdiom, double>
         {

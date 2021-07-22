@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class NavigationService : INavigationService
+    internal class NavigationService : INavigationService
     {
         private static readonly Dictionary<string, Type> _locationPageDictionary = new Dictionary<string, Type>
         {

@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    static class Equivalences
+    internal static class Equivalences
     {
         public static readonly Dictionary<KeyboardType, Keyboard> Keyboards = new Dictionary<KeyboardType, Keyboard>()
         {

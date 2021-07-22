@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.Converters
 {
-    class TimeSpanFormatConverter : IValueConverter
+    internal class TimeSpanFormatConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture) =>

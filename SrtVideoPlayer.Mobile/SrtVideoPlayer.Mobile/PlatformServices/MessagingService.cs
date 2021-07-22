@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class MessagingService : IMessagingService
+    internal class MessagingService : IMessagingService
     {
         public void Subscribe(BaseViewModel subscriber, string name, Action<BaseViewModel> callback, BaseViewModel sender = null) =>
             MessagingCenter.Subscribe(subscriber, name, callback, sender);

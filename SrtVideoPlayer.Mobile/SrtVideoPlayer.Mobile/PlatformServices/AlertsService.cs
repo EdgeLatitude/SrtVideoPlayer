@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class AlertsService : IAlertsService
+    internal class AlertsService : IAlertsService
     {
         public async Task DisplayAlertAsync(string title, string message) =>
             await Application.Current.MainPage.DisplayAlert(title, message, LocalizedStrings.Ok);

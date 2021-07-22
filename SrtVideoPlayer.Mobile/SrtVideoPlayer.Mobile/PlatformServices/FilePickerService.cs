@@ -7,7 +7,7 @@ using Xamarin.Essentials;
 
 namespace SrtVideoPlayer.Mobile.PlatformServices
 {
-    class FilePickerService : IFilePickerService
+    internal class FilePickerService : IFilePickerService
     {
         public async Task<VideoFile> SelectVideoFromGalleryAsync()
         {
