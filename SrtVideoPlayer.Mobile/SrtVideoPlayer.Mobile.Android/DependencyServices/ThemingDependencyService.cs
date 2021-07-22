@@ -2,6 +2,7 @@
 using SrtVideoPlayer.Mobile.DependencyServices;
 using SrtVideoPlayer.Shared.Models.Theming;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(SrtVideoPlayer.Mobile.Droid.DependencyServices.ThemingDependencyService))]
@@ -25,7 +26,7 @@ namespace SrtVideoPlayer.Mobile.Droid.DependencyServices
         {
             if (DeviceSupportsAutomaticDarkMode())
             {
-                var uiModeFlags = Xamarin.Essentials.Platform.CurrentActivity.ApplicationContext.Resources.Configuration.UiMode
+                var uiModeFlags = Platform.AppContext.Resources.Configuration.UiMode
                     & UiMode.NightMask;
                 switch (uiModeFlags)
                 {

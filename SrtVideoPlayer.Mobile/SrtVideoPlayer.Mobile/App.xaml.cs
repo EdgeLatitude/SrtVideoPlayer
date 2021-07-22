@@ -11,11 +11,12 @@ namespace SrtVideoPlayer.Mobile
     {
         public App(VideoFile videoFile = null)
         {
+            InitializeComponent();
             ViewModelLocator.Initialize();
+            MainPage = new NavigationPage(new PlayerPage(videoFile));
+            // MediaPlayer settings.
             CrossMediaManager.Current.KeepScreenOn = true;
             CrossMediaManager.Current.MediaPlayer.VideoAspect = VideoAspectMode.AspectFit;
-            InitializeComponent();
-            MainPage = new NavigationPage(new PlayerPage(videoFile));
         }
 
         protected override void OnStart()

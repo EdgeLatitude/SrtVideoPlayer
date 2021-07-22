@@ -65,6 +65,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchUseLlvm>true</MtouchUseLlvm>
     <LangVersion>8.0</LangVersion>
+    <OptimizePNGs>true</OptimizePNGs>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />

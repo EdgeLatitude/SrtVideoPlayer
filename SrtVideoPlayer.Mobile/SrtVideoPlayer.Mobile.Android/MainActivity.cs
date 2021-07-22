@@ -29,17 +29,11 @@ namespace SrtVideoPlayer.Mobile.Droid
 
         public const int ReadSubtitlesId = 1001;
 
-        public static MainActivity Instance { get; private set; }
-
         public TaskCompletionSource<string> PickVideoTaskCompletionSource { get; set; }
 
         public TaskCompletionSource<string> PickSubtitlesTaskCompletionSource { get; set; }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
-        {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+        internal static MainActivity Instance { get; private set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -50,7 +44,7 @@ namespace SrtVideoPlayer.Mobile.Droid
             base.OnCreate(savedInstanceState);
 
             MediaManager.CrossMediaManager.Current.Init();
-            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
@@ -75,6 +69,25 @@ namespace SrtVideoPlayer.Mobile.Droid
             Shared.Logic.Theming.Instance.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
         }
 
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        private void GlobalEvents_ThemeChangeNeeded(object sender, ThemeChangeNeededEventArgs args)
+        {
+            switch (args.Theme)
+            {
+                case Shared.Models.Theming.Theme.Dark:
+                    SetTheme(Resource.Style.MainTheme);
+                    break;
+                case Shared.Models.Theming.Theme.Light:
+                    SetTheme(Resource.Style.MainTheme_Light);
+                    break;
+            }
+        }
+
         protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
@@ -92,19 +105,6 @@ namespace SrtVideoPlayer.Mobile.Droid
                         PickSubtitlesTaskCompletionSource.SetResult(await ReadContentFromContentUri(data.Data));
                     else
                         PickSubtitlesTaskCompletionSource.SetResult(null);
-                    break;
-            }
-        }
-
-        private void GlobalEvents_ThemeChangeNeeded(object sender, ThemeChangeNeededEventArgs args)
-        {
-            switch (args.Theme)
-            {
-                case Shared.Models.Theming.Theme.Dark:
-                    SetTheme(Resource.Style.MainTheme);
-                    break;
-                case Shared.Models.Theming.Theme.Light:
-                    SetTheme(Resource.Style.MainTheme_Light);
                     break;
             }
         }
