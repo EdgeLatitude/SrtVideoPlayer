@@ -16,8 +16,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
 {
     public class PlayerViewModel : BaseViewModel
     {
-        private const double _one = 1d;
-        private const double _zero = 0d;
+        #region Fields
+        private double? _originalVolume;
+        private TimeSpan _lastHistoryPosition = TimeSpan.Zero;
 
         private readonly IAlertsService _alertsService;
         private readonly IClipboardService _clipboardService;
@@ -44,63 +45,17 @@ namespace SrtVideoPlayer.Shared.ViewModels
             LocalizedStrings.Files
         };
 
-        private TimeSpan _lastHistoryPosition = TimeSpan.Zero;
-        private double? _originalVolume;
+        private const double _one = 1d;
+        private const double _zero = 0d;
+        #endregion
 
+        #region Events
         public event EventHandler PlayPauseRequested;
         public event EventHandler SeekRequested;
         public event EventHandler StopRequested;
+        #endregion
 
-        public PlayerViewModel(
-            IAlertsService alertsService,
-            IClipboardService clipboardService,
-            ICommandFactoryService commandFactoryService,
-            IFileDownloaderService fileDownloaderService,
-            IFilePickerService filePickerService,
-            IFullscreenService fullscreenService,
-            IMessagingService messagingService,
-            INavigationService navigationService,
-            IPermissionsService permissionsService,
-            IPlatformInformationService platformInformationService,
-            ITimerService timerService)
-        {
-            _alertsService = alertsService;
-            _clipboardService = clipboardService;
-            _commandFactoryService = commandFactoryService;
-            _fileDownloaderService = fileDownloaderService;
-            _filePickerService = filePickerService;
-            _fullscreenService = fullscreenService;
-            _messagingService = messagingService;
-            _navigationService = navigationService;
-            _permissionsService = permissionsService;
-            _platformInformationService = platformInformationService;
-            _timerService = timerService;
-
-            LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
-            CopySubtitleToClipboardCommand = _commandFactoryService.Create(async () => await CopySubtitleToClipboard());
-            ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
-            PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
-            StopCommand = _commandFactoryService.Create(Stop);
-            GoBack5_SecondsCommand = _commandFactoryService.Create(() => Seek(false, 5));
-            GoForward5_SecondsCommand = _commandFactoryService.Create(() => Seek(true, 5));
-            GoBack10_SecondsCommand = _commandFactoryService.Create(() => Seek(false, 10));
-            GoForward10_SecondsCommand = _commandFactoryService.Create(() => Seek(true, 10));
-            RestartCommand = _commandFactoryService.Create(Restart);
-            FullscreenOnOffCommand = _commandFactoryService.Create(FullscreenOnOff);
-            FullscreenOnCommand = _commandFactoryService.Create(FullscreenOn);
-            FullscreenOffCommand = _commandFactoryService.Create(FullscreenOff);
-            MuteUnmuteCommand = _commandFactoryService.Create(MuteUnmute);
-            CaptionsOnOffCommand = _commandFactoryService.Create(CaptionsOnOff);
-            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
-            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
-            ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
-
-            _messagingService.Subscribe(this, Strings.SettingsChanged, (viewmodel) => RefreshFromSettings());
-        }
-
-        ~PlayerViewModel() =>
-            _messagingService.Unsubscribe(this, Strings.SettingsChanged);
-
+        #region Properties
         private Video _source;
 
         public Video Source
@@ -340,7 +295,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
         }
 
         public bool SubtitlesAreVisible => SubtitlesAreEnabled && SubtitlesLocationSet;
+        #endregion
 
+        #region Commands
         public TimeSpan? LastPositionFromHistory { get; set; }
 
         public ICommand LoadVideoCommand { get; }
@@ -378,7 +335,63 @@ namespace SrtVideoPlayer.Shared.ViewModels
         public ICommand NavigateToSettingsCommand { get; }
 
         public ICommand ShowAboutCommand { get; }
+        #endregion
 
+        #region Constructors
+        public PlayerViewModel(
+            IAlertsService alertsService,
+            IClipboardService clipboardService,
+            ICommandFactoryService commandFactoryService,
+            IFileDownloaderService fileDownloaderService,
+            IFilePickerService filePickerService,
+            IFullscreenService fullscreenService,
+            IMessagingService messagingService,
+            INavigationService navigationService,
+            IPermissionsService permissionsService,
+            IPlatformInformationService platformInformationService,
+            ITimerService timerService)
+        {
+            _alertsService = alertsService;
+            _clipboardService = clipboardService;
+            _commandFactoryService = commandFactoryService;
+            _fileDownloaderService = fileDownloaderService;
+            _filePickerService = filePickerService;
+            _fullscreenService = fullscreenService;
+            _messagingService = messagingService;
+            _navigationService = navigationService;
+            _permissionsService = permissionsService;
+            _platformInformationService = platformInformationService;
+            _timerService = timerService;
+
+            LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
+            CopySubtitleToClipboardCommand = _commandFactoryService.Create(async () => await CopySubtitleToClipboard());
+            ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
+            PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
+            StopCommand = _commandFactoryService.Create(Stop);
+            GoBack5_SecondsCommand = _commandFactoryService.Create(() => Seek(false, 5));
+            GoForward5_SecondsCommand = _commandFactoryService.Create(() => Seek(true, 5));
+            GoBack10_SecondsCommand = _commandFactoryService.Create(() => Seek(false, 10));
+            GoForward10_SecondsCommand = _commandFactoryService.Create(() => Seek(true, 10));
+            RestartCommand = _commandFactoryService.Create(Restart);
+            FullscreenOnOffCommand = _commandFactoryService.Create(FullscreenOnOff);
+            FullscreenOnCommand = _commandFactoryService.Create(FullscreenOn);
+            FullscreenOffCommand = _commandFactoryService.Create(FullscreenOff);
+            MuteUnmuteCommand = _commandFactoryService.Create(MuteUnmute);
+            CaptionsOnOffCommand = _commandFactoryService.Create(CaptionsOnOff);
+            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
+            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
+            ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
+
+            _messagingService.Subscribe(this, Strings.SettingsChanged, (viewmodel) => RefreshFromSettings());
+        }
+        #endregion
+
+        #region Destructor
+        ~PlayerViewModel() =>
+            _messagingService.Unsubscribe(this, Strings.SettingsChanged);
+        #endregion
+
+        #region Methods
         public async Task Launch(VideoFile videoFile = null)
         {
             var lastPosition = Settings.Instance.GetLastPosition();
@@ -806,5 +819,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Settings.Instance.SetLastPosition(position);
             _lastHistoryPosition = position;
         }
+        #endregion
     }
 }

@@ -12,13 +12,19 @@ namespace SrtVideoPlayer.Shared.ViewModels
 {
     public class SettingsViewModel : BaseViewModel
     {
-        private const string _minusCharacter = "-";
+        #region Fields
+        private bool _loaded;
+        private int _currentHistoryLength;
+        private int _currentFontSize;
+        private int _currentOffset;
+        private string _currentSubtitleColor;
+        private Theme? _currentTheme;
+
+        private readonly bool _deviceSupportsAutomaticDarkMode;
 
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IMessagingService _messagingService;
         private readonly IUiThreadService _uiThreadService;
-
-        private readonly bool _deviceSupportsAutomaticDarkMode;
 
         private readonly Dictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
         {
@@ -33,66 +39,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
             { LocalizedStrings.Cyan, Colors.Cyan }
         };
 
-        private bool _loaded;
-        private int _currentHistoryLength;
-        private Theme? _currentTheme;
-        private string _currentSubtitleColor;
-        private int _currentFontSize;
-        private int _currentOffset;
+        private const string _minusCharacter = "-";
+        #endregion
 
-        public SettingsViewModel(
-            ICommandFactoryService commandFactoryService,
-            IMessagingService messagingService,
-            IUiThreadService uiThreadService)
-        {
-            _commandFactoryService = commandFactoryService;
-            _messagingService = messagingService;
-            _uiThreadService = uiThreadService;
-
-            SaveSettingsCommand = _commandFactoryService.Create(SaveSettings, () => CanExecuteSaveSettings);
-
-            #region History settings
-            _currentHistoryLength = Settings.Instance.GetPlaybackHistoryLength();
-            HistoryLength = _currentHistoryLength.ToString();
-            #endregion History settings
-
-            #region Theme settings
-            DeviceSupportsManualDarkMode = Theming.Instance.DeviceSupportsManualDarkMode;
-            _deviceSupportsAutomaticDarkMode = Theming.Instance.DeviceSupportsAutomaticDarkMode;
-            _currentTheme = Theming.Instance.GetAppOrDefaultTheme();
-
-            if (_deviceSupportsAutomaticDarkMode)
-                _themesDictionary.Add(LocalizedStrings.Device, null);
-
-            _uiThreadService.ExecuteOnUiThread(() =>
-            {
-                Themes = _themesDictionary.Keys.ToArray();
-                SelectedTheme = _themesDictionary.FirstOrDefault(pair => pair.Value == _currentTheme).Key;
-            });
-            #endregion Theme settings
-
-            #region Subtitle color settings
-            _currentSubtitleColor = Settings.Instance.GetSubtitleColor();
-            _uiThreadService.ExecuteOnUiThread(() =>
-            {
-                SubtitleColors = _subtitleColorsDictionary.Keys.ToArray();
-                SelectedSubtitleColor = _subtitleColorsDictionary.FirstOrDefault(pair => pair.Value == _currentSubtitleColor).Key;
-            });
-            #endregion Subtitle color settings
-
-            #region Font size settings
-            _currentFontSize = Settings.Instance.GetFontSize();
-            FontSize = _currentFontSize.ToString();
-            #endregion Font size settings
-
-            #region Offset settings
-            _currentOffset = Settings.Instance.GetOffset();
-            Offset = _currentOffset.ToString();
-            #endregion Offset settings
-
-            _uiThreadService.ExecuteOnUiThread(() => _loaded = true);
-        }
-
+        #region Properties
         private string _historyLength;
 
         public string HistoryLength
@@ -259,9 +209,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        public bool StyleSectionIsVisible =>
-            DeviceSupportsManualDarkMode;
-
         private string _subtitleColorPreview = Settings.Instance.GetSubtitleColor();
 
         public string SubtitleColorPreview
@@ -290,11 +237,73 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        public ICommand SaveSettingsCommand { get; }
-
         private bool CanExecuteSaveSettings =>
             SettingsChanged;
 
+        public bool StyleSectionIsVisible =>
+            DeviceSupportsManualDarkMode;
+        #endregion
+
+        #region Commands
+        public ICommand SaveSettingsCommand { get; }
+        #endregion
+
+        #region Constructors
+        public SettingsViewModel(
+            ICommandFactoryService commandFactoryService,
+            IMessagingService messagingService,
+            IUiThreadService uiThreadService)
+        {
+            _commandFactoryService = commandFactoryService;
+            _messagingService = messagingService;
+            _uiThreadService = uiThreadService;
+
+            SaveSettingsCommand = _commandFactoryService.Create(SaveSettings, () => CanExecuteSaveSettings);
+
+            #region History settings
+            _currentHistoryLength = Settings.Instance.GetPlaybackHistoryLength();
+            HistoryLength = _currentHistoryLength.ToString();
+            #endregion History settings
+
+            #region Theme settings
+            DeviceSupportsManualDarkMode = Theming.Instance.DeviceSupportsManualDarkMode;
+            _deviceSupportsAutomaticDarkMode = Theming.Instance.DeviceSupportsAutomaticDarkMode;
+            _currentTheme = Theming.Instance.GetAppOrDefaultTheme();
+
+            if (_deviceSupportsAutomaticDarkMode)
+                _themesDictionary.Add(LocalizedStrings.Device, null);
+
+            _uiThreadService.ExecuteOnUiThread(() =>
+            {
+                Themes = _themesDictionary.Keys.ToArray();
+                SelectedTheme = _themesDictionary.FirstOrDefault(pair => pair.Value == _currentTheme).Key;
+            });
+            #endregion Theme settings
+
+            #region Subtitle color settings
+            _currentSubtitleColor = Settings.Instance.GetSubtitleColor();
+            _uiThreadService.ExecuteOnUiThread(() =>
+            {
+                SubtitleColors = _subtitleColorsDictionary.Keys.ToArray();
+                SelectedSubtitleColor = _subtitleColorsDictionary.FirstOrDefault(pair => pair.Value == _currentSubtitleColor).Key;
+            });
+            #endregion Subtitle color settings
+
+            #region Font size settings
+            _currentFontSize = Settings.Instance.GetFontSize();
+            FontSize = _currentFontSize.ToString();
+            #endregion Font size settings
+
+            #region Offset settings
+            _currentOffset = Settings.Instance.GetOffset();
+            Offset = _currentOffset.ToString();
+            #endregion Offset settings
+
+            _uiThreadService.ExecuteOnUiThread(() => _loaded = true);
+        }
+        #endregion
+
+        #region Methods
         private void SaveSettings()
         {
             _ = ManageHistoryLengthSettings();
@@ -386,5 +395,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Settings.Instance.SetOffset(fontSizeAsInt);
             _currentOffset = fontSizeAsInt;
         }
+        #endregion
     }
 }

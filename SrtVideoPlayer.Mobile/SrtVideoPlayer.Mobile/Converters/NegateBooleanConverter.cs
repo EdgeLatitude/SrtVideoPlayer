@@ -8,9 +8,8 @@ namespace SrtVideoPlayer.Mobile.Converters
     {
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture) =>
-            value is bool boolValue ?
-                !boolValue :
-                false;
+            value is bool boolValue
+                && !boolValue;
 
         public object ConvertBack(object value, Type targetType,
             object parameter, CultureInfo culture) =>
