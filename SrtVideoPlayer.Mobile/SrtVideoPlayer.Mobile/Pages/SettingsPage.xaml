@@ -130,7 +130,7 @@
                     <Entry  
                         Text="{Binding Offset}"
                         Keyboard="Numeric"
-                        MaxLength="4"
+                        MaxLength="6"
                         WidthRequest="100"
                         Style="{StaticResource SettingEntryStyle}" />
                 </StackLayout>

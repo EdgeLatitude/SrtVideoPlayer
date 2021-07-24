@@ -56,7 +56,6 @@ namespace SrtVideoPlayer.Mobile.Pages
             _viewModel.SeekRequested += ViewModel_SeekRequested;
             _viewModel.StopRequested += ViewModel_StopRequested;
 
-            CrossMediaManager.Current.BufferedChanged += Player_BufferedChanged;
             CrossMediaManager.Current.MediaItemFailed += Player_MediaItemFailed;
             CrossMediaManager.Current.MediaItemFinished += Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged += Player_PositionChanged;
@@ -71,7 +70,6 @@ namespace SrtVideoPlayer.Mobile.Pages
             _viewModel.SeekRequested -= ViewModel_SeekRequested;
             _viewModel.StopRequested -= ViewModel_StopRequested;
 
-            CrossMediaManager.Current.BufferedChanged -= Player_BufferedChanged;
             CrossMediaManager.Current.MediaItemFailed -= Player_MediaItemFailed;
             CrossMediaManager.Current.MediaItemFinished -= Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged -= Player_PositionChanged;
@@ -213,7 +211,7 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private async void ViewModel_PlayPauseRequested(object sender, EventArgs args)
         {
-            switch (Player.State)
+            switch (CrossMediaManager.Current.State)
             {
                 case MediaPlayerState.Playing:
                     await CrossMediaManager.Current.Pause();
@@ -233,11 +231,6 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private async void ViewModel_StopRequested(object sender, EventArgs args) =>
             await CrossMediaManager.Current.Stop();
-
-        private void Player_BufferedChanged(object sender, BufferedChangedEventArgs args)
-        {
-
-        }
 
         private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs args)
         {
