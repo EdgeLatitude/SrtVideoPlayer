@@ -11,7 +11,7 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
 {
     internal class ThemingService : IThemingService
     {
-        private static readonly IThemingDependencyService _themingDependencyService
+        private readonly IThemingDependencyService _themingDependencyService
             = DependencyService.Get<IThemingDependencyService>();
 
         public bool DeviceSupportsManualDarkMode() =>

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SrtVideoPlayer.Shared.Logic
 {
-    public class General
+    public static class General
     {
         public static string RemoveProtocolAndSlashesFromAddress(string address)
         {

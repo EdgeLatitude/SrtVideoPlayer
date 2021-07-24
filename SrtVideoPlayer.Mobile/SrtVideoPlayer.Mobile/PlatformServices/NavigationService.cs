@@ -11,7 +11,7 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
 {
     internal class NavigationService : INavigationService
     {
-        private static readonly Dictionary<string, Type> _locationPageDictionary = new Dictionary<string, Type>
+        private readonly Dictionary<string, Type> _locationPageDictionary = new Dictionary<string, Type>
         {
             { Locations.AboutPage, typeof(AboutPage) },
             { Locations.SettingsPage, typeof(SettingsPage) }
