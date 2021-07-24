@@ -7,34 +7,28 @@ namespace SrtVideoPlayer.Shared.Logic
 {
     public class Theming
     {
-        public static Theming Instance
-        {
-            get;
-            private set;
-        }
+        public static event EventHandler<ThemeChangeNeededEventArgs> ThemeChangeNeeded;
 
-        public static void Initialize(
-            IThemingService themingService) =>
-            Instance = new Theming(themingService);
+        private readonly Settings _settings;
 
         private readonly IThemingService _themingService;
 
-        public event EventHandler<ThemeChangeNeededEventArgs> ThemeChangeNeeded;
+        private Theme? _currentTheme;
 
-        private Theming(
+        public bool DeviceSupportsManualDarkMode { get; }
+
+        public bool DeviceSupportsAutomaticDarkMode { get; }
+
+        public Theming(
+            Settings settings,
             IThemingService themingService)
         {
+            _settings = settings;
             _themingService = themingService;
 
             DeviceSupportsManualDarkMode = _themingService.DeviceSupportsManualDarkMode();
             DeviceSupportsAutomaticDarkMode = _themingService.DeviceSupportsAutomaticDarkMode();
         }
-
-        public readonly bool DeviceSupportsManualDarkMode;
-
-        public readonly bool DeviceSupportsAutomaticDarkMode;
-
-        private Theme? _currentTheme;
 
         public async void ManageAppTheme(bool starting = false)
         {
@@ -48,15 +42,15 @@ namespace SrtVideoPlayer.Shared.Logic
         }
 
         public Theme? GetAppOrDefaultTheme() =>
-            Settings.Instance.ContainsTheme() ?
-                Settings.Instance.GetTheme() :
+            _settings.ContainsTheme() ?
+                _settings.GetTheme() :
                 DeviceSupportsAutomaticDarkMode ?
                     (Theme?)null :
                     _themingService.GetDeviceDefaultTheme();
 
         public async Task<Theme> GetAppOrDeviceTheme() =>
-            Settings.Instance.ContainsTheme() ?
-                Settings.Instance.GetTheme() :
+            _settings.ContainsTheme() ?
+                _settings.GetTheme() :
                 await _themingService.GetDeviceTheme();
     }
 }

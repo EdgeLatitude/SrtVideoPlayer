@@ -149,8 +149,14 @@
   <data name="AppVersion" xml:space="preserve">
     <value>Versión de la aplicación:</value>
   </data>
-  <data name="AppIconAttribution" xml:space="preserve">
-    <value>Ícono de la aplicación diseñado por Freepik de www.flaticon.es</value>
+  <data name="AppIconAttributionDescription" xml:space="preserve">
+    <value>Ícono de la aplicación diseñado por Freepik de:</value>
+  </data>
+  <data name="AppIconAttributionWebsite" xml:space="preserve">
+    <value>www.flaticon.es</value>
+  </data>
+  <data name="SourceCode" xml:space="preserve">
+    <value>Código fuente:</value>
   </data>
   <data name="SelectVideo" xml:space="preserve">
     <value>Selecciona el video</value>

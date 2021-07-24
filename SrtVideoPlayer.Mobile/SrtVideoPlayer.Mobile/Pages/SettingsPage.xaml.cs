@@ -11,7 +11,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         public SettingsPage()
         {
             InitializeComponent();
-            BindingContext = ViewModelLocator.Instance.Resolve<SettingsViewModel>();
+            BindingContext = ViewModelLocator.Instance.ResolveViewModel<SettingsViewModel>();
         }
 
         private void SettingsPage_Appearing(object sender, EventArgs args) =>

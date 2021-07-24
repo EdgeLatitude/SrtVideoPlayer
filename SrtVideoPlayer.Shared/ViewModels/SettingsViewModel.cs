@@ -22,6 +22,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private readonly bool _deviceSupportsAutomaticDarkMode;
 
+        private readonly Settings _settings;
+        private readonly Theming _theming;
+
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IMessagingService _messagingService;
         private readonly IUiThreadService _uiThreadService;
@@ -209,7 +212,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private string _subtitleColorPreview = Settings.Instance.GetSubtitleColor();
+        private string _subtitleColorPreview;
 
         public string SubtitleColorPreview
         {
@@ -223,7 +226,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private int _fontSizePreview = Settings.Instance.GetFontSize();
+        private int _fontSizePreview;
 
         public int FontSizePreview
         {
@@ -250,10 +253,18 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         #region Constructors
         public SettingsViewModel(
+            Settings settings,
+            Theming theming,
             ICommandFactoryService commandFactoryService,
             IMessagingService messagingService,
             IUiThreadService uiThreadService)
         {
+            _settings = settings;
+            _theming = theming;
+
+            _subtitleColorPreview = _settings.GetSubtitleColor();
+            _fontSizePreview = _settings.GetFontSize();
+
             _commandFactoryService = commandFactoryService;
             _messagingService = messagingService;
             _uiThreadService = uiThreadService;
@@ -261,14 +272,14 @@ namespace SrtVideoPlayer.Shared.ViewModels
             SaveSettingsCommand = _commandFactoryService.Create(SaveSettings, () => CanExecuteSaveSettings);
 
             #region History settings
-            _currentHistoryLength = Settings.Instance.GetPlaybackHistoryLength();
+            _currentHistoryLength = _settings.GetPlaybackHistoryLength();
             HistoryLength = _currentHistoryLength.ToString();
             #endregion History settings
 
             #region Theme settings
-            DeviceSupportsManualDarkMode = Theming.Instance.DeviceSupportsManualDarkMode;
-            _deviceSupportsAutomaticDarkMode = Theming.Instance.DeviceSupportsAutomaticDarkMode;
-            _currentTheme = Theming.Instance.GetAppOrDefaultTheme();
+            DeviceSupportsManualDarkMode = _theming.DeviceSupportsManualDarkMode;
+            _deviceSupportsAutomaticDarkMode = _theming.DeviceSupportsAutomaticDarkMode;
+            _currentTheme = _theming.GetAppOrDefaultTheme();
 
             if (_deviceSupportsAutomaticDarkMode)
                 _themesDictionary.Add(LocalizedStrings.Device, null);
@@ -281,7 +292,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             #endregion Theme settings
 
             #region Subtitle color settings
-            _currentSubtitleColor = Settings.Instance.GetSubtitleColor();
+            _currentSubtitleColor = _settings.GetSubtitleColor();
             _uiThreadService.ExecuteOnUiThread(() =>
             {
                 SubtitleColors = _subtitleColorsDictionary.Keys.ToArray();
@@ -290,12 +301,12 @@ namespace SrtVideoPlayer.Shared.ViewModels
             #endregion Subtitle color settings
 
             #region Font size settings
-            _currentFontSize = Settings.Instance.GetFontSize();
+            _currentFontSize = _settings.GetFontSize();
             FontSize = _currentFontSize.ToString();
             #endregion Font size settings
 
             #region Offset settings
-            _currentOffset = Settings.Instance.GetOffset();
+            _currentOffset = _settings.GetOffset();
             Offset = _currentOffset.ToString();
             #endregion Offset settings
 
@@ -325,24 +336,24 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
             if (_currentHistoryLength == historyLengthAsInt)
                 return;
-            Settings.Instance.SetPlaybackHistoryLength(historyLengthAsInt);
+            _settings.SetPlaybackHistoryLength(historyLengthAsInt);
             // Clear storage for out of bounds results
             var newHistoryLengthIsZero = historyLengthAsInt == 0;
             if (historyLengthAsInt - _currentHistoryLength < 0
-                && Settings.Instance.ContainsPlaybackHistory()
+                && _settings.ContainsPlaybackHistory()
                 && !newHistoryLengthIsZero)
             {
-                var resultsHistory = await Settings.Instance.GetPlaybackHistoryAsync();
+                var resultsHistory = await _settings.GetPlaybackHistoryAsync();
                 if (historyLengthAsInt < resultsHistory.Count)
                 {
                     resultsHistory.Reverse();
                     resultsHistory = resultsHistory.Take(historyLengthAsInt).ToList();
                     resultsHistory.Reverse();
-                    _ = Settings.Instance.SetPlaybackHistoryAsync(resultsHistory);
+                    _ = _settings.SetPlaybackHistoryAsync(resultsHistory);
                 }
             }
             else if (newHistoryLengthIsZero)
-                Settings.Instance.ClearPlaybackHistory();
+                _settings.ClearPlaybackHistory();
             _currentHistoryLength = historyLengthAsInt;
         }
 
@@ -352,10 +363,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
             if (_currentTheme == selectedTheme)
                 return;
             if (selectedTheme.HasValue)
-                Settings.Instance.SetTheme(selectedTheme.Value);
+                _settings.SetTheme(selectedTheme.Value);
             else
-                Settings.Instance.ClearTheme();
-            Theming.Instance.ManageAppTheme();
+                _settings.ClearTheme();
+            _theming.ManageAppTheme();
             _currentTheme = selectedTheme;
         }
 
@@ -364,7 +375,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             var selectedSubtitleColor = _subtitleColorsDictionary[SelectedSubtitleColor];
             if (_currentSubtitleColor == selectedSubtitleColor)
                 return;
-            Settings.Instance.SetSubtitleColor(selectedSubtitleColor);
+            _settings.SetSubtitleColor(selectedSubtitleColor);
             _currentSubtitleColor = selectedSubtitleColor;
         }
 
@@ -378,7 +389,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
             if (_currentFontSize == fontSizeAsInt)
                 return;
-            Settings.Instance.SetFontSize(fontSizeAsInt);
+            _settings.SetFontSize(fontSizeAsInt);
             _currentFontSize = fontSizeAsInt;
         }
 
@@ -392,7 +403,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
             if (_currentOffset == fontSizeAsInt)
                 return;
-            Settings.Instance.SetOffset(fontSizeAsInt);
+            _settings.SetOffset(fontSizeAsInt);
             _currentOffset = fontSizeAsInt;
         }
         #endregion

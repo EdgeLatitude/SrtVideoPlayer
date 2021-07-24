@@ -13,21 +13,10 @@ namespace SrtVideoPlayer.Shared.Logic
 {
     public class Settings
     {
-        private static ISettingsService _settingsService;
-        private static IThemingService _themingService;
+        private readonly ISettingsService _settingsService;
+        private readonly IThemingService _themingService;
 
-        public static Settings Instance
-        {
-            get;
-            private set;
-        }
-
-        public static void Initialize(
-            ISettingsService settingsService,
-            IThemingService themingService) =>
-            Instance = new Settings(settingsService, themingService);
-
-        private Settings(
+        public Settings(
             ISettingsService settingsService,
             IThemingService themingService)
         {

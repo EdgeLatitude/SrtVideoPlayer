@@ -20,6 +20,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private double? _originalVolume;
         private TimeSpan _lastHistoryPosition = TimeSpan.Zero;
 
+        private readonly Settings _settings;
+
         private readonly IAlertsService _alertsService;
         private readonly IClipboardService _clipboardService;
         private readonly ICommandFactoryService _commandFactoryService;
@@ -196,7 +198,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private int _offset = Settings.Instance.GetOffset();
+        private int _offset;
 
         public int Offset
         {
@@ -210,7 +212,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private string _subtitleColor = Settings.Instance.GetSubtitleColor();
+        private string _subtitleColor;
 
         public string SubtitleColor
         {
@@ -224,7 +226,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
-        private int _fontSize = Settings.Instance.GetFontSize();
+        private int _fontSize;
 
         public int FontSize
         {
@@ -294,12 +296,12 @@ namespace SrtVideoPlayer.Shared.ViewModels
             }
         }
 
+        public TimeSpan? LastPositionFromHistory { get; set; }
+
         public bool SubtitlesAreVisible => SubtitlesAreEnabled && SubtitlesLocationSet;
         #endregion
 
         #region Commands
-        public TimeSpan? LastPositionFromHistory { get; set; }
-
         public ICommand LoadVideoCommand { get; }
 
         public ICommand CopySubtitleToClipboardCommand { get; }
@@ -339,6 +341,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         #region Constructors
         public PlayerViewModel(
+            Settings settings,
             IAlertsService alertsService,
             IClipboardService clipboardService,
             ICommandFactoryService commandFactoryService,
@@ -351,6 +354,12 @@ namespace SrtVideoPlayer.Shared.ViewModels
             IPlatformInformationService platformInformationService,
             ITimerService timerService)
         {
+            _settings = settings;
+
+            _offset = _settings.GetOffset();
+            _subtitleColor = _settings.GetSubtitleColor();
+            _fontSize = _settings.GetFontSize();
+
             _alertsService = alertsService;
             _clipboardService = clipboardService;
             _commandFactoryService = commandFactoryService;
@@ -379,8 +388,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             MuteUnmuteCommand = _commandFactoryService.Create(MuteUnmute);
             CaptionsOnOffCommand = _commandFactoryService.Create(CaptionsOnOff);
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
-            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
-            ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
+            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettings());
+            ShowAboutCommand = _commandFactoryService.Create(async () => await NavigateToAbout());
 
             _messagingService.Subscribe(this, Strings.SettingsChanged, (viewmodel) => RefreshFromSettings());
         }
@@ -394,8 +403,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
         #region Methods
         public async Task Launch(VideoFile videoFile = null)
         {
-            var lastPosition = Settings.Instance.GetLastPosition();
-            var lastPlayback = (await Settings.Instance.GetPlaybackHistoryAsync()).LastOrDefault();
+            var lastPosition = _settings.GetLastPosition();
+            var lastPlayback = (await _settings.GetPlaybackHistoryAsync())?.LastOrDefault();
 
             if (videoFile != null)
             {
@@ -414,7 +423,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                         return;
                     }
                     else
-                        Settings.Instance.SetLastPosition(TimeSpan.Zero);
+                        _settings.SetLastPosition(TimeSpan.Zero);
                 await LoadVideo(videoFile);
                 return;
             }
@@ -433,7 +442,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     LastPositionFromHistory = lastPosition;
                 }
                 else
-                    Settings.Instance.SetLastPosition(TimeSpan.Zero);
+                    _settings.SetLastPosition(TimeSpan.Zero);
         }
 
         private async Task LoadVideo(VideoFile videoFile = null)
@@ -508,7 +517,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Position = TimeSpan.Zero;
             Duration = null;
             Subtitles = subtitles;
-            _ = Settings.Instance.ManageNewPlaybackAsync(new Playback
+            _ = _settings.ManageNewPlaybackAsync(new Playback
             {
                 Video = video,
                 Subtitles = subtitles
@@ -749,25 +758,25 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private async Task ShowHistory()
         {
-            if (Settings.Instance.GetPlaybackHistoryLength() == 0)
+            if (_settings.GetPlaybackHistoryLength() == 0)
             {
                 var openSettings = await _alertsService.DisplayConfirmationAsync(LocalizedStrings.Notice,
                     LocalizedStrings.DisabledPlaybackHistory,
                     LocalizedStrings.Settings,
                     LocalizedStrings.Cancel);
                 if (openSettings)
-                    await NavigateToSettingsAsync();
+                    await NavigateToSettings();
                 return;
             }
 
-            if (!Settings.Instance.ContainsPlaybackHistory())
+            if (!_settings.ContainsPlaybackHistory())
             {
                 await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice,
                     LocalizedStrings.EmptyPlaybackHistory);
                 return;
             }
 
-            var playbackHistory = await Settings.Instance.GetPlaybackHistoryAsync();
+            var playbackHistory = await _settings.GetPlaybackHistoryAsync();
             playbackHistory.Reverse();
 
             var videosFromHistoryByName = new Dictionary<string, Playback>();
@@ -786,29 +795,20 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 Subtitles = videoDataFromHistory.Subtitles;
             }
             else if (videoFromHistory == LocalizedStrings.ClearHistory)
-                Settings.Instance.ClearPlaybackHistory();
+                _settings.ClearPlaybackHistory();
         }
 
-        private async Task NavigateToSettingsAsync() =>
+        private async Task NavigateToSettings() =>
             await _navigationService.NavigateToAsync(Locations.SettingsPage);
 
-        private async Task ShowAbout() =>
-            await _alertsService.DisplayAlertAsync(
-                LocalizedStrings.About,
-                (_platformInformationService.PlatformSupportsGettingApplicationVersion() ?
-                    LocalizedStrings.AppVersion
-                        + Environment.NewLine
-                        + _platformInformationService.GetApplicationVersion()
-                        + Environment.NewLine
-                        + Environment.NewLine :
-                    string.Empty)
-                + LocalizedStrings.AppIconAttribution);
+        private async Task NavigateToAbout() =>
+            await _navigationService.NavigateToAsync(Locations.AboutPage);
 
         private void RefreshFromSettings()
         {
-            Offset = Settings.Instance.GetOffset();
-            SubtitleColor = Settings.Instance.GetSubtitleColor();
-            FontSize = Settings.Instance.GetFontSize();
+            Offset = _settings.GetOffset();
+            SubtitleColor = _settings.GetSubtitleColor();
+            FontSize = _settings.GetFontSize();
         }
 
         private void ManageLastPosition(TimeSpan position)
@@ -816,7 +816,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             const int secondsDifferenceForSavingState = 5;
             if (Math.Abs(_lastHistoryPosition.TotalSeconds - position.TotalSeconds) < secondsDifferenceForSavingState)
                 return;
-            Settings.Instance.SetLastPosition(position);
+            _settings.SetLastPosition(position);
             _lastHistoryPosition = position;
         }
         #endregion

@@ -70,11 +70,20 @@ namespace SrtVideoPlayer.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a App icon designed by Freepik from www.flaticon.com.
+        ///   Busca una cadena traducida similar a App icon designed by Freepik from:.
         /// </summary>
-        public static string AppIconAttribution {
+        public static string AppIconAttributionDescription {
             get {
-                return ResourceManager.GetString("AppIconAttribution", resourceCulture);
+                return ResourceManager.GetString("AppIconAttributionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a www.flaticon.com.
+        /// </summary>
+        public static string AppIconAttributionWebsite {
+            get {
+                return ResourceManager.GetString("AppIconAttributionWebsite", resourceCulture);
             }
         }
         
@@ -390,6 +399,15 @@ namespace SrtVideoPlayer.Shared.Localization {
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Source code:.
+        /// </summary>
+        public static string SourceCode {
+            get {
+                return ResourceManager.GetString("SourceCode", resourceCulture);
             }
         }
         

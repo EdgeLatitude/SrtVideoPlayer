@@ -37,14 +37,14 @@ namespace SrtVideoPlayer.Mobile.Pages
         // Required for Activator in ThemingService.
         public PlayerPage()
         {
-            _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();
+            _viewModel = ViewModelLocator.Instance.ResolveViewModel<PlayerViewModel>();
             SharedInitialization();
         }
 
         public PlayerPage(VideoFile videoFile = null)
         {
             _videoFile = videoFile;
-            _viewModel = ViewModelLocator.Instance.Resolve<PlayerViewModel>();
+            _viewModel = ViewModelLocator.Instance.ResolveViewModel<PlayerViewModel>();
             SharedInitialization();
         }
 

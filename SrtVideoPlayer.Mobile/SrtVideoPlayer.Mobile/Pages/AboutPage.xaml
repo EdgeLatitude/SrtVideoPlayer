@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:constants="clr-namespace:SrtVideoPlayer.Shared.Constants;assembly=SrtVideoPlayer.Shared"
+             xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
+             xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
+             mc:Ignorable="d"
+             x:DataType="viewmodels:AboutViewModel"
+             x:Class="SrtVideoPlayer.Mobile.Pages.AboutPage"
+             Title="{x:Static localization:LocalizedStrings.About}">
+    <ContentPage.Resources>
+        <!-- Named styles !-->
+        <Style x:Key="AboutStackLayoutStyle" TargetType="StackLayout">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Margin" Value="15,15,15,0" />
+            <Setter Property="Spacing" Value="30" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        </Style>
+        <Style x:Key="SectionStackLayoutStyle" TargetType="StackLayout">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Spacing" Value="10" />
+        </Style>
+        <Style x:Key="DescriptionLabelStyle" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="Subtitle" />
+        </Style>
+        <Style x:Key="DetailLabelStyle" TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="Subtitle" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <StackLayout
+            Style="{StaticResource AboutStackLayoutStyle}">
+            <StackLayout
+                IsVisible="{Binding PlatformSupportsGettingApplicationVersion}"
+                Style="{StaticResource SectionStackLayoutStyle}">
+                <Label  
+                    Text="{x:Static localization:LocalizedStrings.AppVersion}"
+                    Style="{StaticResource DescriptionLabelStyle}" />
+                <Label  
+                    Text="{Binding AppVersion}"
+                    Style="{StaticResource DetailLabelStyle}" />
+            </StackLayout>
+            <StackLayout
+                Style="{StaticResource SectionStackLayoutStyle}">
+                <Label  
+                    Text="{x:Static localization:LocalizedStrings.SourceCode}"
+                    Style="{StaticResource DescriptionLabelStyle}" />
+                <Label  
+                    Text="{x:Static constants:Strings.SourceCodeWebsite}"
+                    Style="{StaticResource DetailLabelStyle}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding NavigateToWebsiteCommand}"
+                            CommandParameter="{x:Static constants:Strings.SourceCodeWebsite}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            <StackLayout
+                Style="{StaticResource SectionStackLayoutStyle}">
+                <Label  
+                    Text="{x:Static localization:LocalizedStrings.AppIconAttributionDescription}"
+                    Style="{StaticResource DescriptionLabelStyle}" />
+                <Label  
+                    Text="{x:Static localization:LocalizedStrings.AppIconAttributionWebsite}"
+                    Style="{StaticResource DetailLabelStyle}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding NavigateToWebsiteCommand}"
+                            CommandParameter="{x:Static localization:LocalizedStrings.AppIconAttributionWebsite}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -149,8 +149,14 @@
   <data name="AppVersion" xml:space="preserve">
     <value>App version:</value>
   </data>
-  <data name="AppIconAttribution" xml:space="preserve">
-    <value>App icon designed by Freepik from www.flaticon.com</value>
+  <data name="AppIconAttributionDescription" xml:space="preserve">
+    <value>App icon designed by Freepik from:</value>
+  </data>
+  <data name="AppIconAttributionWebsite" xml:space="preserve">
+    <value>www.flaticon.com</value>
+  </data>
+  <data name="SourceCode" xml:space="preserve">
+    <value>Source code:</value>
   </data>
   <data name="SelectVideo" xml:space="preserve">
     <value>Select video</value>

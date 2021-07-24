@@ -14,5 +14,7 @@
         public const string SrtFileExtension = ".srt";
         public const string HoursMinutesAndSecondsFormat = @"hh\:mm\:ss";
         public const string MinutesAndSecondsFormat = @"mm\:ss";
+        public const string HttpsProtocol = "https://";
+        public const string SourceCodeWebsite = "github.com/EdgeLatitude/SrtVideoPlayer";
     }
 }

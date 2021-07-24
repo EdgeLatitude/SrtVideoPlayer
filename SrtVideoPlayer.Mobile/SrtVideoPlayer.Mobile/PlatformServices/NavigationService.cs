@@ -13,6 +13,7 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
     {
         private static readonly Dictionary<string, Type> _locationPageDictionary = new Dictionary<string, Type>
         {
+            { Locations.AboutPage, typeof(AboutPage) },
             { Locations.SettingsPage, typeof(SettingsPage) }
         };
 
