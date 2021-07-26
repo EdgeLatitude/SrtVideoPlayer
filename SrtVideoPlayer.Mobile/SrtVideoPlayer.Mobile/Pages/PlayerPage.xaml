@@ -333,6 +333,7 @@
                         ValueChanged="ProgressSlider_ValueChanged"
                         VerticalOptions="Center" />
                     <Label
+                        FontSize="14"
                         VerticalOptions="Center">
                         <Label.FormattedText>
                             <FormattedString>
