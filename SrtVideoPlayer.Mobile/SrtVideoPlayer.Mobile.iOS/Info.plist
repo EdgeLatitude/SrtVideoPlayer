@@ -46,8 +46,6 @@
     </array>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Access to the photo library is necessary to be able to select videos that are in it.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>At this time, access to the microphone is necessary to be able to use the gallery selector, the microphone is not used.</string>
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleLightContent</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>

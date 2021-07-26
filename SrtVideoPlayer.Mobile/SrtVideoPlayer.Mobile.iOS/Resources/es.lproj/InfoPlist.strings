@@ -1,4 +1,3 @@
 ﻿CFBundleDisplayName = "Reproductor de video";
 CFBundleName = "Reproductor de video ft. subtítulos";
 NSPhotoLibraryUsageDescription = "El acceso a la librería de fotos es necesario para poder seleccionar videos que se encuentren en ella.";
-NSMicrophoneUsageDescription = "En este momento, el acceso al micrófono es necesario para poder utilizar el selector de la galería, el micrófono no es utilizado.";
