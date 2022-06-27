@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:constants="clr-namespace:SrtVideoPlayer.Shared.Constants;assembly=SrtVideoPlayer.Shared"
-             xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
-             xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
-             mc:Ignorable="d"
-             x:DataType="viewmodels:AboutViewModel"
-             x:Class="SrtVideoPlayer.Mobile.Pages.AboutPage"
-             Title="{x:Static localization:LocalizedStrings.About}">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:constants="clr-namespace:SrtVideoPlayer.Shared.Constants;assembly=SrtVideoPlayer.Shared"
+    xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
+    xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
+    mc:Ignorable="d"
+    x:Class="SrtVideoPlayer.Mobile.Pages.AboutPage"
+    x:DataType="viewmodels:AboutViewModel"
+    Title="{x:Static localization:LocalizedStrings.About}">
     <ContentPage.Resources>
         <!-- Named styles !-->
         <Style x:Key="AboutStackLayoutStyle" TargetType="StackLayout">
@@ -32,7 +33,7 @@
             <Setter Property="FontSize" Value="Subtitle" />
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="HorizontalTextAlignment" Value="Center" />
-            <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="TextColor" Value="{DynamicResource AccentColor}" />
         </Style>
     </ContentPage.Resources>
     <ScrollView>

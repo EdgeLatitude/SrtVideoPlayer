@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
-             xmlns:converters="clr-namespace:SrtVideoPlayer.Mobile.Converters"
-             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             mc:Ignorable="d"
-             android:Application.WindowSoftInputModeAdjust="Resize"
-             x:Class="SrtVideoPlayer.Mobile.App">
+<Application
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
+    xmlns:converters="clr-namespace:SrtVideoPlayer.Mobile.Converters"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    android:Application.WindowSoftInputModeAdjust="Resize"
+    mc:Ignorable="d"
+    x:Class="SrtVideoPlayer.Mobile.App">
     <Application.Resources>
         <!-- Colors !-->
-        <Color x:Key="AccentColor">#004080</Color>
         <Color x:Key="BarBackgroundColor">#00366C</Color>
         <Color x:Key="BarForegroundColor">#FFFFFF</Color>
         <!-- Converters !-->
@@ -50,10 +50,10 @@
             <Setter Property="BackgroundColor"
                     Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
                                        iOS={DynamicResource iOSFieldBackgroundColor}}" />
-            <Setter Property="ios:Entry.CursorColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="ios:Entry.CursorColor" Value="{DynamicResource AccentColor}" />
             <Setter Property="IsSpellCheckEnabled" Value="False" />
             <Setter Property="IsTextPredictionEnabled" Value="False" />
-            <Setter Property="PlaceholderColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="PlaceholderColor" Value="{DynamicResource AccentColor}" />
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidTextColor},
                                        iOS={DynamicResource iOSTextColor}}" />
@@ -96,7 +96,7 @@
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidTextColor},
                                        iOS={DynamicResource iOSTextColor}}" />
-            <Setter Property="TitleColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="TitleColor" Value="{DynamicResource AccentColor}" />
             <Setter Property="Visual"
                     Value="{OnPlatform Android=Material,
                                        iOS=Default}" />

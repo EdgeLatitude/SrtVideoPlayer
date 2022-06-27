@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
-             xmlns:effects="clr-namespace:SrtVideoPlayer.Mobile.Effects"
-             xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
-             xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
-             mc:Ignorable="d"
-             x:DataType="viewmodels:SettingsViewModel"
-             x:Class="SrtVideoPlayer.Mobile.Pages.SettingsPage"
-             Appearing="SettingsPage_Appearing"
-             Title="{x:Static localization:LocalizedStrings.Settings}">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
+    xmlns:effects="clr-namespace:SrtVideoPlayer.Mobile.Effects"
+    xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
+    xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
+    mc:Ignorable="d"
+    x:Class="SrtVideoPlayer.Mobile.Pages.SettingsPage"
+    x:DataType="viewmodels:SettingsViewModel"
+    Appearing="SettingsPage_Appearing"
+    Title="{x:Static localization:LocalizedStrings.Settings}">
     <ContentPage.Resources>
         <!-- Named styles !-->
         <Style x:Key="DescriptionLabelStyle" TargetType="Label">
@@ -34,7 +35,7 @@
         <Style x:Key="SectionLabelStyle" TargetType="Label">
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="FontSize" Value="Subtitle" />
-            <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="TextColor" Value="{DynamicResource AccentColor}" />
         </Style>
         <Style x:Key="SectionStackLayoutStyle" TargetType="StackLayout">
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />

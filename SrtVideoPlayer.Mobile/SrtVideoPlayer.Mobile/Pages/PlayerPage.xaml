@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<controls:KeyboardPage xmlns="http://xamarin.com/schemas/2014/forms"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-                       xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-                       xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
-                       xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
-                       xmlns:effects="clr-namespace:SrtVideoPlayer.Mobile.Effects"
-                       xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
-                       xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
-                       mc:Ignorable="d"
-                       x:DataType="viewmodels:PlayerViewModel"
-                       x:Class="SrtVideoPlayer.Mobile.Pages.PlayerPage"
-                       SizeChanged="Page_SizeChanged">
+<controls:KeyboardPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
+    xmlns:controls="clr-namespace:SrtVideoPlayer.Mobile.Controls"
+    xmlns:effects="clr-namespace:SrtVideoPlayer.Mobile.Effects"
+    xmlns:localization="clr-namespace:SrtVideoPlayer.Shared.Localization;assembly=SrtVideoPlayer.Shared"
+    xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
+    mc:Ignorable="d"
+    x:Class="SrtVideoPlayer.Mobile.Pages.PlayerPage"
+    x:DataType="viewmodels:PlayerViewModel"
+    SizeChanged="Page_SizeChanged">
     <controls:KeyboardPage.Resources>
         <!-- Named styles !-->
         <Style x:Key="ProgressSliderStyle" TargetType="Slider">
