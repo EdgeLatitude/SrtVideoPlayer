@@ -22,7 +22,7 @@ namespace SrtVideoPlayer.Mobile.Droid.DependencyServices
         public Theme GetDeviceDefaultTheme() =>
             Theme.Dark;
 
-        public Task<Theme> GetDeviceTheme()
+        public Task<Theme> GetDeviceThemeAsync()
         {
             if (DeviceSupportsAutomaticDarkMode())
             {

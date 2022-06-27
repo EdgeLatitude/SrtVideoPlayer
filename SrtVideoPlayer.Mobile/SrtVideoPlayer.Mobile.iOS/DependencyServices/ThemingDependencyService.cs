@@ -23,11 +23,11 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
         public Theme GetDeviceDefaultTheme() =>
             Theme.Light;
 
-        public async Task<Theme> GetDeviceTheme()
+        public async Task<Theme> GetDeviceThemeAsync()
         {
             if (DeviceSupportsAutomaticDarkMode())
             {
-                var currentUIViewController = await GetVisibleViewController();
+                var currentUIViewController = await GetVisibleViewControllerAsync();
                 var userInterfaceStyle = currentUIViewController.TraitCollection.UserInterfaceStyle;
                 switch (userInterfaceStyle)
                 {
@@ -41,7 +41,7 @@ namespace SrtVideoPlayer.Mobile.iOS.DependencyServices
             return GetDeviceDefaultTheme();
         }
 
-        private static Task<UIViewController> GetVisibleViewController() =>
+        private static Task<UIViewController> GetVisibleViewControllerAsync() =>
             // UIApplication.SharedApplication can only be referenced on by Main Thread,
             // so it should be used Device.InvokeOnMainThreadAsync which was introduced in Xamarin.Forms v4.2.0
             Device.InvokeOnMainThreadAsync(() =>

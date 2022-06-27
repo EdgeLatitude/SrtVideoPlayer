@@ -30,14 +30,14 @@ namespace SrtVideoPlayer.Shared.Logic
             DeviceSupportsAutomaticDarkMode = _themingService.DeviceSupportsAutomaticDarkMode();
         }
 
-        public async void ManageAppTheme(bool starting = false)
+        public async Task ManageAppThemeAsync(bool starting = false)
         {
-            var theme = await GetAppOrDeviceTheme();
+            var theme = await GetAppOrDeviceThemeAsync();
             if (!starting
                 && theme == _currentTheme)
                 return;
             ThemeChangeNeeded?.Invoke(this, new ThemeChangeNeededEventArgs { Theme = theme });
-            _themingService.SetTheme(theme);
+            await _themingService.SetThemeAsync(theme);
             _currentTheme = theme;
         }
 
@@ -48,9 +48,9 @@ namespace SrtVideoPlayer.Shared.Logic
                     (Theme?)null :
                     _themingService.GetDeviceDefaultTheme();
 
-        public async Task<Theme> GetAppOrDeviceTheme() =>
+        public async Task<Theme> GetAppOrDeviceThemeAsync() =>
             _settings.ContainsTheme() ?
                 _settings.GetTheme() :
-                await _themingService.GetDeviceTheme();
+                await _themingService.GetDeviceThemeAsync();
     }
 }

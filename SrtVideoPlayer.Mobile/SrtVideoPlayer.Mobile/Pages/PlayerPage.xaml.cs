@@ -5,6 +5,7 @@ using MediaManager.Playback;
 using MediaManager.Player;
 using MediaManager.Video;
 using SrtVideoPlayer.Mobile.Controls;
+using SrtVideoPlayer.Shared.Extensions;
 using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Models.Files;
 using SrtVideoPlayer.Shared.ViewModels;
@@ -102,7 +103,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         {
             if (_firstAppearance)
             {
-                _ = _viewModel.Launch(_videoFile);
+                _viewModel.LaunchAsync(_videoFile).AwaitInOtherContext(true);
                 _firstAppearance = false;
             }
             // iOS bug fix.

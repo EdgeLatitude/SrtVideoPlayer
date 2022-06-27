@@ -1,9 +1,11 @@
 ﻿using SrtVideoPlayer.Shared.Constants;
+using SrtVideoPlayer.Shared.Extensions;
 using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Logic;
 using SrtVideoPlayer.Shared.Models.Theming;
 using SrtVideoPlayer.Shared.PlatformServices;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -29,18 +31,18 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private readonly IMessagingService _messagingService;
         private readonly IUiThreadService _uiThreadService;
 
-        private readonly Dictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
+        private readonly IDictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
         {
             { LocalizedStrings.Light, Theme.Light },
             { LocalizedStrings.Dark, Theme.Dark }
         };
 
-        private readonly Dictionary<string, string> _subtitleColorsDictionary = new Dictionary<string, string>
+        private readonly IReadOnlyDictionary<string, string> _subtitleColorsDictionary = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>
         {
             { LocalizedStrings.Yellow, Colors.Yellow },
             { LocalizedStrings.White, Colors.White },
             { LocalizedStrings.Cyan, Colors.Cyan }
-        };
+        });
 
         private const string _minusCharacter = "-";
         #endregion
@@ -269,7 +271,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _messagingService = messagingService;
             _uiThreadService = uiThreadService;
 
-            SaveSettingsCommand = _commandFactoryService.Create(SaveSettings, () => CanExecuteSaveSettings);
+            SaveSettingsCommand = _commandFactoryService.Create(async () => await SaveSettingsAsync(), () => CanExecuteSaveSettings);
 
             #region History settings
             _currentHistoryLength = _settings.GetPlaybackHistoryLength();
@@ -315,10 +317,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
         #endregion
 
         #region Methods
-        private void SaveSettings()
+        private async Task SaveSettingsAsync()
         {
-            _ = ManageHistoryLengthSettings();
-            ManageThemeSettings();
+            await ManageHistoryLengthSettingsAsync();
+            await ManageThemeSettingsAsync();
             ManageSubtitleColorSettings();
             ManageFontSizeSettings();
             ManageOffsetSettings();
@@ -326,7 +328,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _messagingService.Send(this, Strings.SettingsChanged);
         }
 
-        private async Task ManageHistoryLengthSettings()
+        private async Task ManageHistoryLengthSettingsAsync()
         {
             // Try to use the value that the user inputted, else, use the configuration default
             if (!int.TryParse(HistoryLength, out var historyLengthAsInt))
@@ -349,7 +351,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     resultsHistory.Reverse();
                     resultsHistory = resultsHistory.Take(historyLengthAsInt).ToList();
                     resultsHistory.Reverse();
-                    _ = _settings.SetPlaybackHistoryAsync(resultsHistory);
+                    _settings.SetPlaybackHistoryAsync(resultsHistory).AwaitInOtherContext(true);
                 }
             }
             else if (newHistoryLengthIsZero)
@@ -357,7 +359,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _currentHistoryLength = historyLengthAsInt;
         }
 
-        private void ManageThemeSettings()
+        private async Task ManageThemeSettingsAsync()
         {
             var selectedTheme = _themesDictionary[SelectedTheme];
             if (_currentTheme == selectedTheme)
@@ -366,7 +368,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 _settings.SetTheme(selectedTheme.Value);
             else
                 _settings.ClearTheme();
-            _theming.ManageAppTheme();
+            await _theming.ManageAppThemeAsync();
             _currentTheme = selectedTheme;
         }
 

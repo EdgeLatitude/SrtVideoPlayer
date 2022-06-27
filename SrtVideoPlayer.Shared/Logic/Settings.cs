@@ -37,7 +37,7 @@ namespace SrtVideoPlayer.Shared.Logic
             _settingsService.Remove(Strings.History);
 
         public async Task ManageNewPlaybackAsync(Playback playback) =>
-            await Task.Run(() => ManageNewPlayback(playback));
+            await Task.Run(() => ManageNewPlayback(playback)).ConfigureAwait(false);
 
         private void ManageNewPlayback(Playback playback)
         {
@@ -63,13 +63,13 @@ namespace SrtVideoPlayer.Shared.Logic
         }
 
         public async Task<List<Playback>> GetPlaybackHistoryAsync() =>
-            await Task.Run(GetPlaybackHistory);
+            await Task.Run(GetPlaybackHistory).ConfigureAwait(false);
 
         private List<Playback> GetPlaybackHistory() =>
             JsonConvert.DeserializeObject<List<Playback>>(_settingsService.Get(Strings.History, string.Empty));
 
         public async Task SetPlaybackHistoryAsync(IEnumerable<Playback> playbackHistory) =>
-            await Task.Run(() => SetPlaybackHistory(playbackHistory));
+            await Task.Run(() => SetPlaybackHistory(playbackHistory)).ConfigureAwait(false);
 
         private void SetPlaybackHistory(IEnumerable<Playback> playbackHistory) =>
             _settingsService.Set(Strings.History, JsonConvert.SerializeObject(playbackHistory,

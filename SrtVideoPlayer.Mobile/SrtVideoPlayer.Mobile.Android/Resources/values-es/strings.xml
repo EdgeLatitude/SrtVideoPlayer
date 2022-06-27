@@ -1,4 +1,4 @@
 <resources>
-  <string name="app_name">Reproductor de video ft. subtítulos</string>
-  <string name="short_app_name">Reproductor de video</string>
+	<string name="app_name">Reproductor de video ft. subtítulos</string>
+	<string name="short_app_name">Reproductor de video</string>
 </resources>

@@ -25,7 +25,7 @@ namespace SrtVideoPlayer.Shared.Logic
             return addressWithoutSlashes;
         }
 
-        public static async Task<string> ReadSubtitlesFileContent(string path)
+        public static async Task<string> ReadSubtitlesFileContentAsync(string path)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace SrtVideoPlayer.Shared.Logic
             }
         }
 
-        public static async Task<Subtitle[]> GetSubtitlesFromContent(string content, bool removeHtmlFormatting) =>
+        public static async Task<Subtitle[]> GetSubtitlesFromContentAsync(string content, bool removeHtmlFormatting) =>
             await Task.Run(() =>
             {
                 const int subtitlesSetLines = 3;
@@ -138,7 +138,7 @@ namespace SrtVideoPlayer.Shared.Logic
                 }
 
                 return subtitles.ToArray();
-            });
+            }).ConfigureAwait(false);
 
         public static string ConvertTimeSpanToShortestString(TimeSpan timeSpan) =>
             timeSpan.TotalHours >= 1 ?

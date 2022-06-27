@@ -7,6 +7,7 @@ using SrtVideoPlayer.Shared.Models.Playback;
 using SrtVideoPlayer.Shared.PlatformServices;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,18 +35,18 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private readonly IPlatformInformationService _platformInformationService;
         private readonly ITimerService _timerService;
 
-        private readonly string[] _videoSourceOptions = new string[]
+        private readonly ReadOnlyCollection<string> _videoSourceOptions = new ReadOnlyCollection<string>(new string[]
         {
             LocalizedStrings.Web,
             LocalizedStrings.Gallery,
             LocalizedStrings.Files,
-        };
+        });
 
-        private readonly string[] _subtitlesSourceOptions = new string[]
+        private readonly ReadOnlyCollection<string> _subtitlesSourceOptions = new ReadOnlyCollection<string>(new string[]
         {
             LocalizedStrings.Web,
             LocalizedStrings.Files
-        };
+        });
 
         private const double _one = 1d;
         private const double _zero = 0d;
@@ -372,8 +373,8 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _platformInformationService = platformInformationService;
             _timerService = timerService;
 
-            LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideo());
-            CopySubtitleToClipboardCommand = _commandFactoryService.Create(async () => await CopySubtitleToClipboard());
+            LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideoAsync());
+            CopySubtitleToClipboardCommand = _commandFactoryService.Create(async () => await CopySubtitleToClipboardAsync());
             ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
             PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
             StopCommand = _commandFactoryService.Create(Stop);
@@ -387,9 +388,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
             FullscreenOffCommand = _commandFactoryService.Create(FullscreenOff);
             MuteUnmuteCommand = _commandFactoryService.Create(MuteUnmute);
             CaptionsOnOffCommand = _commandFactoryService.Create(CaptionsOnOff);
-            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
-            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettings());
-            ShowAboutCommand = _commandFactoryService.Create(async () => await NavigateToAbout());
+            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistoryAsync());
+            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
+            ShowAboutCommand = _commandFactoryService.Create(async () => await NavigateToAboutAsync());
 
             _messagingService.Subscribe(this, Strings.SettingsChanged, (viewmodel) => RefreshFromSettings());
         }
@@ -401,7 +402,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         #endregion
 
         #region Methods
-        public async Task Launch(VideoFile videoFile = null)
+        public async Task LaunchAsync(VideoFile videoFile = null)
         {
             var lastPosition = _settings.GetLastPosition();
             var lastPlayback = (await _settings.GetPlaybackHistoryAsync())?.LastOrDefault();
@@ -424,7 +425,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     }
                     else
                         _settings.SetLastPosition(TimeSpan.Zero);
-                await LoadVideo(videoFile);
+                await LoadVideoAsync(videoFile);
                 return;
             }
 
@@ -445,9 +446,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     _settings.SetLastPosition(TimeSpan.Zero);
         }
 
-        private async Task LoadVideo(VideoFile videoFile = null)
+        private async Task LoadVideoAsync(VideoFile videoFile = null)
         {
-            if (!await CheckAndRequestForMediaAndFilesAccessPermissions())
+            if (!await CheckAndRequestForMediaAndFilesAccessPermissionsAsync())
                 return;
 
             SelectingVideo = true;
@@ -460,16 +461,16 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 {
                     videoSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.VideoSource,
                         null,
-                        _videoSourceOptions);
+                        _videoSourceOptions.ToArray());
 
                     if (videoSource != null
                         && _videoSourceOptions.Contains(videoSource))
                         if (videoSource == LocalizedStrings.Web)
-                            video = await LoadWebVideo();
+                            video = await LoadWebVideoAsync();
                         else if (videoSource == LocalizedStrings.Gallery)
-                            video = await LoadLocalVideoFromGallery();
+                            video = await LoadLocalVideoFromGalleryAsync();
                         else if (videoSource == LocalizedStrings.Files)
-                            video = await LoadLocalVideoFromFiles();
+                            video = await LoadLocalVideoFromFilesAsync();
 
                 } while (videoSource != LocalizedStrings.Cancel
                     && video == null);
@@ -489,15 +490,15 @@ namespace SrtVideoPlayer.Shared.ViewModels
             {
                 subtitlesSource = await _alertsService.DisplayOptionsAsync(LocalizedStrings.SubtitlesSource,
                     LocalizedStrings.NoSubtitles,
-                    _subtitlesSourceOptions);
+                    _subtitlesSourceOptions.ToArray());
 
                 if (subtitlesSource != null
                     && _subtitlesSourceOptions.Contains(subtitlesSource))
                 {
                     if (subtitlesSource == LocalizedStrings.Web)
-                        subtitles = await LoadWebSubtitles();
+                        subtitles = await LoadWebSubtitlesAsync();
                     else if (subtitlesSource == LocalizedStrings.Files)
-                        subtitles = await LoadLocalSubtitles();
+                        subtitles = await LoadLocalSubtitlesAsync();
                 }
                 else if (subtitlesSource == LocalizedStrings.NoSubtitles)
                     subtitles = null;
@@ -517,26 +518,26 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Position = TimeSpan.Zero;
             Duration = null;
             Subtitles = subtitles;
-            _ = _settings.ManageNewPlaybackAsync(new Playback
+            _settings.ManageNewPlaybackAsync(new Playback
             {
                 Video = video,
                 Subtitles = subtitles
-            });
+            }).ConfigureAwait(true);
         }
 
-        private async Task<bool> CheckAndRequestForMediaAndFilesAccessPermissions()
+        private async Task<bool> CheckAndRequestForMediaAndFilesAccessPermissionsAsync()
         {
-            var accessGranted = await _permissionsService.CheckMediaAndFilesAccessPermissions()
-                || await _permissionsService.RequestMediaAndFilesAccessPermissions();
+            var accessGranted = await _permissionsService.CheckMediaAndFilesAccessPermissionsAsync()
+                || await _permissionsService.RequestMediaAndFilesAccessPermissionsAsync();
             if (!accessGranted)
                 await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseGrantAccessToYourGalleryAndFiles);
             return accessGranted;
         }
 
-        private async Task<Video> LoadWebVideo()
+        private async Task<Video> LoadWebVideoAsync()
         {
 #if DEBUG
-            var webSource = await PromptForWebSource("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+            var webSource = await PromptForWebSourceAsync("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
 #else
             var webSource = await PromptForWebSource();
 #endif
@@ -545,7 +546,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             return new Video(General.RemoveProtocolAndSlashesFromAddress(webSource), webSource);
         }
 
-        private async Task<Video> LoadLocalVideoFromGallery()
+        private async Task<Video> LoadLocalVideoFromGalleryAsync()
         {
             var file = await _filePickerService.SelectVideoFromGalleryAsync();
             if (file == null)
@@ -553,7 +554,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             return new Video(file.Name, file.Path);
         }
 
-        private async Task<Video> LoadLocalVideoFromFiles()
+        private async Task<Video> LoadLocalVideoFromFilesAsync()
         {
             var file = await _filePickerService.SelectVideoFromFilesAsync();
             if (file == null)
@@ -561,10 +562,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
             return new Video(file.Name, file.Path);
         }
 
-        private async Task<Subtitle[]> LoadWebSubtitles()
+        private async Task<Subtitle[]> LoadWebSubtitlesAsync()
         {
 #if DEBUG
-            var webSource = await PromptForWebSource("https://raw.githubusercontent.com/moust/MediaPlayer/master/demo/subtitles.srt");
+            var webSource = await PromptForWebSourceAsync("https://raw.githubusercontent.com/moust/MediaPlayer/master/demo/subtitles.srt");
 #else
             var webSource = await PromptForWebSource();
 #endif
@@ -576,25 +577,25 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 Strings.SrtFileExtension,
                 true,
                 LocalizedStrings.DownloadingSubtitles);
-            return await General.GetSubtitlesFromContent(
+            return await General.GetSubtitlesFromContentAsync(
                 await File.ReadAllTextAsync(filepath),
                 _platformInformationService.GetDeviceOs() == DeviceOs.iOS);
         }
 
-        private async Task<Subtitle[]> LoadLocalSubtitles()
+        private async Task<Subtitle[]> LoadLocalSubtitlesAsync()
         {
             var file = await _filePickerService.SelectSubtitlesAsync();
             if (file == null)
                 return null;
-            var subtitlesContent = await General.ReadSubtitlesFileContent(file.Path);
+            var subtitlesContent = await General.ReadSubtitlesFileContentAsync(file.Path);
             if (string.IsNullOrWhiteSpace(subtitlesContent))
                 return null;
-            return await General.GetSubtitlesFromContent(
+            return await General.GetSubtitlesFromContentAsync(
                 subtitlesContent,
                 _platformInformationService.GetDeviceOs() == DeviceOs.iOS);
         }
 
-        private async Task<string> PromptForWebSource(string initialValue = null)
+        private async Task<string> PromptForWebSourceAsync(string initialValue = null)
         {
             var input = await _alertsService.DisplayPromptAsync(
                 LocalizedStrings.WebSource,
@@ -613,13 +614,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
             if (!Uri.IsWellFormedUriString(input, UriKind.Absolute))
             {
                 await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice, LocalizedStrings.PleaseEnterAValidUrl);
-                return await PromptForWebSource(input);
+                return await PromptForWebSourceAsync(input);
             }
 
             return input;
         }
 
-        private async Task CopySubtitleToClipboard()
+        private async Task CopySubtitleToClipboardAsync()
         {
             var subtitle = Subtitle?.Text;
             if (!string.IsNullOrWhiteSpace(subtitle))
@@ -756,7 +757,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             return keepSetting;
         }
 
-        private async Task ShowHistory()
+        private async Task ShowHistoryAsync()
         {
             if (_settings.GetPlaybackHistoryLength() == 0)
             {
@@ -765,7 +766,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
                     LocalizedStrings.Settings,
                     LocalizedStrings.Cancel);
                 if (openSettings)
-                    await NavigateToSettings();
+                    await NavigateToSettingsAsync();
                 return;
             }
 
@@ -798,10 +799,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 _settings.ClearPlaybackHistory();
         }
 
-        private async Task NavigateToSettings() =>
+        private async Task NavigateToSettingsAsync() =>
             await _navigationService.NavigateToAsync(Locations.SettingsPage);
 
-        private async Task NavigateToAbout() =>
+        private async Task NavigateToAboutAsync() =>
             await _navigationService.NavigateToAsync(Locations.AboutPage);
 
         private void RefreshFromSettings()

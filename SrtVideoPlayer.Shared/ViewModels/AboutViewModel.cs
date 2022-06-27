@@ -57,7 +57,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _navigationService = navigationService;
             _platformInformationService = platformInformationService;
 
-            NavigateToWebsiteCommand = _commandFactoryService.Create(async (string website) => await NavigateToWebsite(website));
+            NavigateToWebsiteCommand = _commandFactoryService.Create(async (string website) => await NavigateToWebsiteAsync(website));
 
             PlatformSupportsGettingApplicationVersion = _platformInformationService.PlatformSupportsGettingApplicationVersion();
             if (PlatformSupportsGettingApplicationVersion)
@@ -66,7 +66,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
         #endregion
 
         #region Methods
-        private async Task NavigateToWebsite(string website) =>
+        private async Task NavigateToWebsiteAsync(string website) =>
             await _navigationService.NavigateToAsync($"{Strings.HttpsProtocol}{website}");
         #endregion
     }

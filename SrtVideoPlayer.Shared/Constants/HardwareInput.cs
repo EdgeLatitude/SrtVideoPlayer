@@ -1,8 +1,10 @@
-﻿namespace SrtVideoPlayer.Shared.Constants
+﻿using System.Collections.ObjectModel;
+
+namespace SrtVideoPlayer.Shared.Constants
 {
     public static class HardwareInput
     {
-        public static readonly string[] KeyboardShortcutsCollection = new string[]
+        public static readonly ReadOnlyCollection<string> KeyboardShortcutsCollection = new ReadOnlyCollection<string>(new string[]
         {
             KeyboardShortcuts.PlayPauseA,
             KeyboardShortcuts.PlayPauseB,
@@ -12,6 +14,6 @@
             KeyboardShortcuts.FullscreenOnOff,
             KeyboardShortcuts.MuteUnmute,
             KeyboardShortcuts.CaptionsOnOff
-        };
+        });
     }
 }

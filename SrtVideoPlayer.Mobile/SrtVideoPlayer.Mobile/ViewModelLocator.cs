@@ -1,9 +1,14 @@
 ﻿using Autofac;
+using SrtVideoPlayer.Mobile.Pages;
 using SrtVideoPlayer.Mobile.PlatformServices;
+using SrtVideoPlayer.Shared.Constants;
 using SrtVideoPlayer.Shared.PlatformServices;
 using SrtVideoPlayer.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace SrtVideoPlayer.Mobile
 {
@@ -18,6 +23,18 @@ namespace SrtVideoPlayer.Mobile
         public static void Initialize() =>
             Instance = new ViewModelLocator();
 
+        public Page ResolvePage(string page) =>
+            (Page)_container.Resolve(_pagesToResolve[page]);
+
+        public async Task<Page> ResolvePageAsync(string page) =>
+            await Task.Run(() => ResolvePage(page));
+
+        public Page ResolvePage(Type pageType) =>
+            (Page)_container.Resolve(pageType);
+
+        public async Task<Page> ResolvePageAsync(Type pageType) =>
+            await Task.Run(() => ResolvePage(pageType));
+
         public TViewModel ResolveViewModel<TViewModel>()
             where TViewModel : BaseViewModel =>
             _container.Resolve<TViewModel>();
@@ -27,7 +44,7 @@ namespace SrtVideoPlayer.Mobile
 
         private readonly IContainer _container;
 
-        private readonly Dictionary<Type, Type> _implementationInterfaceDictionary = new Dictionary<Type, Type>
+        private readonly IReadOnlyDictionary<Type, Type> _implementationInterfaceDictionary = new ReadOnlyDictionary<Type, Type>(new Dictionary<Type, Type>
         {
             { typeof(AlertsService), typeof(IAlertsService) },
             { typeof(ClipboardService), typeof(IClipboardService) },
@@ -43,23 +60,31 @@ namespace SrtVideoPlayer.Mobile
             { typeof(ThemingService), typeof(IThemingService) },
             { typeof(TimerService), typeof(ITimerService) },
             { typeof(UiThreadService), typeof(IUiThreadService) }
-        };
+        });
 
-        private readonly Type[] _viewModelsToResolve = new Type[]
+        private readonly IReadOnlyDictionary<string, Type> _pagesToResolve = new ReadOnlyDictionary<string, Type>(new Dictionary<string, Type>
+        {
+            { Locations.AboutPage, typeof(AboutPage) },
+            { Locations.PlayerPage, typeof(PlayerPage) },
+            { Locations.SettingsPage, typeof(SettingsPage) }
+        });
+
+        private readonly ReadOnlyCollection<Type> _viewModelsToResolve = new ReadOnlyCollection<Type>(new Type[]
         {
             typeof(AboutViewModel)
-        };
+        });
 
-        private readonly Type[] _viewModelsToResolveAsSingletons = new Type[]
+        private readonly ReadOnlyCollection<Type> _viewModelsToResolveAsSingletons = new ReadOnlyCollection<Type>(new Type[]
         {
             typeof(PlayerViewModel),
             typeof(SettingsViewModel)
-        };
+        });
 
         private ViewModelLocator()
         {
             var builder = new ContainerBuilder();
             RegisterPlatformServices(builder);
+            RegisterPages(builder);
             RegisterViewModels(builder);
             RegisterLogic(builder);
             _container = builder.Build();
@@ -70,6 +95,12 @@ namespace SrtVideoPlayer.Mobile
             foreach (var implementationInterfacePair in _implementationInterfaceDictionary)
                 builder.RegisterType(implementationInterfacePair.Key)
                     .As(implementationInterfacePair.Value).SingleInstance();
+        }
+
+        private void RegisterPages(ContainerBuilder builder)
+        {
+            foreach (var pageToResolve in _pagesToResolve)
+                builder.RegisterType(pageToResolve.Value);
         }
 
         private void RegisterViewModels(ContainerBuilder builder)

@@ -1,4 +1,4 @@
 <resources>
-  <string name="app_name">Video player ft. subtitles</string>
-  <string name="short_app_name">Video player</string>
+	<string name="app_name">Video player ft. subtitles</string>
+	<string name="short_app_name">Video player</string>
 </resources>

@@ -8,7 +8,7 @@ namespace SrtVideoPlayer.Shared.PlatformServices
         bool DeviceSupportsManualDarkMode();
         bool DeviceSupportsAutomaticDarkMode();
         Theme GetDeviceDefaultTheme();
-        Task<Theme> GetDeviceTheme();
-        void SetTheme(Theme theme);
+        Task<Theme> GetDeviceThemeAsync();
+        Task SetThemeAsync(Theme theme);
     }
 }

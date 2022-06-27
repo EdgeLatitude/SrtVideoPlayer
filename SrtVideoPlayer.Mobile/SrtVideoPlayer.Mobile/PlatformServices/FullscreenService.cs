@@ -14,7 +14,7 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
         private readonly IFullscreenDependencyService _fullscreenDependencyService
             = DependencyService.Get<IFullscreenDependencyService>();
 
-        private readonly Dictionary<Xamarin.Forms.Page, ToolbarItem[]> _originalToolbarItems
+        private readonly IDictionary<Xamarin.Forms.Page, ToolbarItem[]> _originalToolbarItems
             = new Dictionary<Xamarin.Forms.Page, ToolbarItem[]>();
 
         public void Disable(BaseViewModel callerViewModel)

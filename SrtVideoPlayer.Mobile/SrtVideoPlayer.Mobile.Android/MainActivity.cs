@@ -88,7 +88,7 @@ namespace SrtVideoPlayer.Mobile.Droid
             }
         }
 
-        protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        protected override async void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
 
@@ -102,14 +102,14 @@ namespace SrtVideoPlayer.Mobile.Droid
                     break;
                 case ReadSubtitlesId:
                     if (resultCode == Result.Ok && data != null)
-                        PickSubtitlesTaskCompletionSource.SetResult(await ReadContentFromContentUri(data.Data));
+                        PickSubtitlesTaskCompletionSource.SetResult(await ReadContentFromContentUriAsync(data.Data));
                     else
                         PickSubtitlesTaskCompletionSource.SetResult(null);
                     break;
             }
         }
 
-        private async Task<string> ReadContentFromContentUri(Uri contentUri)
+        private async Task<string> ReadContentFromContentUriAsync(Uri contentUri)
         {
             try
             {
