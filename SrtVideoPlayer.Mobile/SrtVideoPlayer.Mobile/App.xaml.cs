@@ -1,6 +1,7 @@
 ﻿using MediaManager;
 using MediaManager.Video;
 using SrtVideoPlayer.Mobile.Pages;
+using SrtVideoPlayer.Shared.Constants;
 using SrtVideoPlayer.Shared.Logic;
 using SrtVideoPlayer.Shared.Models.Files;
 using Xamarin.Forms;
@@ -15,7 +16,9 @@ namespace SrtVideoPlayer.Mobile
         {
             InitializeComponent();
             ViewModelLocator.Initialize();
-            MainPage = new NavigationPage(new PlayerPage(videoFile));
+            var playerPage = (PlayerPage)ViewModelLocator.Instance.ResolvePage(Locations.PlayerPage);
+            playerPage.VideoFile = videoFile;
+            MainPage = new NavigationPage(playerPage);
             _theming = ViewModelLocator.Instance.Resolve<Theming>();
             // MediaPlayer settings.
             CrossMediaManager.Current.KeepScreenOn = true;

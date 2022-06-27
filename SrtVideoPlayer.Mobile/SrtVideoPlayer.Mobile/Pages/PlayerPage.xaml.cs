@@ -20,7 +20,6 @@ namespace SrtVideoPlayer.Mobile.Pages
     {
         private const double _defaultPinchScale = 1d;
 
-        private readonly VideoFile _videoFile;
         private readonly PlayerViewModel _viewModel;
 
         private IVideoView _videoView;
@@ -35,16 +34,10 @@ namespace SrtVideoPlayer.Mobile.Pages
         private bool _progressSliderIsLocked;
         private bool _firstPlayback = true;
 
-        // Required for Activator in ThemingService.
+        public VideoFile VideoFile { get; set; }
+
         public PlayerPage()
         {
-            _viewModel = ViewModelLocator.Instance.ResolveViewModel<PlayerViewModel>();
-            SharedInitialization();
-        }
-
-        public PlayerPage(VideoFile videoFile = null)
-        {
-            _videoFile = videoFile;
             _viewModel = ViewModelLocator.Instance.ResolveViewModel<PlayerViewModel>();
             SharedInitialization();
         }
@@ -103,7 +96,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         {
             if (_firstAppearance)
             {
-                _viewModel.LaunchAsync(_videoFile).AwaitInOtherContext(true);
+                _viewModel.LaunchAsync(VideoFile).AwaitInOtherContext(true);
                 _firstAppearance = false;
             }
             // iOS bug fix.

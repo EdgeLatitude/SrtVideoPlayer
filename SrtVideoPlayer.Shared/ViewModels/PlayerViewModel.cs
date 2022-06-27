@@ -1,4 +1,5 @@
 ﻿using SrtVideoPlayer.Shared.Constants;
+using SrtVideoPlayer.Shared.Extensions;
 using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Logic;
 using SrtVideoPlayer.Shared.Models.Enums;
@@ -522,7 +523,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             {
                 Video = video,
                 Subtitles = subtitles
-            }).ConfigureAwait(true);
+            }).AwaitInOtherContext(true);
         }
 
         private async Task<bool> CheckAndRequestForMediaAndFilesAccessPermissionsAsync()
