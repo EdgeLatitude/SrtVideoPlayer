@@ -147,11 +147,7 @@
                             Opacity="0"
                             Text="{x:Static localization:LocalizedStrings.SubtitlesPreview}">
                             <Label.Effects>
-                                <effects:ShadowEffect
-                                    Color="Black"
-                                    DistanceX="5"
-                                    DistanceY="5"
-                                    Radius="5" />
+                                <effects:ShadowEffect />
                             </Label.Effects>
                         </Label>
                     </Frame>
@@ -166,11 +162,7 @@
                             Text="{x:Static localization:LocalizedStrings.SubtitlesPreview}"
                             TextColor="{Binding SubtitleColorPreview, Converter={StaticResource hexColorConverter}}">
                             <Label.Effects>
-                                <effects:ShadowEffect
-                                    Color="Black"
-                                    DistanceX="5"
-                                    DistanceY="5"
-                                    Radius="5" />
+                                <effects:ShadowEffect />
                             </Label.Effects>
                         </Label>
                     </Frame>

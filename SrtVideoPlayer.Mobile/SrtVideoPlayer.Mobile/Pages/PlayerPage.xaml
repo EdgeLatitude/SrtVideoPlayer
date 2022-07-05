@@ -170,11 +170,7 @@
                         TextColor="{Binding SubtitleColor, Converter={StaticResource hexColorConverter}}"
                         VerticalOptions="End">
                         <Label.Effects>
-                            <effects:ShadowEffect
-                                Color="Black"
-                                DistanceX="5"
-                                DistanceY="5"
-                                Radius="5" />
+                            <effects:ShadowEffect />
                         </Label.Effects>
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer
