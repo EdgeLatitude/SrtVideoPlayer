@@ -53,7 +53,7 @@ namespace SrtVideoPlayer.Shared.Logic
                         newPlaybackHistory.Enqueue(playbackHistory.Dequeue());
                     else
                         playbackHistory.Dequeue();
-                newPlaybackHistory.Enqueue(playbackWithTheSameVideoName);
+                newPlaybackHistory.Enqueue(playback);
                 playbackHistory = newPlaybackHistory;
             }
             else
