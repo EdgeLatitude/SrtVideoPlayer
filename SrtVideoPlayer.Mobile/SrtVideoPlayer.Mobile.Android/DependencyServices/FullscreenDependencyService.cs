@@ -1,4 +1,4 @@
-﻿using Android.Views;
+﻿using AndroidX.Core.View;
 using SrtVideoPlayer.Mobile.DependencyServices;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -11,7 +11,11 @@ namespace SrtVideoPlayer.Mobile.Droid.DependencyServices
         public void Disable() => Device.BeginInvokeOnMainThread(() =>
         {
             Platform.CurrentActivity.RequestedOrientation = Android.Content.PM.ScreenOrientation.Unspecified;
-            Platform.CurrentActivity.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)SystemUiFlags.LayoutStable;
+            var window = Platform.CurrentActivity.Window;
+            WindowCompat.SetDecorFitsSystemWindows(window, true);
+            var controllerCompat = new WindowInsetsControllerCompat(window, window.DecorView);
+            controllerCompat.Show(WindowInsetsCompat.Type.SystemBars() | WindowInsetsCompat.Type.NavigationBars());
+            controllerCompat.SystemBarsBehavior = WindowInsetsControllerCompat.BehaviorShowBarsBySwipe;
         });
 
         public void Enable(bool landscapeMode) => Device.BeginInvokeOnMainThread(() =>
@@ -19,15 +23,11 @@ namespace SrtVideoPlayer.Mobile.Droid.DependencyServices
             Platform.CurrentActivity.RequestedOrientation = landscapeMode ?
                 Android.Content.PM.ScreenOrientation.SensorLandscape :
                 Android.Content.PM.ScreenOrientation.SensorPortrait;
-            Platform.CurrentActivity.Window.DecorView.SystemUiVisibility =
-                (StatusBarVisibility)(SystemUiFlags.Fullscreen
-                    | SystemUiFlags.HideNavigation
-                    | SystemUiFlags.Immersive
-                    | SystemUiFlags.ImmersiveSticky
-                    | SystemUiFlags.LowProfile
-                    | SystemUiFlags.LayoutStable
-                    | SystemUiFlags.LayoutHideNavigation
-                    | SystemUiFlags.LayoutFullscreen);
+            var window = Platform.CurrentActivity.Window;
+            WindowCompat.SetDecorFitsSystemWindows(window, false);
+            var controllerCompat = new WindowInsetsControllerCompat(window, window.DecorView);
+            controllerCompat.Hide(WindowInsetsCompat.Type.SystemBars() | WindowInsetsCompat.Type.NavigationBars());
+            controllerCompat.SystemBarsBehavior = WindowInsetsControllerCompat.BehaviorShowTransientBarsBySwipe;
         });
     }
 }

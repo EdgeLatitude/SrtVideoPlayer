@@ -39,11 +39,6 @@ namespace SrtVideoPlayer.Mobile.Pages
         public PlayerPage()
         {
             _viewModel = ViewModelLocator.Instance.ResolveViewModel<PlayerViewModel>();
-            SharedInitialization();
-        }
-
-        private void SharedInitialization()
-        {
             BindingContext = _viewModel;
 
             _viewModel.PlayPauseRequested += ViewModel_PlayPauseRequested;
@@ -56,6 +51,9 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.StateChanged += Player_StateChanged;
 
             InitializeComponent();
+
+            SizeChanged += Page_SizeChanged;
+            ProgressSlider.ValueChanged += ProgressSlider_ValueChanged;
         }
 
         ~PlayerPage()
@@ -68,6 +66,9 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.MediaItemFinished -= Player_MediaItemFinished;
             CrossMediaManager.Current.PositionChanged -= Player_PositionChanged;
             CrossMediaManager.Current.StateChanged -= Player_StateChanged;
+
+            SizeChanged -= Page_SizeChanged;
+            ProgressSlider.ValueChanged -= ProgressSlider_ValueChanged;
         }
 
         public override void OnKeyUp(string character) =>

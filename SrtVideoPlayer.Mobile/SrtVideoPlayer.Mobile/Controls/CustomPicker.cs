@@ -12,6 +12,9 @@ namespace SrtVideoPlayer.Mobile.Controls
         public CustomPicker() =>
             Focused += CustomPicker_Focused;
 
+        ~CustomPicker() =>
+            Focused -= CustomPicker_Focused;
+
         private void CustomPicker_Focused(object sender, FocusEventArgs args)
         {
             if (Device.RuntimePlatform != Device.Android)

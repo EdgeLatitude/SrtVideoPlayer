@@ -1,5 +1,4 @@
 ﻿using SrtVideoPlayer.Shared.ViewModels;
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,7 +13,16 @@ namespace SrtVideoPlayer.Mobile.Pages
             BindingContext = ViewModelLocator.Instance.ResolveViewModel<SettingsViewModel>();
         }
 
-        private void SettingsPage_Appearing(object sender, EventArgs args) =>
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
             PreviewGrid.IsVisible = true;
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            PreviewGrid.IsVisible = false;
+        }
     }
 }

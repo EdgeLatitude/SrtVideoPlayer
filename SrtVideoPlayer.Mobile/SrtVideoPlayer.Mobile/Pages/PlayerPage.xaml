@@ -12,8 +12,7 @@
     xmlns:viewmodels="clr-namespace:SrtVideoPlayer.Shared.ViewModels;assembly=SrtVideoPlayer.Shared"
     mc:Ignorable="d"
     x:Class="SrtVideoPlayer.Mobile.Pages.PlayerPage"
-    x:DataType="viewmodels:PlayerViewModel"
-    SizeChanged="Page_SizeChanged">
+    x:DataType="viewmodels:PlayerViewModel">
     <controls:KeyboardPage.Resources>
         <!-- Named styles !-->
         <Style x:Key="ProgressSliderStyle" TargetType="Slider">
@@ -331,7 +330,6 @@
                         x:Name="ProgressSlider"
                         HorizontalOptions="FillAndExpand"
                         Style="{StaticResource ProgressSliderStyle}"
-                        ValueChanged="ProgressSlider_ValueChanged"
                         VerticalOptions="Center" />
                     <Label
                         FontSize="14"
