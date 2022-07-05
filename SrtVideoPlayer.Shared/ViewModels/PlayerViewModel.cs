@@ -540,7 +540,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 #if DEBUG
             var webSource = await PromptForWebSourceAsync("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
 #else
-            var webSource = await PromptForWebSource();
+            var webSource = await PromptForWebSourceAsync();
 #endif
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
@@ -568,7 +568,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 #if DEBUG
             var webSource = await PromptForWebSourceAsync("https://raw.githubusercontent.com/moust/MediaPlayer/master/demo/subtitles.srt");
 #else
-            var webSource = await PromptForWebSource();
+            var webSource = await PromptForWebSourceAsync();
 #endif
             if (string.IsNullOrWhiteSpace(webSource))
                 return null;
