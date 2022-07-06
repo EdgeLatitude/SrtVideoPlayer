@@ -183,6 +183,9 @@
     <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets.xcassets\AccentColor.colorset\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\SrtVideoPlayer.Shared\SrtVideoPlayer.Shared.csproj">
       <Project>{87aa0025-374a-4803-a40c-1a409fb7416b}</Project>
       <Name>SrtVideoPlayer.Shared</Name>
@@ -228,8 +231,6 @@
   <ItemGroup>
     <BundleResource Include="Resources\stop_white.svg" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties TriggeredFromHotReload="False" />
