@@ -26,14 +26,14 @@ namespace SrtVideoPlayer.Mobile
         public Page ResolvePage(string page) =>
             (Page)_container.Resolve(_pagesToResolve[page]);
 
-        public async Task<Page> ResolvePageAsync(string page) =>
-            await Task.Run(() => ResolvePage(page));
+        public Task<Page> ResolvePageAsync(string page) =>
+            Task.Run(() => ResolvePage(page));
 
         public Page ResolvePage(Type pageType) =>
             (Page)_container.Resolve(pageType);
 
-        public async Task<Page> ResolvePageAsync(Type pageType) =>
-            await Task.Run(() => ResolvePage(pageType));
+        public Task<Page> ResolvePageAsync(Type pageType) =>
+            Task.Run(() => ResolvePage(pageType));
 
         public TViewModel ResolveViewModel<TViewModel>()
             where TViewModel : BaseViewModel =>

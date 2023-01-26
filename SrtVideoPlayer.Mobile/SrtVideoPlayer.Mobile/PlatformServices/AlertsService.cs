@@ -8,18 +8,18 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
 {
     internal class AlertsService : IAlertsService
     {
-        public async Task DisplayAlertAsync(string title, string message) =>
-            await Application.Current.MainPage.DisplayAlert(title, message, LocalizedStrings.Ok);
+        public Task DisplayAlertAsync(string title, string message) =>
+            Application.Current.MainPage.DisplayAlert(title, message, LocalizedStrings.Ok);
 
-        public async Task<bool> DisplayConfirmationAsync(string title, string message, string accept, string cancel) =>
-            await Application.Current.MainPage.DisplayAlert(title, message, accept, cancel);
+        public Task<bool> DisplayConfirmationAsync(string title, string message, string accept, string cancel) =>
+            Application.Current.MainPage.DisplayAlert(title, message, accept, cancel);
 
-        public async Task<string> DisplayOptionsAsync(string title, string destruction, params string[] options) =>
-            await Application.Current.MainPage.DisplayActionSheet(title, LocalizedStrings.Cancel, destruction, options);
+        public Task<string> DisplayOptionsAsync(string title, string destruction, params string[] options) =>
+            Application.Current.MainPage.DisplayActionSheet(title, LocalizedStrings.Cancel, destruction, options);
 
-        public async Task<string> DisplayPromptAsync(string title, string message, string placeholder = null,
+        public Task<string> DisplayPromptAsync(string title, string message, string placeholder = null,
             int? maxLength = null, string initialValue = null, KeyboardType keyboardType = KeyboardType.Plain) =>
-            await Application.Current.MainPage.DisplayPromptAsync(
+            Application.Current.MainPage.DisplayPromptAsync(
                 title,
                 message,
                 LocalizedStrings.Ok,

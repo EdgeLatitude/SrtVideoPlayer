@@ -18,10 +18,10 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
                 await Application.Current.MainPage.Navigation.PushAsync(await ViewModelLocator.Instance.ResolvePageAsync(resource));
         }
 
-        public async Task NavigateBackAsync() =>
-            await Application.Current.MainPage.Navigation.PopAsync();
+        public Task NavigateBackAsync() =>
+            Application.Current.MainPage.Navigation.PopAsync();
 
-        public async Task NavigateBackToRootAsync() =>
-            await Application.Current.MainPage.Navigation.PopToRootAsync();
+        public Task NavigateBackToRootAsync() =>
+            Application.Current.MainPage.Navigation.PopToRootAsync();
     }
 }

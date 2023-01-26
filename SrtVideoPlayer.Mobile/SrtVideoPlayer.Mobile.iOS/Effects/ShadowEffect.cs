@@ -27,7 +27,7 @@ namespace SrtVideoPlayer.Mobile.iOS.Effects
             }
             catch (Exception exception)
             {
-                Debug.WriteLine($"Cannot set property on attached control. Error: {exception.Message}");
+                Debug.WriteLine($"Cannot set property on attached control. Exception: {exception.Message}");
             }
         }
 

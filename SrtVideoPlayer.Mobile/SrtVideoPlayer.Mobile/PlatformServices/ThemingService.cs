@@ -22,8 +22,8 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
         public Theme GetDeviceDefaultTheme() =>
             _themingDependencyService.GetDeviceDefaultTheme();
 
-        public async Task<Theme> GetDeviceThemeAsync() =>
-            await _themingDependencyService.GetDeviceThemeAsync();
+        public Task<Theme> GetDeviceThemeAsync() =>
+            _themingDependencyService.GetDeviceThemeAsync();
 
         public async Task SetThemeAsync(Theme theme)
         {

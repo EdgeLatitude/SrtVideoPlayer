@@ -798,11 +798,11 @@ namespace SrtVideoPlayer.Shared.ViewModels
                 _settings.ClearPlaybackHistory();
         }
 
-        private async Task NavigateToSettingsAsync() =>
-            await _navigationService.NavigateToAsync(Locations.SettingsPage);
+        private Task NavigateToSettingsAsync() =>
+            _navigationService.NavigateToAsync(Locations.SettingsPage);
 
-        private async Task NavigateToAboutAsync() =>
-            await _navigationService.NavigateToAsync(Locations.AboutPage);
+        private Task NavigateToAboutAsync() =>
+            _navigationService.NavigateToAsync(Locations.AboutPage);
 
         private void RefreshFromSettings()
         {

@@ -39,8 +39,8 @@ namespace SrtVideoPlayer.Shared.Logic
             }
         }
 
-        public static async Task<Subtitle[]> GetSubtitlesFromContentAsync(string content, bool removeHtmlFormatting) =>
-            await Task.Run(() =>
+        public static Task<Subtitle[]> GetSubtitlesFromContentAsync(string content, bool removeHtmlFormatting) =>
+            Task.Run(() =>
             {
                 const int subtitlesSetLines = 3;
                 const string timesDelimiter = "-->";
@@ -131,14 +131,14 @@ namespace SrtVideoPlayer.Shared.Logic
                         }
                         catch (Exception exception)
                         {
-                            Debug.WriteLine($"Error removing HTML formatting from subtitle line: {exception.Message}");
+                            Debug.WriteLine($"Exception removing HTML formatting from subtitle line: {exception.Message}");
                         }
 
                     subtitles.Add(new Subtitle(indexAsInt, new SubtitleSpan(startTimeAsTimeSpan, endTimeAsTimeSpan), text));
                 }
 
                 return subtitles.ToArray();
-            }).ConfigureAwait(false);
+            });
 
         public static string ConvertTimeSpanToShortestString(TimeSpan timeSpan) =>
             timeSpan.TotalHours >= 1 ?

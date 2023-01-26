@@ -6,7 +6,7 @@ namespace SrtVideoPlayer.Mobile.PlatformServices
 {
     internal class ClipboardService : IClipboardService
     {
-        public async Task SetTextAsync(string text) =>
-            await Clipboard.SetTextAsync(text);
+        public Task SetTextAsync(string text) =>
+            Clipboard.SetTextAsync(text);
     }
 }

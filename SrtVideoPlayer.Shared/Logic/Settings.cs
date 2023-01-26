@@ -36,8 +36,8 @@ namespace SrtVideoPlayer.Shared.Logic
         public void ClearPlaybackHistory() =>
             _settingsService.Remove(Strings.History);
 
-        public async Task ManageNewPlaybackAsync(Playback playback) =>
-            await Task.Run(() => ManageNewPlayback(playback)).ConfigureAwait(false);
+        public Task ManageNewPlaybackAsync(Playback playback) =>
+            Task.Run(() => ManageNewPlayback(playback));
 
         private void ManageNewPlayback(Playback playback)
         {
@@ -62,14 +62,14 @@ namespace SrtVideoPlayer.Shared.Logic
             SetPlaybackHistory(new CircularBuffer<Playback>(GetPlaybackHistoryLength(), playbackHistory));
         }
 
-        public async Task<List<Playback>> GetPlaybackHistoryAsync() =>
-            await Task.Run(GetPlaybackHistory).ConfigureAwait(false);
+        public Task<List<Playback>> GetPlaybackHistoryAsync() =>
+            Task.Run(GetPlaybackHistory);
 
         private List<Playback> GetPlaybackHistory() =>
             JsonConvert.DeserializeObject<List<Playback>>(_settingsService.Get(Strings.History, string.Empty));
 
-        public async Task SetPlaybackHistoryAsync(IEnumerable<Playback> playbackHistory) =>
-            await Task.Run(() => SetPlaybackHistory(playbackHistory)).ConfigureAwait(false);
+        public Task SetPlaybackHistoryAsync(IEnumerable<Playback> playbackHistory) =>
+            Task.Run(() => SetPlaybackHistory(playbackHistory));
 
         private void SetPlaybackHistory(IEnumerable<Playback> playbackHistory) =>
             _settingsService.Set(Strings.History, JsonConvert.SerializeObject(playbackHistory,
