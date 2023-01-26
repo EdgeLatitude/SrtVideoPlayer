@@ -6,7 +6,7 @@
 	package="com.edgelatitude.srtvideoplayer">
 	<uses-sdk
 		android:minSdkVersion="21"
-		android:targetSdkVersion="30" />
+		android:targetSdkVersion="33" />
 	<application
 		android:label="@string/app_name"
 		android:usesCleartextTraffic="true"></application>

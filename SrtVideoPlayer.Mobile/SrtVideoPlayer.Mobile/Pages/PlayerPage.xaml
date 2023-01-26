@@ -24,12 +24,12 @@
             <Setter Property="ThumbColor"
                     Value="{DynamicResource ProgressSliderThumbColor}" />
         </Style>
-        <Style x:Key="PlayerPositionLabelStyle" TargetType="Label">
+        <Style x:Key="PlayerPositionLabelStyle" TargetType="Span">
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
                                        iOS={DynamicResource iOSPageBackgroundColor}}" />
         </Style>
-        <Style x:Key="PlayerDurationLabelStyle" TargetType="Label">
+        <Style x:Key="PlayerDurationLabelStyle" TargetType="Span">
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
                                        iOS={DynamicResource iOSFieldBackgroundColor}}" />
