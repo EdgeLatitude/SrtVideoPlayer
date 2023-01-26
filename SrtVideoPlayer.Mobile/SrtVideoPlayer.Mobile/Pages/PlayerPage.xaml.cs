@@ -52,7 +52,6 @@ namespace SrtVideoPlayer.Mobile.Pages
 
             InitializeComponent();
 
-            SizeChanged += Page_SizeChanged;
             ProgressSlider.ValueChanged += ProgressSlider_ValueChanged;
         }
 
@@ -67,7 +66,6 @@ namespace SrtVideoPlayer.Mobile.Pages
             CrossMediaManager.Current.PositionChanged -= Player_PositionChanged;
             CrossMediaManager.Current.StateChanged -= Player_StateChanged;
 
-            SizeChanged -= Page_SizeChanged;
             ProgressSlider.ValueChanged -= ProgressSlider_ValueChanged;
         }
 
@@ -119,10 +117,11 @@ namespace SrtVideoPlayer.Mobile.Pages
             return false;
         }
 
-        private void SubtitleLabel_Tapped(object sender, EventArgs args)
+        protected override void OnSizeAllocated(double width, double height)
         {
-            if (!string.IsNullOrWhiteSpace(SubtitleLabel.Text))
-                CopySubtitleToClipboardAnimation();
+            base.OnSizeAllocated(width, height);
+            if (_viewModel.MediaLoaded)
+                SetSubtitlesPosition(true);
         }
 
         private void CopySubtitleToClipboardAnimation()
@@ -148,35 +147,6 @@ namespace SrtVideoPlayer.Mobile.Pages
                 return false;
             });
         }
-
-        private void Player_PinchUpdated(object sender, PinchGestureUpdatedEventArgs args)
-        {
-            switch (args.Status)
-            {
-                case GestureStatus.Started:
-                    _pinchScale = args.Scale;
-                    break;
-                case GestureStatus.Running:
-                    _pinchScale = args.Scale;
-                    break;
-                case GestureStatus.Completed:
-                    if (_pinchScale > _defaultPinchScale)
-                        CrossMediaManager.Current.MediaPlayer.VideoAspect = VideoAspectMode.AspectFill;
-                    else if (_pinchScale < _defaultPinchScale)
-                        CrossMediaManager.Current.MediaPlayer.VideoAspect = VideoAspectMode.AspectFit;
-                    break;
-            }
-        }
-
-        private void Player_Tapped(object sender, EventArgs args)
-        {
-            if (_playbackControlsAreVisible)
-                _viewModel.PlayOrPauseCommand.Execute(null);
-            PlaybackControlsAnimation();
-        }
-
-        private void PlaybackControls_Tapped(object sender, EventArgs args) =>
-            PlaybackControlsAnimation();
 
         private void PlaybackControlsAnimation()
         {
@@ -204,6 +174,52 @@ namespace SrtVideoPlayer.Mobile.Pages
             });
         }
 
+        private void SetSubtitlesPosition(bool pageSizeChanged)
+        {
+            const double horizontalMargin = 16;
+            const double verticalMargin = 8;
+
+            var videoHeight = Player.VideoHeight;
+            var videoWidth = Player.VideoWidth;
+
+            if (videoHeight == default
+                || videoWidth == default)
+                return;
+
+            if (!pageSizeChanged
+                && videoHeight == _lastVideoHeight
+                && videoWidth == _lastVideoWidth)
+            {
+                if (!_viewModel.SubtitlesLocationSet)
+                    Device.BeginInvokeOnMainThread(() => _viewModel.SubtitlesLocationSet = true);
+                return;
+            }
+
+            _lastVideoHeight = videoHeight;
+            _lastVideoWidth = videoWidth;
+
+            _viewModel.LandscapeVideo = _lastVideoWidth > _lastVideoHeight;
+
+            var containerHeight = ContainerGrid.Height;
+            var containerWidth = ContainerGrid.Width;
+
+            var videoAspectRatio = (double)_lastVideoWidth / _lastVideoHeight;
+            var containerAspectRatio = containerWidth / containerHeight;
+
+            var scaledVideoHeight = CrossMediaManager.Current.MediaPlayer.VideoAspect == VideoAspectMode.AspectFit
+                && videoAspectRatio > containerAspectRatio ?
+                _lastVideoHeight * containerWidth / _lastVideoWidth :
+                containerHeight;
+            var bottonMargin = (containerHeight / 2) - (scaledVideoHeight / 2) + verticalMargin;
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                SubtitleLabel.Margin = new Thickness(horizontalMargin, verticalMargin, horizontalMargin, bottonMargin);
+                _viewModel.SubtitlesLocationSet = true;
+            });
+        }
+
+        #region ViewModel events
         private async void ViewModel_PlayPauseRequested(object sender, EventArgs args)
         {
             switch (CrossMediaManager.Current.State)
@@ -226,7 +242,9 @@ namespace SrtVideoPlayer.Mobile.Pages
 
         private async void ViewModel_StopRequested(object sender, EventArgs args) =>
             await CrossMediaManager.Current.Stop();
+        #endregion
 
+        #region Player events
         private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs args)
         {
             if (Player.State != MediaPlayerState.Failed)
@@ -298,6 +316,37 @@ namespace SrtVideoPlayer.Mobile.Pages
                     break;
             }
         }
+        #endregion
+
+        #region Other events
+        private void PlaybackControls_Tapped(object sender, EventArgs args) =>
+            PlaybackControlsAnimation();
+
+        private void PlayerPinchGestureRecognizer_PinchUpdated(object sender, PinchGestureUpdatedEventArgs args)
+        {
+            switch (args.Status)
+            {
+                case GestureStatus.Started:
+                    _pinchScale = args.Scale;
+                    break;
+                case GestureStatus.Running:
+                    _pinchScale = args.Scale;
+                    break;
+                case GestureStatus.Completed:
+                    if (_pinchScale > _defaultPinchScale)
+                        CrossMediaManager.Current.MediaPlayer.VideoAspect = VideoAspectMode.AspectFill;
+                    else if (_pinchScale < _defaultPinchScale)
+                        CrossMediaManager.Current.MediaPlayer.VideoAspect = VideoAspectMode.AspectFit;
+                    break;
+            }
+        }
+
+        private void PlayerTapGestureRecognizer_Tapped(object sender, EventArgs args)
+        {
+            if (_playbackControlsAreVisible)
+                _viewModel.PlayOrPauseCommand.Execute(null);
+            PlaybackControlsAnimation();
+        }
 
         private async void ProgressSlider_ValueChanged(object sender, ValueChangedEventArgs args)
         {
@@ -308,55 +357,11 @@ namespace SrtVideoPlayer.Mobile.Pages
             await CrossMediaManager.Current.SeekTo(position);
         }
 
-        private void Page_SizeChanged(object sender, EventArgs args)
+        private void SubtitleLabel_Tapped(object sender, EventArgs args)
         {
-            if (_viewModel.MediaLoaded)
-                SetSubtitlesPosition(true);
+            if (!string.IsNullOrWhiteSpace(SubtitleLabel.Text))
+                CopySubtitleToClipboardAnimation();
         }
-
-        private void SetSubtitlesPosition(bool pageSizeChanged)
-        {
-            const double horizontalMargin = 16;
-            const double verticalMargin = 8;
-
-            var videoHeight = Player.VideoHeight;
-            var videoWidth = Player.VideoWidth;
-
-            if (videoHeight == default
-                || videoWidth == default)
-                return;
-
-            if (!pageSizeChanged
-                && videoHeight == _lastVideoHeight
-                && videoWidth == _lastVideoWidth)
-            {
-                if (!_viewModel.SubtitlesLocationSet)
-                    Device.BeginInvokeOnMainThread(() => _viewModel.SubtitlesLocationSet = true);
-                return;
-            }
-
-            _lastVideoHeight = videoHeight;
-            _lastVideoWidth = videoWidth;
-
-            _viewModel.LandscapeVideo = _lastVideoWidth > _lastVideoHeight;
-
-            var containerHeight = ContainerGrid.Height;
-            var containerWidth = ContainerGrid.Width;
-
-            var videoAspectRatio = (double)_lastVideoWidth / _lastVideoHeight;
-            var containerAspectRatio = containerWidth / containerHeight;
-
-            var scaledVideoHeight = CrossMediaManager.Current.MediaPlayer.VideoAspect == VideoAspectMode.AspectFit
-                && videoAspectRatio > containerAspectRatio ?
-                _lastVideoHeight * containerWidth / _lastVideoWidth :
-                containerHeight;
-            var bottonMargin = (containerHeight / 2) - (scaledVideoHeight / 2) + verticalMargin;
-
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                SubtitleLabel.Margin = new Thickness(horizontalMargin, verticalMargin, horizontalMargin, bottonMargin);
-                _viewModel.SubtitlesLocationSet = true;
-            });
-        }
+        #endregion
     }
 }

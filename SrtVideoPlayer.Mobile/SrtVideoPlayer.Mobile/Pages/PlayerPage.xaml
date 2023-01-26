@@ -24,12 +24,12 @@
             <Setter Property="ThumbColor"
                     Value="{DynamicResource ProgressSliderThumbColor}" />
         </Style>
-        <Style x:Key="PlayerPositionLabelStyle" TargetType="Span">
+        <Style x:Key="PlayerPositionSpanStyle" TargetType="Span">
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
                                        iOS={DynamicResource iOSPageBackgroundColor}}" />
         </Style>
-        <Style x:Key="PlayerDurationLabelStyle" TargetType="Span">
+        <Style x:Key="PlayerDurationSpanStyle" TargetType="Span">
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
                                        iOS={DynamicResource iOSFieldBackgroundColor}}" />
@@ -197,7 +197,7 @@
                     <BoxView>
                         <BoxView.GestureRecognizers>
                             <PinchGestureRecognizer
-                                PinchUpdated="Player_PinchUpdated" />
+                                PinchUpdated="PlayerPinchGestureRecognizer_PinchUpdated" />
                             <SwipeGestureRecognizer
                                 Command="{Binding GoForward5_SecondsCommand}"
                                 Direction="Left" />
@@ -205,7 +205,7 @@
                                 Command="{Binding GoBack5_SecondsCommand}"
                                 Direction="Right" />
                             <TapGestureRecognizer
-                                Tapped="Player_Tapped" />
+                                Tapped="PlayerTapGestureRecognizer_Tapped" />
                             <TapGestureRecognizer
                                 Command="{Binding GoBack10_SecondsCommand}"
                                 NumberOfTapsRequired="2" />
@@ -215,7 +215,7 @@
                         Grid.Column="1">
                         <BoxView.GestureRecognizers>
                             <PinchGestureRecognizer
-                                PinchUpdated="Player_PinchUpdated" />
+                                PinchUpdated="PlayerPinchGestureRecognizer_PinchUpdated" />
                             <SwipeGestureRecognizer
                                 Command="{Binding GoForward5_SecondsCommand}"
                                 Direction="Left" />
@@ -223,7 +223,7 @@
                                 Command="{Binding GoBack5_SecondsCommand}"
                                 Direction="Right" />
                             <TapGestureRecognizer
-                                Tapped="Player_Tapped" />
+                                Tapped="PlayerTapGestureRecognizer_Tapped" />
                             <TapGestureRecognizer
                                 Command="{Binding FullscreenOnOffCommand}"
                                 NumberOfTapsRequired="2" />
@@ -233,7 +233,7 @@
                         Grid.Column="2">
                         <BoxView.GestureRecognizers>
                             <PinchGestureRecognizer
-                                PinchUpdated="Player_PinchUpdated" />
+                                PinchUpdated="PlayerPinchGestureRecognizer_PinchUpdated" />
                             <SwipeGestureRecognizer
                                 Command="{Binding GoForward5_SecondsCommand}"
                                 Direction="Left" />
@@ -241,7 +241,7 @@
                                 Command="{Binding GoBack5_SecondsCommand}"
                                 Direction="Right" />
                             <TapGestureRecognizer
-                                Tapped="Player_Tapped" />
+                                Tapped="PlayerTapGestureRecognizer_Tapped" />
                             <TapGestureRecognizer
                                 Command="{Binding GoForward10_SecondsCommand}"
                                 NumberOfTapsRequired="2" />
@@ -333,13 +333,13 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span
-                                    Style="{StaticResource PlayerPositionLabelStyle}"
+                                    Style="{StaticResource PlayerPositionSpanStyle}"
                                     Text="{Binding Position, Converter={StaticResource timeSpanFormatConverter}}" />
                                 <Span
-                                    Style="{StaticResource PlayerPositionLabelStyle}"
+                                    Style="{StaticResource PlayerPositionSpanStyle}"
                                     Text=" / " />
                                 <Span
-                                    Style="{StaticResource PlayerDurationLabelStyle}"
+                                    Style="{StaticResource PlayerDurationSpanStyle}"
                                     Text="{Binding Duration, Converter={StaticResource timeSpanFormatConverter}}" />
                             </FormattedString>
                         </Label.FormattedText>
