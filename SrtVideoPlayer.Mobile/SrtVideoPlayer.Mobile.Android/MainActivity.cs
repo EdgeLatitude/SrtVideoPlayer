@@ -69,6 +69,12 @@ namespace SrtVideoPlayer.Mobile.Droid
             Shared.Logic.Theming.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            Shared.Logic.Theming.ThemeChangeNeeded -= GlobalEvents_ThemeChangeNeeded;
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

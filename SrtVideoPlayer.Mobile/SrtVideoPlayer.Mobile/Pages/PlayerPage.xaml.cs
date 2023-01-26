@@ -10,6 +10,7 @@ using SrtVideoPlayer.Shared.Localization;
 using SrtVideoPlayer.Shared.Models.Files;
 using SrtVideoPlayer.Shared.ViewModels;
 using System;
+using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -42,6 +43,7 @@ namespace SrtVideoPlayer.Mobile.Pages
             BindingContext = _viewModel;
 
             _viewModel.PlayPauseRequested += ViewModel_PlayPauseRequested;
+            _viewModel.PropertyChanged += ViewModel_PropertyChanged;
             _viewModel.SeekRequested += ViewModel_SeekRequested;
             _viewModel.StopRequested += ViewModel_StopRequested;
 
@@ -58,6 +60,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         ~PlayerPage()
         {
             _viewModel.PlayPauseRequested -= ViewModel_PlayPauseRequested;
+            _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
             _viewModel.SeekRequested -= ViewModel_SeekRequested;
             _viewModel.StopRequested -= ViewModel_StopRequested;
 
@@ -179,8 +182,8 @@ namespace SrtVideoPlayer.Mobile.Pages
             const double horizontalMargin = 16;
             const double verticalMargin = 8;
 
-            var videoHeight = Player.VideoHeight;
-            var videoWidth = Player.VideoWidth;
+            var videoHeight = CrossMediaManager.Current.MediaPlayer.VideoHeight;
+            var videoWidth = CrossMediaManager.Current.MediaPlayer.VideoWidth;
 
             if (videoHeight == default
                 || videoWidth == default)
@@ -233,6 +236,15 @@ namespace SrtVideoPlayer.Mobile.Pages
             }
         }
 
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            // Android bug fix.
+            if (args.PropertyName != nameof(_viewModel.Source)
+                || Device.RuntimePlatform != Device.Android)
+                return;
+            CrossMediaManager.Current.Speed = 1f;
+        }
+
         private void ViewModel_SeekRequested(object sender, EventArgs args)
         {
             var duration = CrossMediaManager.Current.Duration;
@@ -247,7 +259,7 @@ namespace SrtVideoPlayer.Mobile.Pages
         #region Player events
         private async void Player_MediaItemFailed(object sender, MediaItemFailedEventArgs args)
         {
-            if (Player.State != MediaPlayerState.Failed)
+            if (CrossMediaManager.Current.State != MediaPlayerState.Failed)
                 return;
             _viewModel.SelectingVideo = false;
             await DisplayAlert(LocalizedStrings.Error, $"{LocalizedStrings.MediaError}{Environment.NewLine}{args.Message}", LocalizedStrings.Ok);

@@ -4,7 +4,6 @@ using Android.Views;
 using SrtVideoPlayer.Mobile.Controls;
 using SrtVideoPlayer.Shared.Constants;
 using System;
-using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -30,9 +29,7 @@ namespace SrtVideoPlayer.Mobile.Droid.CustomRenderers
                 RequestFocus();
 
             Page.Appearing += (sender, innerArgs) =>
-            {
                 RequestFocus();
-            };
         }
 
         public override bool OnKeyUp([GeneratedEnum] Keycode keyCode, KeyEvent keyEvent)
