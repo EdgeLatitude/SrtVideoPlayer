@@ -26,7 +26,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
         private readonly IAlertsService _alertsService;
         private readonly IClipboardService _clipboardService;
-        private readonly ICommandFactoryService _commandFactoryService;
         private readonly IFileDownloaderService _fileDownloaderService;
         private readonly IFilePickerService _filePickerService;
         private readonly IFullscreenService _fullscreenService;
@@ -364,7 +363,6 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             _alertsService = alertsService;
             _clipboardService = clipboardService;
-            _commandFactoryService = commandFactoryService;
             _fileDownloaderService = fileDownloaderService;
             _filePickerService = filePickerService;
             _fullscreenService = fullscreenService;
@@ -374,24 +372,24 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _platformInformationService = platformInformationService;
             _timerService = timerService;
 
-            LoadVideoCommand = _commandFactoryService.Create(async () => await LoadVideoAsync());
-            CopySubtitleToClipboardCommand = _commandFactoryService.Create(async () => await CopySubtitleToClipboardAsync());
-            ManageInputFromHardwareCommand = _commandFactoryService.Create((string character) => ManageInputFromHardware(character));
-            PlayOrPauseCommand = _commandFactoryService.Create(PlayOrPause);
-            StopCommand = _commandFactoryService.Create(Stop);
-            GoBack5_SecondsCommand = _commandFactoryService.Create(() => Seek(false, 5));
-            GoForward5_SecondsCommand = _commandFactoryService.Create(() => Seek(true, 5));
-            GoBack10_SecondsCommand = _commandFactoryService.Create(() => Seek(false, 10));
-            GoForward10_SecondsCommand = _commandFactoryService.Create(() => Seek(true, 10));
-            RestartCommand = _commandFactoryService.Create(Restart);
-            FullscreenOnOffCommand = _commandFactoryService.Create(FullscreenOnOff);
-            FullscreenOnCommand = _commandFactoryService.Create(FullscreenOn);
-            FullscreenOffCommand = _commandFactoryService.Create(FullscreenOff);
-            MuteUnmuteCommand = _commandFactoryService.Create(MuteUnmute);
-            CaptionsOnOffCommand = _commandFactoryService.Create(CaptionsOnOff);
-            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistoryAsync());
-            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
-            ShowAboutCommand = _commandFactoryService.Create(async () => await NavigateToAboutAsync());
+            LoadVideoCommand = commandFactoryService.Create(async () => await LoadVideoAsync());
+            CopySubtitleToClipboardCommand = commandFactoryService.Create(async () => await CopySubtitleToClipboardAsync());
+            ManageInputFromHardwareCommand = commandFactoryService.Create((string character) => ManageInputFromHardware(character));
+            PlayOrPauseCommand = commandFactoryService.Create(PlayOrPause);
+            StopCommand = commandFactoryService.Create(Stop);
+            GoBack5_SecondsCommand = commandFactoryService.Create(() => Seek(false, 5));
+            GoForward5_SecondsCommand = commandFactoryService.Create(() => Seek(true, 5));
+            GoBack10_SecondsCommand = commandFactoryService.Create(() => Seek(false, 10));
+            GoForward10_SecondsCommand = commandFactoryService.Create(() => Seek(true, 10));
+            RestartCommand = commandFactoryService.Create(Restart);
+            FullscreenOnOffCommand = commandFactoryService.Create(FullscreenOnOff);
+            FullscreenOnCommand = commandFactoryService.Create(FullscreenOn);
+            FullscreenOffCommand = commandFactoryService.Create(FullscreenOff);
+            MuteUnmuteCommand = commandFactoryService.Create(MuteUnmute);
+            CaptionsOnOffCommand = commandFactoryService.Create(CaptionsOnOff);
+            ShowHistoryCommand = commandFactoryService.Create(async () => await ShowHistoryAsync());
+            NavigateToSettingsCommand = commandFactoryService.Create(async () => await NavigateToSettingsAsync());
+            ShowAboutCommand = commandFactoryService.Create(async () => await NavigateToAboutAsync());
 
             _messagingService.Subscribe(this, Strings.SettingsChanged, (viewmodel) => RefreshFromSettings());
         }

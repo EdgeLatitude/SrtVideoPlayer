@@ -2,10 +2,10 @@
 
 namespace SrtVideoPlayer.Mobile.Controls
 {
-    public class KeyboardPage : ContentPage
+    public abstract class KeyboardPage : ContentPage
     {
-        public virtual void OnKeyUp(string character) { return; }
-        public virtual void OnKeyCommand(KeyCommand command) { return; }
+        public abstract void OnKeyUp(string character);
+        public abstract void OnKeyCommand(KeyCommand command);
     }
 
     public enum KeyCommand

@@ -22,14 +22,10 @@ namespace SrtVideoPlayer.Shared.ViewModels
         private string _currentSubtitleColor;
         private Theme? _currentTheme;
 
-        private readonly bool _deviceSupportsAutomaticDarkMode;
-
         private readonly Settings _settings;
         private readonly Theming _theming;
 
-        private readonly ICommandFactoryService _commandFactoryService;
         private readonly IMessagingService _messagingService;
-        private readonly IUiThreadService _uiThreadService;
 
         private readonly IDictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
         {
@@ -267,11 +263,9 @@ namespace SrtVideoPlayer.Shared.ViewModels
             _subtitleColorPreview = _settings.GetSubtitleColor();
             _fontSizePreview = _settings.GetFontSize();
 
-            _commandFactoryService = commandFactoryService;
             _messagingService = messagingService;
-            _uiThreadService = uiThreadService;
 
-            SaveSettingsCommand = _commandFactoryService.Create(async () => await SaveSettingsAsync(), () => CanExecuteSaveSettings);
+            SaveSettingsCommand = commandFactoryService.Create(async () => await SaveSettingsAsync(), () => CanExecuteSaveSettings);
 
             #region History settings
             _currentHistoryLength = _settings.GetPlaybackHistoryLength();
@@ -280,13 +274,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             #region Theme settings
             DeviceSupportsManualDarkMode = _theming.DeviceSupportsManualDarkMode;
-            _deviceSupportsAutomaticDarkMode = _theming.DeviceSupportsAutomaticDarkMode;
+            var deviceSupportsAutomaticDarkMode = _theming.DeviceSupportsAutomaticDarkMode;
             _currentTheme = _theming.GetAppOrDefaultTheme();
 
-            if (_deviceSupportsAutomaticDarkMode)
+            if (deviceSupportsAutomaticDarkMode)
                 _themesDictionary.Add(LocalizedStrings.Device, null);
 
-            _uiThreadService.ExecuteOnUiThread(() =>
+            uiThreadService.ExecuteOnUiThread(() =>
             {
                 Themes = _themesDictionary.Keys.ToArray();
                 SelectedTheme = _themesDictionary.FirstOrDefault(pair => pair.Value == _currentTheme).Key;
@@ -295,7 +289,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
 
             #region Subtitle color settings
             _currentSubtitleColor = _settings.GetSubtitleColor();
-            _uiThreadService.ExecuteOnUiThread(() =>
+            uiThreadService.ExecuteOnUiThread(() =>
             {
                 SubtitleColors = _subtitleColorsDictionary.Keys.ToArray();
                 SelectedSubtitleColor = _subtitleColorsDictionary.FirstOrDefault(pair => pair.Value == _currentSubtitleColor).Key;
@@ -312,7 +306,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
             Offset = _currentOffset.ToString();
             #endregion Offset settings
 
-            _uiThreadService.ExecuteOnUiThread(() => _loaded = true);
+            uiThreadService.ExecuteOnUiThread(() => _loaded = true);
         }
         #endregion
 

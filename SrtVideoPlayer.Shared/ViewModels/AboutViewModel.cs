@@ -8,9 +8,7 @@ namespace SrtVideoPlayer.Shared.ViewModels
     public class AboutViewModel : BaseViewModel
     {
         #region Fields
-        private readonly ICommandFactoryService _commandFactoryService;
         private readonly INavigationService _navigationService;
-        private readonly IPlatformInformationService _platformInformationService;
         #endregion
 
         #region Properties
@@ -53,15 +51,13 @@ namespace SrtVideoPlayer.Shared.ViewModels
             INavigationService navigationService,
             IPlatformInformationService platformInformationService)
         {
-            _commandFactoryService = commandFactoryService;
             _navigationService = navigationService;
-            _platformInformationService = platformInformationService;
 
-            NavigateToWebsiteCommand = _commandFactoryService.Create(async (string website) => await NavigateToWebsiteAsync(website));
+            NavigateToWebsiteCommand = commandFactoryService.Create(async (string website) => await NavigateToWebsiteAsync(website));
 
-            PlatformSupportsGettingApplicationVersion = _platformInformationService.PlatformSupportsGettingApplicationVersion();
+            PlatformSupportsGettingApplicationVersion = platformInformationService.PlatformSupportsGettingApplicationVersion();
             if (PlatformSupportsGettingApplicationVersion)
-                AppVersion = _platformInformationService.GetApplicationVersion();
+                AppVersion = platformInformationService.GetApplicationVersion();
         }
         #endregion
 
