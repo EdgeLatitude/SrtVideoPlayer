@@ -32,9 +32,9 @@
     <key>CFBundleDisplayName</key>
     <string>Video player</string>
     <key>CFBundleVersion</key>
-    <string>010003</string>
+    <string>010004</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.3</string>
+    <string>1.0.4</string>
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleLocalizations</key>
