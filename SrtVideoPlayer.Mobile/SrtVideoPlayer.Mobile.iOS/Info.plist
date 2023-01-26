@@ -21,20 +21,18 @@
       <string>UIInterfaceOrientationLandscapeLeft</string>
       <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
-    <key>MinimumOSVersion</key>
-    <string>8.0</string>
-    <key>CFBundleDisplayName</key>
-    <string>Video player</string>
-    <key>CFBundleIdentifier</key>
-    <string>com.edgelatitude.srtvideoplayer</string>
-    <key>CFBundleVersion</key>
-    <string>010003</string>
-    <key>UILaunchStoryboardName</key>
-    <string>LaunchScreen</string>
-    <key>CFBundleName</key>
-    <string>Video player ft. subtitles</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+    <key>MinimumOSVersion</key>
+    <string>8.0</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.edgelatitude.srtvideoplayer</string>
+    <key>CFBundleName</key>
+    <string>Video player ft. subtitles</string>
+    <key>CFBundleDisplayName</key>
+    <string>Video player</string>
+    <key>CFBundleVersion</key>
+    <string>010003</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0.3</string>
     <key>CFBundleDevelopmentRegion</key>
@@ -44,12 +42,22 @@
       <string>en</string>
       <string>es</string>
     </array>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Access to the photo library is necessary to be able to select videos that are in it.</string>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleLightContent</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>audio</string>
+      <string>fetch</string>
+    </array>
     <key>CFBundleDocumentTypes</key>
     <array>
       <dict>
@@ -63,21 +71,11 @@
         </array>
       </dict>
     </array>
-    <key>NSUbiquitousContainerIsDocumentScopePublic</key>
-    <true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-    </dict>
-    <key>UIBackgroundModes</key>
-    <array>
-      <string>audio</string>
-      <string>fetch</string>
-    </array>
-    <key>UIViewControllerBasedStatusBarAppearance</key>
-    <false/>
     <key>UISupportsDocumentBrowser</key>
     <true/>
+    <key>NSUbiquitousContainerIsDocumentScopePublic</key>
+    <true/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Access to the photo library is necessary to be able to select videos that are in it.</string>
   </dict>
 </plist>

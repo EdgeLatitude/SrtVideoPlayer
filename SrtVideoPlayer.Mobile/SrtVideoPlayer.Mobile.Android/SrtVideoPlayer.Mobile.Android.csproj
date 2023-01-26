@@ -9,64 +9,52 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SrtVideoPlayer.Mobile.Droid</RootNamespace>
     <AssemblyName>SrtVideoPlayer.Mobile.Android</AssemblyName>
+    <Deterministic>True</Deterministic>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
+    <DebugType>portable</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <LangVersion>8.0</LangVersion>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-    <BundleAssemblies>false</BundleAssemblies>
-    <AndroidDexTool>d8</AndroidDexTool>
-    <AndroidPackageFormat>apk</AndroidPackageFormat>
-    <LangVersion>8.0</LangVersion>
-    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
-    <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
-    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidUseDefaultAotProfile>false</AndroidUseDefaultAotProfile>
     <AndroidDexTool>d8</AndroidDexTool>
-    <AndroidLinkTool>r8</AndroidLinkTool>
-    <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
     <AndroidSupportedAbis>armeabi-v7a;x86_64;arm64-v8a;x86</AndroidSupportedAbis>
-    <LangVersion>8.0</LangVersion>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Numerics" />
@@ -106,6 +94,17 @@
       <Version>5.0.0.2545</Version>
     </PackageReference>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\SrtVideoPlayer.Shared\SrtVideoPlayer.Shared.csproj">
+      <Project>{87aa0025-374a-4803-a40c-1a409fb7416b}</Project>
+      <Name>SrtVideoPlayer.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SrtVideoPlayer.Mobile\SrtVideoPlayer.Mobile.csproj">
+      <Project>{00935aeb-a7d2-4375-9d72-3e28bdc1a7f9}</Project>
+      <Name>SrtVideoPlayer.Mobile</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
     <Compile Include="DependencyServices\FullscreenDependencyService.cs" />
@@ -142,85 +141,35 @@
     <AndroidResource Include="Resources\values\strings.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
+    <AndroidResource Include="Resources\values-es\strings.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\drawable\launch_screen.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\SrtVideoPlayer.Shared\SrtVideoPlayer.Shared.csproj">
-      <Project>{87aa0025-374a-4803-a40c-1a409fb7416b}</Project>
-      <Name>SrtVideoPlayer.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SrtVideoPlayer.Mobile\SrtVideoPlayer.Mobile.csproj">
-      <Project>{00935aeb-a7d2-4375-9d72-3e28bdc1a7f9}</Project>
-      <Name>SrtVideoPlayer.Mobile</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\values-es\strings.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\close_fullscreen_black.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\not_started_black.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\open_in_full_black.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pause_black.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\play_arrow_black.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\stop_black.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\close_fullscreen_white.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\not_started_white.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\open_in_full_white.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pause_white.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\play_arrow_white.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\stop_white.svg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidEnvironment Include="EnvironmentVariables.txt" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" />
-    </VisualStudio>
-  </ProjectExtensions>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\close_fullscreen_black.svg" />
+    <AndroidResource Include="Resources\drawable\not_started_black.svg" />
+    <AndroidResource Include="Resources\drawable\open_in_full_black.svg" />
+    <AndroidResource Include="Resources\drawable\pause_black.svg" />
+    <AndroidResource Include="Resources\drawable\play_arrow_black.svg" />
+    <AndroidResource Include="Resources\drawable\stop_black.svg" />
+    <AndroidResource Include="Resources\drawable\close_fullscreen_white.svg" />
+    <AndroidResource Include="Resources\drawable\not_started_white.svg" />
+    <AndroidResource Include="Resources\drawable\open_in_full_white.svg" />
+    <AndroidResource Include="Resources\drawable\pause_white.svg" />
+    <AndroidResource Include="Resources\drawable\play_arrow_white.svg" />
+    <AndroidResource Include="Resources\drawable\stop_white.svg" />
+  </ItemGroup>
 </Project>

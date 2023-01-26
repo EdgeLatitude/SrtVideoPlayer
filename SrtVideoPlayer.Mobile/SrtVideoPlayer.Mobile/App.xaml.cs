@@ -5,9 +5,11 @@ using SrtVideoPlayer.Shared.Constants;
 using SrtVideoPlayer.Shared.Logic;
 using SrtVideoPlayer.Shared.Models.Files;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace SrtVideoPlayer.Mobile
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class App : Application
     {
         private readonly Theming _theming;
