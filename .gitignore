@@ -341,3 +341,11 @@ healthchecksdb
 
 # SonarQube
 .sonarqube/
+
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
