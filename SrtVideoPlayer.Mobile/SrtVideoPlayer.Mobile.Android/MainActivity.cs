@@ -17,10 +17,9 @@ using System.Threading.Tasks;
 namespace SrtVideoPlayer.Mobile.Droid
 {
     [Activity(
-        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.SmallestScreenSize | ConfigChanges.UiMode,
+        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.UiMode | ConfigChanges.ScreenSize | ConfigChanges.SmallestScreenSize | ConfigChanges.Density,
         LaunchMode = LaunchMode.SingleTop,
-        Theme = "@style/LaunchTheme"
-    )]
+        Theme = "@style/LaunchTheme")]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private const int _readExternalStorageRequestCode = 1;

@@ -9,18 +9,16 @@ namespace SrtVideoPlayer.Mobile.Droid
     [IntentFilter(
         new string[] { Intent.ActionView },
         Categories = new string[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-        DataScheme = "content",
         DataHost = "*",
-        DataMimeType = "video/*"
-    )]
+        DataMimeType = "video/*",
+        DataScheme = "content")]
     [Activity(
-        Label = "@string/short_app_name",
         Icon = "@mipmap/icon",
-        Theme = "@style/MainTheme.Splash",
+        Label = "@string/short_app_name",
         MainLauncher = true,
-        NoHistory = true
-    )]
-    public class SplashActivity : AppCompatActivity
+        NoHistory = true,
+        Theme = "@style/MainTheme.Splash")]
+    public class LaunchScreenActivity : AppCompatActivity
     {
         private bool _mainActivityCreationStarted;
 
